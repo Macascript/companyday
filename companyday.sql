@@ -23,6 +23,7 @@ CREATE TABLE actividad (
     nombre VARCHAR(25) NOT NULL
 )
 
+
 CREATE TABLE empresa (
     id INT(32) PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
@@ -34,7 +35,45 @@ CREATE TABLE empresa (
     codigo_postal VARCHAR(10) NOT NULL,
     web VARCHAR(500),
     logo_url VARCHAR(200),
-    buscando_candidatos BOOLEAN NOT NULL
+    buscando_candidatos BOOLEAN NOT NULL,
+    
+);
+
+CREATE TABLE asistente (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    empresa_id INT(32) FOREIGN KEY REFERENCES empresa(id) NOT NULL,
+    nombre_completo VARCHAR(250) NOT NULL,
+    cargo VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE presentacion (
+    empresa_id INT(32) PRIMARY KEY FOREIGN KEY REFERENCES empresa(id),
+    presencial BOOLEAN DEFAULT FALSE,
+    animacion BOOLEAN DEFAULT FALSE,
+    videojuegos BOOLEAN DEFAULT FALSE,
+    disenio BOOLEAN DEFAULT FALSE,
+    ingenieria BOOLEAN DEFAULT FALSE
+);
+
+CREATE TABLE sesion (
+    id INT PRIMARY KEY,
+    empresa_id INT(32) FOREIGN KEY REFERENCES empresa(id) NOT NULL,
+    fecha DATE NOT NULL,
+    duracion VARCHAR(2) NOT NULL
+);
+
+CREATE TABLE speed_meeting (
+    empresa_id INT(32) PRIMARY KEY FOREIGN KEY REFERENCES empresa(id),
+    presencial BOOLEAN,
+    descripcion VARCHAR(500),
+    preguntas VARCHAR(500)
+);
+
+CREATE TABLE charla (
+    descripcion VARCHAR(500),
+    presencial BOOLEAN DEFAULT FALSE,
+    fecha DATETIME NOT NULL,
+    ponente VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE participa (
