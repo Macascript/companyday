@@ -10,6 +10,13 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 # MODELS
+
+class Actividad(db.Model):
+    __tablename__ = "actividad"
+    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
+    nombre = db.Column(db.String(25))
+
+
 participa = db.Table(
     "participa",
     db.Column("empresa_id",db.Integer,db.ForeignKey("empresa.id")),
@@ -54,7 +61,7 @@ class Pais(db.Model):
 
 class Provincia(db.Model):
     __tablename__ = "provincia"
-    id = db.Column(db.Integer)
+    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
     pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
     nombre = db.Column(db.String(50))
 
@@ -65,10 +72,6 @@ class Poblacion(db.Model):
     pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
     nombre = db.Column(db.String(100))
 
-class Actividad(db.Model):
-    __tablename__ = "actividad"
-    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    nombre = db.Column(db.String(25))
 
 class Asistente(db.Model):
     __tablename__ = "asistente"
@@ -125,6 +128,7 @@ class Speed_meeting(db.Model):
         self.preguntas = preguntas
 
 class Charla(db.Model):
+    __tablename__ = "charla"
     empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
     descripcion = db.Column(db.String(500))
     presencial = db.Column(db.Boolean)
