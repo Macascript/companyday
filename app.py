@@ -39,7 +39,7 @@ class Empresa(db.Model):
 def index():
     # empresas = Empresa.query.all()
     # return render_template("index.html",empresas=empresas)
-    return render_template("index.html")
+    return render_template("nuevoIndex.html")
 
 @app.route("/registered", methods=["GET","POST"])
 def profile():
