@@ -1,4 +1,4 @@
-from crypt import methods
+#from crypt import methods
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
@@ -9,19 +9,30 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
+# MODELS
+participa = db.Table(
+    "participa",
+    db.Column("empresa_id",db.Integer,db.ForeignKey("empresa.id")),
+    db.Column("actividad_id",db.Integer,db.ForeignKey("actividad.id"))
+)
+
 class Empresa(db.Model):
+    __tablename__ = "empresa"
     # TODO: resto de atributos de una empresa en la BD
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key = True,autoincrement = True)
     nombre = db.Column(db.String(100))
     nombre_persona_contacto = db.Column(db.String(100))
     email = db.Column(db.String(320))
     telefono = db.Column(db.String(13))
     direccion = db.Column(db.String(500))
-    poblacion = db.Column(db.Integer)
+    poblacion = db.Column(db.Integer,db.ForeignKey("poblacion.id"))
     codigo_postal = db.Column(db.String(10))
     web = db.Column(db.String(500))
     logo_url = db.Column(db.String(200))
     buscando_candidatos = db.Column(db.Boolean)
+
+    asistentes = db.relationship("asistente")
+    actividades = db.relationship("actividad",secondary = participa,backref = "participa")
 
     def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, buscando_candidatos):
         self.nombre = nombre
@@ -35,6 +46,100 @@ class Empresa(db.Model):
         self.logo_url = logo_url
         self.buscando_candidatos = buscando_candidatos
 
+class Pais(db.Model):
+    __tablename__ = "pais"
+    id = db.Column(db.Integer, primary_key = True,autoincrement = True)
+    nombre = db.Column(db.String(50))
+    provincias = db.relationship("Provincia")
+
+class Provincia(db.Model):
+    __tablename__ = "provincia"
+    id = db.Column(db.Integer)
+    pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
+    nombre = db.Column(db.String(50))
+
+class Poblacion(db.Model):
+    __tablename__ = "poblacion"
+    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
+    provincia_id = db.Column(db.Integer,db.ForeignKey("provincia.id"),primary_key = True)
+    pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
+    nombre = db.Column(db.String(100))
+
+class Actividad(db.Model):
+    __tablename__ = "actividad"
+    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
+    nombre = db.Column(db.String(25))
+
+class Asistente(db.Model):
+    __tablename__ = "asistente"
+    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
+    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"))
+    nombre_completo = db.Column(db.String(250))
+    cargo = db.Column(db.String(100))
+
+    def __init__(self,empresa_id,nombre_completo,cargo):
+        self.empresa_id = empresa_id
+        self.nombre_completo = nombre_completo
+        self.cargo = cargo
+
+class Presentacion(db.Model):
+    __tablename__ = "presentacion"
+    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
+    presencial = db.Column(db.Boolean)
+    animacion = db.Column(db.Boolean)
+    videojuegos = db.Column(db.Boolean)
+    disenio = db.Column(db.Boolean)
+    ingenieria = db.Column(db.Boolean)
+
+    def __init__(self,empresa_id,presencial,animacion,videojuegos,disenio,ingenieria):
+        self.empresa_id = empresa_id
+        self.presencial = presencial
+        self.animacion = animacion
+        self.videojuegos = videojuegos
+        self.disenio = disenio
+        self.ingenieria = ingenieria
+
+class Sesion(db.Model):
+    __tablename__ = "sesion"
+    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
+    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"))
+    fecha = db.Column(db.Date)
+    duracion = db.Column(db.String(2))
+
+    def __init__(self,empresa_id,fecha,duracion):
+        self.empresa_id = empresa_id
+        self.fecha = fecha
+        self.duracion = duracion
+
+class Speed_meeting(db.Model):
+    __tablename__ = "speed_meeting"
+    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
+    presencial = db.Column(db.Boolean)
+    descripcion = db.Column(db.String(500))
+    preguntas = db.Column(db.String(500))
+
+    def __init__(self,empresa_id,presencial,descripcion,preguntas):
+        self.empresa_id = empresa_id
+        self.presencial = presencial
+        self.descripcion = descripcion
+        self.preguntas = preguntas
+
+class Charla(db.Model):
+    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
+    descripcion = db.Column(db.String(500))
+    presencial = db.Column(db.Boolean)
+    fecha = db.Column(db.Datetime)
+    ponente = db.Column(db.String(100))
+
+    def __init__(self,empresa_id,descripcion,presencial,fecha,ponente):
+        self.empresa_id = empresa_id
+        self.descripcion = descripcion
+        self.presencial = presencial
+        self.fecha = fecha
+        self.ponente = ponente
+
+# END MODELS
+
 @app.route("/", methods=["GET","POST"])
 def index():
     # empresas = Empresa.query.all()
@@ -44,7 +149,7 @@ def index():
 @app.route("/registered", methods=["GET","POST"])
 def profile():
     if request.method == "POST":
-        # TODO: distintos parámetros que recibe del formulario
+        # TODO: distintos parametros que recibe del formulario
         nombre = request.form["nombre"]
         nombre_persona_contacto = request.form["nombre_persona_contacto"]
         email = request.form["email"]
@@ -61,3 +166,4 @@ def profile():
 
 if __name__ == '__main__':
     app.run(port=5000,debug=True)
+    db.create_all()
