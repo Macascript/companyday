@@ -140,11 +140,15 @@ class Charla(db.Model):
 
 # END MODELS
 
+
+
+# CONTROLLER
+
 @app.route("/", methods=["GET","POST"])
 def index():
     # empresas = Empresa.query.all()
     # return render_template("index.html",empresas=empresas)
-    db.create_all()
+    # db.create_all()
     return render_template("nuevoIndex.html")
 
 @app.route("/registered", methods=["GET","POST"])
@@ -162,8 +166,10 @@ def profile():
         logo_url = request.form["logo_url"]
         buscando_candidatos = request.form["buscando_candidatos"]
         new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,buscando_candidatos)
-        db.session.add(new_empresa)
-        db.session.commit()
+        # db.session.add(new_empresa)
+        # db.session.commit()
 
 if __name__ == '__main__':
     app.run(port=5000,debug=True)
+
+# END CONTROLLER
