@@ -144,6 +144,7 @@ class Charla(db.Model):
 def index():
     # empresas = Empresa.query.all()
     # return render_template("index.html",empresas=empresas)
+    db.create_all()
     return render_template("nuevoIndex.html")
 
 @app.route("/registered", methods=["GET","POST"])
@@ -166,4 +167,3 @@ def profile():
 
 if __name__ == '__main__':
     app.run(port=5000,debug=True)
-    db.create_all()
