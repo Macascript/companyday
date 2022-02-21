@@ -12,8 +12,8 @@ db = SQLAlchemy(app)
 # MODELS
 participa = db.Table(
     "participa",
-    db.Column("empresa_id",db.Integer,db.ForeignKey("empresa.id")),
-    db.Column("actividad_id",db.Integer,db.ForeignKey("actividad.id"))
+    db.Column("empresa_id",db.Integer,db.ForeignKey(Empresa.id)),
+    db.Column("actividad_id",db.Integer,db.ForeignKey(Actividad.id))
 )
 
 class Empresa(db.Model):
@@ -25,7 +25,7 @@ class Empresa(db.Model):
     email = db.Column(db.String(320))
     telefono = db.Column(db.String(13))
     direccion = db.Column(db.String(500))
-    poblacion = db.Column(db.Integer,db.ForeignKey("poblacion.id"))
+    poblacion = db.Column(db.Integer,db.ForeignKey(Poblacion.id))
     codigo_postal = db.Column(db.String(10))
     web = db.Column(db.String(500))
     logo_url = db.Column(db.String(200))
@@ -55,14 +55,14 @@ class Pais(db.Model):
 class Provincia(db.Model):
     __tablename__ = "provincia"
     id = db.Column(db.Integer)
-    pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
+    pais_id = db.Column(db.Integer,db.ForeignKey(Pais.id),primary_key = True)
     nombre = db.Column(db.String(50))
 
 class Poblacion(db.Model):
     __tablename__ = "poblacion"
     id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    provincia_id = db.Column(db.Integer,db.ForeignKey("provincia.id"),primary_key = True)
-    pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
+    provincia_id = db.Column(db.Integer,db.ForeignKey(Provincia.id),primary_key = True)
+    pais_id = db.Column(db.Integer,db.ForeignKey(Pais.id),primary_key = True)
     nombre = db.Column(db.String(100))
 
 class Actividad(db.Model):
@@ -73,7 +73,7 @@ class Actividad(db.Model):
 class Asistente(db.Model):
     __tablename__ = "asistente"
     id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"))
+    empresa_id = db.Column(db.Integer,db.ForeignKey(Empresa.id))
     nombre_completo = db.Column(db.String(250))
     cargo = db.Column(db.String(100))
 
@@ -84,7 +84,7 @@ class Asistente(db.Model):
 
 class Presentacion(db.Model):
     __tablename__ = "presentacion"
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
+    empresa_id = db.Column(db.Integer,db.ForeignKey(Empresa.id),primary_key = True)
     presencial = db.Column(db.Boolean)
     animacion = db.Column(db.Boolean)
     videojuegos = db.Column(db.Boolean)
@@ -102,7 +102,7 @@ class Presentacion(db.Model):
 class Sesion(db.Model):
     __tablename__ = "sesion"
     id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"))
+    empresa_id = db.Column(db.Integer,db.ForeignKey(Empresa.id))
     fecha = db.Column(db.Date)
     duracion = db.Column(db.String(2))
 
@@ -113,7 +113,7 @@ class Sesion(db.Model):
 
 class Speed_meeting(db.Model):
     __tablename__ = "speed_meeting"
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
+    empresa_id = db.Column(db.Integer,db.ForeignKey(Empresa.id),primary_key = True)
     presencial = db.Column(db.Boolean)
     descripcion = db.Column(db.String(500))
     preguntas = db.Column(db.String(500))
@@ -125,7 +125,7 @@ class Speed_meeting(db.Model):
         self.preguntas = preguntas
 
 class Charla(db.Model):
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
+    empresa_id = db.Column(db.Integer,db.ForeignKey(Empresa.id),primary_key = True)
     descripcion = db.Column(db.String(500))
     presencial = db.Column(db.Boolean)
     fecha = db.Column(db.DateTime)
