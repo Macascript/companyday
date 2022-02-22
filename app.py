@@ -115,7 +115,7 @@ class Presentacion(db.Model):
 class Sesion(db.Model):
     __tablename__ = "sesion"
     id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"))
+    empresa_id = db.Column(db.Integer,db.ForeignKey("speed_meeting.empresa_id"))
     fecha = db.Column(db.Date)
     duracion = db.Column(db.String(2))
 
@@ -130,6 +130,8 @@ class Speed_meeting(db.Model):
     presencial = db.Column(db.Boolean)
     descripcion = db.Column(db.String(500))
     preguntas = db.Column(db.String(500))
+
+    sesiones = db.relationship("sesion")
 
     def __init__(self,empresa_id,presencial,descripcion,preguntas):
         self.empresa_id = empresa_id
@@ -200,17 +202,20 @@ def profile():
 
         modalidad_speed_meeting = request.form["modalidad_speed_meeting"] is not None
         fecha_speed_meeting = request.form["fecha_speed_meeting"]
+        fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%d/%m/%Y")
+        duracion = request.form["duracion"]
         descripcion = request.form["descripcion"]
         preguntas = request.form["preguntas"]
         new_empresa.speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,preguntas)
+        new_empresa.speed_meeting.sesiones.append(Sesion(new_empresa,fecha_speed_meeting,duracion))
 
         modalidad_charlas = request.form["modalidad_charlas"] is not None
         descripcion = request.form["descripcion"]
         fecha_charla = request.form["fecha_charla"]
         hora_charla = request.form["hora_charla"]
-        fecha_hora_charla = datetime.strptime(fecha_charla+" "+hora_charla,"")
+        fecha_hora_charla = datetime.strptime(fecha_charla+"-"+hora_charla,"%d/%m/%Y-%H:%M")
         ponente = request.form["ponente"]
-        new_empresa.charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_charla,ponente)
+        new_empresa.charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_hora_charla,ponente)
 
         db.session.add(new_empresa)
         db.session.commit()
