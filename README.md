@@ -53,10 +53,10 @@ NAMES DE FORMULARIO:
 - modalidad_speed_meeting
 - fecha_speed_meeting
 - duracion
-- descripcion_speedmeeting
+- descripcion_speed_meeting
 - preguntas
 - modalidad_charlas
-- descripcion
+- descripcion_charla
 - fecha_charla
 - hora_charla
 - ponente
