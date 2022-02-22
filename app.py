@@ -222,9 +222,7 @@ def prueba2():
     print(request.args.get("msg") is None)
     return "Hola"
 
-@app.route('/test-carrusel-vue')
-def test_carrusel_vue():
-        
+
 
 
 if __name__ == '__main__':
