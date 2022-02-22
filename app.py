@@ -164,7 +164,7 @@ class Charla(db.Model):
 def index():
     # empresas = Empresa.query.all()
     # return render_template("index.html",empresas=empresas)
-    # db.create_all()
+    db.create_all()
     return render_template("nuevoIndex.html")
 
 @app.route("/registered", methods=["GET","POST"])
@@ -181,8 +181,16 @@ def profile():
         print(telefono)
         direccion = request.form["direccion"]
         print(direccion)
-        poblacion = request.form["poblacion"]
-        print(poblacion)
+        # poblacion = Poblacion.query.filter_by(
+        #     nombre == request.form["poblacion"],
+        #     provincia_id == Provincia.query.filter_by(
+        #         nombre == request.form["provincia"],
+        #         pais_id == Pais.query.filter_by(
+        #             nombre == request.form["pais"]
+        #         ).first().id
+        #     ).first().id
+        # ).first()
+        # print(poblacion)
         codigo_postal = request.form["codigo_postal"]
         print(codigo_postal)
         web = request.form["web"]
