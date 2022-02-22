@@ -42,6 +42,8 @@ class Empresa(db.Model):
     asistentes = db.relationship("asistente")
     actividades = db.relationship("actividad",secondary = participa,backref = "participa")
     presentacion = db.relationship("presentacion")
+    speed_meeting = db.relationship("speed_meeting")
+    charla = db.relationship("charla")
 
     def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, buscando_candidatos):
         self.nombre = nombre
@@ -190,7 +192,16 @@ def profile():
         ingenieria = request.form["ingenieria"] is not None
         new_empresa.presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
 
-        
+        modalidad_speed_meeting = request.form["modalidad_speed_meeting"] is not None
+        descripcion = request.form["descripcion"]
+        preguntas = request.form["preguntas"]
+        new_empresa.speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,preguntas)
+
+        modalidad_charlas = request.form["modalidad_charlas"] is not None
+        descripcion = request.form["descripcion"]
+        fecha = request.form["fecha"]
+        ponente = request.form["ponente"]
+        new_empresa.charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha,ponente)
 
         db.session.add(new_empresa)
         db.session.commit()
