@@ -222,33 +222,33 @@ def profile():
         db.session.add(new_empresa)
         print(new_empresa)
 
-        if request.form["feria_empresas"] is not None:
+        if "feria_empresas" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["feria_empresas"])))
-        if request.form["presentacion"] is not None:
+        if "presentacion" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["presentacion"])))
-        if request.form["speed_meetings"] is not None:
+        if "speed_meetings" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["speed_meetings"])))
-        if request.form["charlas"] is not None:
+        if "charlas" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
 
         print(new_empresa.actividades)
 
-        modalidad_presentacion = request.form["modalidad_presentacion"] is not None
+        modalidad_presentacion = request.form["modalidad_presentacion"] == "presencial"
         print(modalidad_presentacion)
-        animacion = request.form["animacion"] is not None
+        animacion = "animacion" in request.form
         print(animacion)
-        videojuegos = request.form["videojuegos"] is not None
+        videojuegos = "videojuegos" in request.form
         print(videojuegos)
-        disenio = request.form["disenio"] is not None
+        disenio = "disenio" in request.form
         print(disenio)
-        ingenieria = request.form["ingenieria"] is not None
+        ingenieria = "ingenieria" in request.form
         print(ingenieria)
         presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
         db.session.add(presentacion)
         new_empresa.presentacion = presentacion
         print(new_empresa.presentacion)
 
-        modalidad_speed_meeting = request.form["modalidad_speed_meeting"] is not None
+        modalidad_speed_meeting = request.form["modalidad_speed_meeting"] == "presencial"
         fecha_speed_meeting = request.form["fecha_speed_meeting"]
         fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%Y-%m-%d")
         print(fecha_speed_meeting)
@@ -266,7 +266,7 @@ def profile():
         new_empresa.speed_meeting.sesiones.append(sesion)
         print(new_empresa.speed_meeting.sesiones)
 
-        modalidad_charlas = request.form["modalidad_charlas"] is not None
+        modalidad_charlas = request.form["modalidad_charlas"] == "presencial"
         descripcion = request.form["descripcion_charla"]
         fecha_charla = request.form["fecha_charla"]
         hora_charla = request.form["hora_charla"]
