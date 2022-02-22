@@ -1,6 +1,6 @@
 #from crypt import methods
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -37,18 +37,19 @@ class Empresa(db.Model):
     email = db.Column(db.String(320))
     telefono = db.Column(db.String(13))
     direccion = db.Column(db.String(500))
-    poblacion = db.Column(db.Integer,db.ForeignKey("poblacion.id"))
+    poblacion_id = db.Column(db.Integer,db.ForeignKey("poblacion.id"))
     codigo_postal = db.Column(db.String(10))
     web = db.Column(db.String(500))
     logo_url = db.Column(db.String(200))
     consentimiento_uso_nombre = db.Column(db.Boolean)
     buscando_candidatos = db.Column(db.Boolean)
 
+    poblacion = db.relationship("Poblacion",uselist=False)
     asistentes = db.relationship("Asistente")
     actividades = db.relationship("Actividad",secondary = participa,backref = "participa")
-    presentacion = db.relationship("Presentacion")
-    speed_meeting = db.relationship("Speed_meeting")
-    charla = db.relationship("Charla")
+    presentacion = db.relationship("Presentacion",uselist=False)
+    speed_meeting = db.relationship("Speed_meeting",uselist=False)
+    charla = db.relationship("Charla",uselist=False)
 
     def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, consentimiento_uso_nombre, buscando_candidatos):
         self.nombre = nombre
@@ -211,11 +212,15 @@ def profile():
         #             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         #             logo_url = UPLOAD_FOLDER+"/"+filename
 
-        consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"]
+        consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"] == "si"
         print(consentimiento_uso_nombre)
-        buscando_candidatos = request.form["buscando_candidatos"]
+        buscando_candidatos = request.form["buscando_candidatos"] == "si"
         print(buscando_candidatos)
-        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,1,codigo_postal,web,"logo_url",consentimiento_uso_nombre,buscando_candidatos)
+        poblacion = Poblacion.query.get((1,1,1))
+        print(poblacion)
+        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,"logo_url",consentimiento_uso_nombre,buscando_candidatos)
+        db.session.add(new_empresa)
+        print(new_empresa)
 
         if request.form["feria_empresas"] is not None:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["feria_empresas"])))
@@ -226,32 +231,53 @@ def profile():
         if request.form["charlas"] is not None:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
 
+        print(new_empresa.actividades)
+
         modalidad_presentacion = request.form["modalidad_presentacion"] is not None
+        print(modalidad_presentacion)
         animacion = request.form["animacion"] is not None
+        print(animacion)
         videojuegos = request.form["videojuegos"] is not None
+        print(videojuegos)
         disenio = request.form["disenio"] is not None
+        print(disenio)
         ingenieria = request.form["ingenieria"] is not None
-        new_empresa.presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
+        print(ingenieria)
+        presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
+        db.session.add(presentacion)
+        new_empresa.presentacion = presentacion
+        print(new_empresa.presentacion)
 
         modalidad_speed_meeting = request.form["modalidad_speed_meeting"] is not None
         fecha_speed_meeting = request.form["fecha_speed_meeting"]
-        fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%d/%m/%Y")
+        fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%Y-%m-%d")
+        print(fecha_speed_meeting)
         duracion = request.form["duracion"]
+        print(duracion)
         descripcion = request.form["descripcion_speed_meeting"]
-        preguntas = request.form["preguntas"]
-        new_empresa.speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,preguntas)
-        new_empresa.speed_meeting.sesiones.append(Sesion(new_empresa,fecha_speed_meeting,duracion))
+        print(descripcion)
+        # preguntas = request.form["preguntas"]
+        speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,"preguntas")
+        db.session.add(speed_meeting)
+        new_empresa.speed_meeting = speed_meeting
+        print(new_empresa.speed_meeting)
+        sesion = Sesion(new_empresa,fecha_speed_meeting,duracion)
+        db.session.add(sesion)
+        new_empresa.speed_meeting.sesiones.append(sesion)
+        print(new_empresa.speed_meeting.sesiones)
 
         modalidad_charlas = request.form["modalidad_charlas"] is not None
         descripcion = request.form["descripcion_charla"]
         fecha_charla = request.form["fecha_charla"]
         hora_charla = request.form["hora_charla"]
-        fecha_hora_charla = datetime.strptime(fecha_charla+"-"+hora_charla,"%d/%m/%Y-%H:%M")
-        ponente = request.form["ponente"]
-        new_empresa.charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_hora_charla,ponente)
-
-        db.session.add(new_empresa)
+        fecha_hora_charla = datetime.strptime(fecha_charla+" "+hora_charla,"%Y-%m-%d %H:%M")
+        # ponente = request.form["ponente"]
+        charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_hora_charla,"ponente")
+        db.session.add(charla)
+        new_empresa.charla = charla
+        
         db.session.commit()
+    return redirect("/")
 
 @app.route("/prueba")
 def prueba():
