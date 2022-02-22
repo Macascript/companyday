@@ -104,8 +104,11 @@
 
                 <label for="message-text" class="col-form-label">Presentacion proyectos</label>
                 <hr>
-                <input type="checkbox" name="feria_empresas" value="value1"> <label for="cbox2" id="actividad1">online</label>
-                <input type="checkbox" name="presentacion" value="value2"> <label for="cbox2">presencial</label><br><br>
+                <label for="message-text" class="col-form-label">Modalidad</label><br>
+                <input type="radio" name="modalidad_presentacion" value="online">
+                <label>online</label><br>
+                <input type="radio" name="modalidad_presentacion" value="presencial">
+                <label>presencial</label><br><br>
                 <input type="checkbox" name="animacion" value="value2"> <label for="cbox2">animacion</label><br>
                 <input type="checkbox" name="videojuegos" value="value2"> <label for="cbox2">videojuegos</label><br>
                 <input type="checkbox" name="ingenieria" value="value2"> <label for="cbox2">ingeieria</label><br>
@@ -116,9 +119,11 @@
 
                 <label for="message-text" class="col-form-label">Speed Meetings</label>
                 <hr>
-                <input type="checkbox" name="feria_empresas" value="value1"> <label for="cbox2" id="actividad1">online</label>
-                <input type="checkbox" name="presentacion" value="value2"> <label for="cbox2">presencial</label><br><br>
-                
+                <label for="message-text" class="col-form-label">Modalidad</label><br><br>
+                <input type="radio" name="modalidad_presentacion" value="online">
+                <label>online</label><br>
+                <input type="radio" name="modalidad_presentacion" value="presencial">
+                <label>presencial</label><br><br>
                 <input type="date" id="start" name="fecha_speed_meeting"
                 value="2018-07-22"
                 min="2022-09-18" max="2022-09-23">
@@ -128,7 +133,7 @@
                 <div class="col-sm-4">
                     <div class="input-group date" id="datepicker">
                         <input type="text" class="form-control">
-                        <span class="input-group-append">
+                        <span class="input-group-append"> 
                             <span class="input-group-text bg-white">
                                 <i class="fa fa-calendar"></i>
                             </span>
@@ -138,9 +143,10 @@
               <label for="cars">Duracion de la entrevista</label>
 
               <select id="cars" name="duracion">
-                <option value="volvo">15 mins</option>
-                <option value="saab">30 mins</option>
-                <option value="opel">45 mins</option>
+                <option value="volvo">10 mins</option>
+                <option value="saab">15 mins</option>
+                <option value="opel">20 mins</option>
+                <option value="opel">25 mins</option>
               </select><br><br>
               <label for="w3review">Explique que oferta de empleo esta buscando</label>
               <textarea id="w3review" name="descripcion_speed_meeting" rows="4" cols="50"></textarea>
@@ -150,8 +156,11 @@
 
                 <label for="message-text" class="col-form-label">Charlas</label>
                 <hr>
-                <input type="checkbox" name="feria_empresas" value="value1"> <label for="cbox2" id="actividad1">online</label>
-                <input type="checkbox" name="presentacion" value="value2"> <label for="cbox2">presencial</label><br><br>
+                <label for="message-text" class="col-form-label">Modalidad</label><br><br><br>
+                <input type="radio" name="modalidad_charlas" value="online">
+                <label>online</label><br>
+                <input type="radio" name="modalidad_charlas" value="presencial">
+                <label>presencial</label><br><br>
                 <label for="w3review">Titulo y descripcion</label>
                 <textarea id="w3review" name="descripcion_charla" rows="2" cols="50"></textarea> <br> <br>
                 <input type="date" id="start" name="fecha_charla"
