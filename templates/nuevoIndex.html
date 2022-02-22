@@ -190,7 +190,7 @@
           
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Send message</button>
+                <button type="submit" class="btn btn-primary" onclick="$('form').submit();">Send message</button>
               </div>
             </form>
           </div>
@@ -252,9 +252,7 @@
         modalTitle.textContent = 'DATOS A RELLENAR'
         modalBodyInput.value = ""
         })*/
-        $(function() {
-            $('#datepicker').datepicker();
-        });
+       
     </script>
   
 </body>
