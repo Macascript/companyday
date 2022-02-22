@@ -21,44 +21,6 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Inscripcion</button>
     </div>
     
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="modal-form">
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre:</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Apellido:</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Empresa:</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">DNI:</label>
-                <input type="text" class="form-control" id="recipient-name">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="modal-submit">Send message</button>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="rowCarousel">
       <div class="container">
         <!-- <section class="logo-carousel slider" data-arrows="true">
@@ -102,54 +64,8 @@
           }]
         });
 
-        // Send modal data ajax
-        // $('#modal-submit').click( function() {
-        //   $.post( '/', $('#modal-form').serialize(), function(data) {
-        //       // ... do something with response from server
-        //     },
-        //     'json' // I expect a JSON response
-        //   );
-        // });
-        
-        // Send modal data no ajax
-        $("#modal-submit").click(function(){        
-          $("#modal-form").submit(); // Submit the form
-        });
-
-      });
-
-
         // TODO: Meter fotos en el carrusel del objeto empresa pasado por flask
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*var exampleModal = document.getElementById('exampleModal')
-        exampleModal.addEventListener('show.bs.modal', function (event) {
-        // Button that triggered the modal
-        var button = event.relatedTarget
-        // Extract info from data-bs-* attributes
-        var recipient = button.getAttribute('data-bs-whatever')
-        // If necessary, you could initiate an AJAX request here
-        // and then do the updating in a callback.
-        //
-        // Update the modal's content.
-        var modalTitle = exampleModal.querySelector('.modal-title')
-        var modalBodyInput = exampleModal.querySelector('.modal-body input')
-
-        modalTitle.textContent = 'DATOS A RELLENAR'
-        modalBodyInput.value = ""
-        })*/
     </script>
   
 </body>
