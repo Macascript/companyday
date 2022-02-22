@@ -172,24 +172,32 @@ def profile():
     if request.method == "POST":
         # TODO: distintos parametros que recibe del formulario
         nombre = request.form["nombre"]
+        print(nombre)
         nombre_persona_contacto = request.form["nombre_persona_contacto"]
+        print(nombre_persona_contacto)
         email = request.form["email"]
+        print(email)
         telefono = request.form["telefono"]
+        print(telefono)
         direccion = request.form["direccion"]
+        print(direccion)
         poblacion = request.form["poblacion"]
+        print(poblacion)
         codigo_postal = request.form["codigo_postal"]
+        print(codigo_postal)
         web = request.form["web"]
+        print(web)
 
         # check if the post request has the file part
-        if 'file' in request.files:
-            file = request.files['file']
-            # if user does not select file, browser also
-            # submit a empty part without filename
-            if file.filename != '':
-                if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    logo_url = UPLOAD_FOLDER+"/"+filename
+        # if 'file' in request.files:
+        #     file = request.files['file']
+        #     # if user does not select file, browser also
+        #     # submit a empty part without filename
+        #     if file.filename != '':
+        #         if file and allowed_file(file.filename):
+        #             filename = secure_filename(file.filename)
+        #             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #             logo_url = UPLOAD_FOLDER+"/"+filename
 
         consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"]
         buscando_candidatos = request.form["buscando_candidatos"]
