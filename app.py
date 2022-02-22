@@ -1,8 +1,13 @@
 #from crypt import methods
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
+from pendulum import date
+
+UPLOAD_FOLDER = "/logos"
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://app:companyday@macascript.com/companyday"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -45,7 +50,7 @@ class Empresa(db.Model):
     speed_meeting = db.relationship("speed_meeting")
     charla = db.relationship("charla")
 
-    def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, buscando_candidatos):
+    def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, consentimiento_uso_nombre, buscando_candidatos):
         self.nombre = nombre
         self.nombre_persona_contacto = nombre_persona_contacto
         self.email = email
@@ -55,6 +60,7 @@ class Empresa(db.Model):
         self.codigo_postal = codigo_postal
         self.web = web
         self.logo_url = logo_url
+        self.consentimiento_uso_nombre = consentimiento_uso_nombre
         self.buscando_candidatos = buscando_candidatos
 
 class Pais(db.Model):
@@ -174,7 +180,7 @@ def profile():
         logo_url = request.form["logo_url"]
         consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"]
         buscando_candidatos = request.form["buscando_candidatos"]
-        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,buscando_candidatos)
+        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,consentimiento_uso_nombre,buscando_candidatos)
 
         if request.form["feria_empresas"] is not None:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["feria_empresas"])))
@@ -193,15 +199,18 @@ def profile():
         new_empresa.presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
 
         modalidad_speed_meeting = request.form["modalidad_speed_meeting"] is not None
+        fecha_speed_meeting = request.form["fecha_speed_meeting"]
         descripcion = request.form["descripcion"]
         preguntas = request.form["preguntas"]
         new_empresa.speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,preguntas)
 
         modalidad_charlas = request.form["modalidad_charlas"] is not None
         descripcion = request.form["descripcion"]
-        fecha = request.form["fecha"]
+        fecha_charla = request.form["fecha_charla"]
+        hora_charla = request.form["hora_charla"]
+        fecha_hora_charla = datetime.strptime(fecha_charla+" "+hora_charla,"")
         ponente = request.form["ponente"]
-        new_empresa.charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha,ponente)
+        new_empresa.charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_charla,ponente)
 
         db.session.add(new_empresa)
         db.session.commit()
