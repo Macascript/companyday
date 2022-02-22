@@ -36,10 +36,12 @@ class Empresa(db.Model):
     codigo_postal = db.Column(db.String(10))
     web = db.Column(db.String(500))
     logo_url = db.Column(db.String(200))
+    consentimiento_uso_nombre = db.Column(db.Boolean)
     buscando_candidatos = db.Column(db.Boolean)
 
     asistentes = db.relationship("asistente")
     actividades = db.relationship("actividad",secondary = participa,backref = "participa")
+    presentacion = db.relationship("presentacion")
 
     def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, buscando_candidatos):
         self.nombre = nombre
@@ -164,10 +166,46 @@ def profile():
         codigo_postal = request.form["codigo_postal"]
         web = request.form["web"]
         logo_url = request.form["logo_url"]
+        consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"]
         buscando_candidatos = request.form["buscando_candidatos"]
         new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,buscando_candidatos)
+
+        if request.form["feria_empresas"] is not None:
+            new_empresa.actividades.append(Actividad.query.get(int(request.form["feria_empresas"])))
+        if request.form["presentacion"] is not None:
+            new_empresa.actividades.append(Actividad.query.get(int(request.form["presentacion"])))
+        if request.form["speed_meetings"] is not None:
+            new_empresa.actividades.append(Actividad.query.get(int(request.form["speed_meetings"])))
+        if request.form["charlas"] is not None:
+            new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
+
+        modalidad_presentacion = request.form["modalidad_presentacion"] is not None
+        animacion = request.form["animacion"] is not None
+        videojuegos = request.form["videojuegos"] is not None
+        disenio = request.form["disenio"] is not None
+        ingenieria = request.form["ingenieria"] is not None
+        new_empresa.presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
+
+        
+
         db.session.add(new_empresa)
         db.session.commit()
+
+@app.route("/prueba")
+def prueba():
+    return """
+        <form action="/prueba2" type="GET">
+            <input type="checkbox" name="msg" value="hola"/>
+            <input type="checkbox" name="msg" value="mundo"/>
+            <input type="submit"/>
+        </form>
+
+    """
+
+@app.route("/prueba2")
+def prueba2():
+    print(request.args.get("msg") is None)
+    return "Hola"
 
 if __name__ == '__main__':
     app.run(port=5000,debug=True)
