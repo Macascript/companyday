@@ -231,6 +231,9 @@ def prueba2():
     print(request.args.get("msg") is None)
     return "Hola"
 
+
+
+
 if __name__ == '__main__':
     app.run(port=5000,debug=True)
 

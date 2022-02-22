@@ -4,7 +4,16 @@
     <title>Company Day </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <!--jQuery-->
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.slim.js"
+			  integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
+			  crossorigin="anonymous">
+    </script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- Slick Slider CSS -->
@@ -29,53 +38,156 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form id="modal-form">
+            <form  action="/registered" method="post">
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre:</label>
+                <label for="recipient-name" class="col-form-label">Nombre de la empresa:</label>
                 <input type="text" class="form-control" id="recipient-name">
               </div>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Apellido:</label>
+                <label for="recipient-name" class="col-form-label">Persona de contacto</label>
                 <input type="text" class="form-control" id="recipient-name">
               </div>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Empresa:</label>
+                <label for="recipient-name" class="col-form-label">Email de empresa</label>
                 <input type="text" class="form-control" id="recipient-name">
               </div>
               <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">DNI:</label>
+                <label for="recipient-name" class="col-form-label">Telefono de contacto</label>
                 <input type="text" class="form-control" id="recipient-name">
               </div>
               <div class="mb-3">
-                <label for="message-text" class="col-form-label">Message:</label>
-                <textarea class="form-control" id="message-text"></textarea>
+                <label for="message-text" class="col-form-label">Direccion</label>
+                <input type="text" class="form-control" id="recipient-name">
               </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Poblacion</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Provincia</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Codigo postal</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Pais</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Url website</label>
+                <input type="text" class="form-control" id="recipient-name">
+              </div>
+              <div class="mb-3">
+                <label for="message-text" class="col-form-label">Logo de empresa</label>
+                <input type="file" class="form-control" id="recipient-name">
+              </div>
+              <label for="message-text" class="col-form-label">Actividades</label><br>
+              <input type="checkbox" name="feria_empresas" value="value1"> <label for="cbox2" id="actividad1">Feria de empresas</label>
+              <input type="checkbox" name="presentacion" value="value2"> <label for="cbox2">Presentacion proyectos</label><br>
+              <input type="checkbox" name="speed_meetings" value="value3"> <label for="cbox2"  id="actividad2">Speed Meetings</label>
+              <input type="checkbox" name="charlas" value="value4"> <label for="cbox2">Charlas</label>
+              <hr>
+              <div class="mb-3">
+
+                <label for="message-text" class="col-form-label">Presentacion proyectos</label>
+                <hr>
+                <input type="checkbox" name="feria_empresas" value="value1"> <label for="cbox2" id="actividad1">online</label>
+                <input type="checkbox" name="presentacion" value="value2"> <label for="cbox2">presencial</label><br><br>
+                <input type="checkbox" name="animacion" value="value2"> <label for="cbox2">animacion</label><br>
+                <input type="checkbox" name="videojuegos" value="value2"> <label for="cbox2">videojuegos</label><br>
+                <input type="checkbox" name="ingeieria" value="value2"> <label for="cbox2">ingeieria</label><br>
+                <input type="checkbox" name="disenio" value="value2"> <label for="cbox2">diseño</label><br>
+                <hr>
+              </div>
+              <div class="mb-3">
+
+                <label for="message-text" class="col-form-label">Speed Meetings</label>
+                <hr>
+                <input type="checkbox" name="feria_empresas" value="value1"> <label for="cbox2" id="actividad1">online</label>
+                <input type="checkbox" name="presentacion" value="value2"> <label for="cbox2">presencial</label><br><br>
+                
+                <input type="date" id="start" name="trip-start"
+                value="2018-07-22"
+                min="2022-09-18" max="2022-09-23">
+                <br>
+                <br>
+                <!--<label for="date" class="col-sm-1 col-form-label">Date</label>
+                <div class="col-sm-4">
+                    <div class="input-group date" id="datepicker">
+                        <input type="text" class="form-control">
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>-->
+              <label for="cars">Duracion de la entrevista</label>
+
+              <select id="cars">
+                <option value="volvo">15 mins</option>
+                <option value="saab">30 mins</option>
+                <option value="opel">45 mins</option>
+              </select><br><br>
+              <label for="w3review">Explique que oferta de empleo esta buscando</label>
+              <textarea id="w3review" name="w3review" rows="4" cols="50"></textarea>
+              <hr>
+              </div>
+              <div class="mb-3">
+
+                <label for="message-text" class="col-form-label">Charlas</label>
+                <hr>
+                <input type="checkbox" name="feria_empresas" value="value1"> <label for="cbox2" id="actividad1">online</label>
+                <input type="checkbox" name="presentacion" value="value2"> <label for="cbox2">presencial</label><br><br>
+                <label for="w3review">Titulo y descripcion</label>
+                <textarea id="w3review" name="w3review" rows="2" cols="50"></textarea> <br> <br>
+                <input type="date" id="start" name="trip-start"
+                value="2018-07-22"
+                min="2022-09-18" max="2022-09-23">
+                <br>
+                <br>
+                <input type="time"  min="09:00" max="18:00"> <br> <br>
+                <!--<label for="date" class="col-sm-1 col-form-label">Date</label>
+                <div class="col-sm-4">
+                    <div class="input-group date" id="datepicker">
+                        <input type="text" class="form-control">
+                        <span class="input-group-append">
+                            <span class="input-group-text bg-white">
+                                <i class="fa fa-calendar"></i>
+                            </span>
+                        </span>
+                    </div>
+                </div>-->
+              </div>
+
+              <!--<form action="/" type="GET">
+                <input type="checkbox" name="msg" value="hola"/>
+                <input type="checkbox" name="msg" value="mundo"/>
+                <input type="submit"/>
+              </form>-->
+          
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="modal-submit">Send message</button>
+            <button type="button" class="btn btn-primary">Send message</button>
           </div>
         </div>
       </div>
     </div>
     <div class="rowCarousel">
       <div class="container">
-        <!-- <section class="logo-carousel slider" data-arrows="true">
-          {% for empresa in empresas %}
-          <div class="slide"><img src={{ empresa.logo_url }}></div>
-          {% endfor %}
-        </section> -->
-
         <section class="logo-carousel slider" data-arrows="true">
-          <div class="slide"><img src="static/rtve.jpg"></div>
-          <div class="slide"><img src="static/bbva.jpg"></div>
-          <div class="slide"><img src="static/king.png"></div>
-          <div class="slide"><img src="static/ericsson.jpg"></div>
-          <div class="slide"><img src="static/elCorteIngles.png"></div>
-          <div class="slide"><img src="static/skydance.png"></div>
-          <div class="slide"><img src="static/tequila.jpg"></div>
-          <div class="slide"><img src="static/ibm.png"></div>
+          <div class="slide"><a href="https://www.rtve.es/" target="_blank"><img src="static/rtve.jpg"></a></div>
+          <div class="slide"><a href="https://www.bbva.es/personas.html" target="_blank"><img src="static/bbva.jpg"></a></div>
+          <div class="slide"><a href="https://www.king.com/es" target="_blank"><img src="static/king.png"></a></div>
+          <div class="slide"><a href="https://www.ericsson.com/en" target="_blank"><img src="static/ericsson.jpg"></a></div>
+          <div class="slide"><a href="https://www.elcorteingles.es/" target="_blank"><img src="static/elCorteIngles.png"></a></div>
+          <div class="slide"><a href="https://skydance.com/" target="_blank"><img src="static/skydance.png"></a></div>
+          <div class="slide"><a href="https://www.tequilaworks.com/" target="_blank"><img src="static/tequila.jpg"></a></div>
+          <div class="slide"><a href="https://www.ibm.com/es-es" target="_blank"><img src="static/ibm.png"></a></div>
         </section>
       </div>
     </div>
@@ -101,38 +213,7 @@
             }
           }]
         });
-
-        // Send modal data ajax
-        // $('#modal-submit').click( function() {
-        //   $.post( '/', $('#modal-form').serialize(), function(data) {
-        //       // ... do something with response from server
-        //     },
-        //     'json' // I expect a JSON response
-        //   );
-        // });
-        
-        // Send modal data no ajax
-        $("#modal-submit").click(function(){        
-          $("#modal-form").submit(); // Submit the form
-        });
-
       });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         /*var exampleModal = document.getElementById('exampleModal')
         exampleModal.addEventListener('show.bs.modal', function (event) {
@@ -150,6 +231,9 @@
         modalTitle.textContent = 'DATOS A RELLENAR'
         modalBodyInput.value = ""
         })*/
+        $(function() {
+            $('#datepicker').datepicker();
+        });
     </script>
   
 </body>
