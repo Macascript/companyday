@@ -160,6 +160,10 @@ class Charla(db.Model):
 
 # CONTROLLER
 
+@app.route("/plantilla")
+def plantilla():
+    return render_template("index.html")
+
 @app.route("/", methods=["GET","POST"])
 def index():
     # empresas = Empresa.query.all()
