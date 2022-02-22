@@ -53,7 +53,7 @@ NAMES DE FORMULARIO:
 - modalidad_speed_meeting
 - fecha_speed_meeting
 - duracion
-- descripcion
+- descripcion_speedmeeting
 - preguntas
 - modalidad_charlas
 - descripcion
