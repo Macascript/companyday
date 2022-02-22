@@ -29,7 +29,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form>
+            <form id="modal-form">
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Nombre:</label>
                 <input type="text" class="form-control" id="recipient-name">
@@ -54,7 +54,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Send message</button>
+            <button type="button" class="btn btn-primary" id="modal-submit">Send message</button>
           </div>
         </div>
       </div>
@@ -101,6 +101,21 @@
             }
           }]
         });
+
+        // Send modal data ajax
+        // $('#modal-submit').click( function() {
+        //   $.post( '/', $('#modal-form').serialize(), function(data) {
+        //       // ... do something with response from server
+        //     },
+        //     'json' // I expect a JSON response
+        //   );
+        // });
+        
+        // Send modal data no ajax
+        $("#modal-submit").click(function(){        
+          $("#modal-form").submit(); // Submit the form
+        });
+
       });
 
 
