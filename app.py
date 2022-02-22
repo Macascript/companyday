@@ -178,6 +178,21 @@ def profile():
         codigo_postal = request.form["codigo_postal"]
         web = request.form["web"]
         logo_url = request.form["logo_url"]
+
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
         consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"]
         buscando_candidatos = request.form["buscando_candidatos"]
         new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,consentimiento_uso_nombre,buscando_candidatos)
@@ -202,13 +217,13 @@ def profile():
         fecha_speed_meeting = request.form["fecha_speed_meeting"]
         fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%d/%m/%Y")
         duracion = request.form["duracion"]
-        descripcion = request.form["descripcion"]
+        descripcion = request.form["descripcion_speed_meeting"]
         preguntas = request.form["preguntas"]
         new_empresa.speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,preguntas)
         new_empresa.speed_meeting.sesiones.append(Sesion(new_empresa,fecha_speed_meeting,duracion))
 
         modalidad_charlas = request.form["modalidad_charlas"] is not None
-        descripcion = request.form["descripcion"]
+        descripcion = request.form["descripcion_charla"]
         fecha_charla = request.form["fecha_charla"]
         hora_charla = request.form["hora_charla"]
         fecha_hora_charla = datetime.strptime(fecha_charla+"-"+hora_charla,"%d/%m/%Y-%H:%M")
