@@ -44,11 +44,11 @@ class Empresa(db.Model):
     consentimiento_uso_nombre = db.Column(db.Boolean)
     buscando_candidatos = db.Column(db.Boolean)
 
-    asistentes = db.relationship("asistente")
-    actividades = db.relationship("actividad",secondary = participa,backref = "participa")
-    presentacion = db.relationship("presentacion")
-    speed_meeting = db.relationship("speed_meeting")
-    charla = db.relationship("charla")
+    asistentes = db.relationship("Asistente")
+    actividades = db.relationship("Actividad",secondary = participa,backref = "participa")
+    presentacion = db.relationship("Presentacion")
+    speed_meeting = db.relationship("Speed_meeting")
+    charla = db.relationship("Charla")
 
     def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, consentimiento_uso_nombre, buscando_candidatos):
         self.nombre = nombre
@@ -131,7 +131,7 @@ class Speed_meeting(db.Model):
     descripcion = db.Column(db.String(500))
     preguntas = db.Column(db.String(500))
 
-    sesiones = db.relationship("sesion")
+    sesiones = db.relationship("Sesion")
 
     def __init__(self,empresa_id,presencial,descripcion,preguntas):
         self.empresa_id = empresa_id
@@ -212,8 +212,10 @@ def profile():
         #             logo_url = UPLOAD_FOLDER+"/"+filename
 
         consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"]
+        print(consentimiento_uso_nombre)
         buscando_candidatos = request.form["buscando_candidatos"]
-        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,consentimiento_uso_nombre,buscando_candidatos)
+        print(buscando_candidatos)
+        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,1,codigo_postal,web,"logo_url",consentimiento_uso_nombre,buscando_candidatos)
 
         if request.form["feria_empresas"] is not None:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["feria_empresas"])))
