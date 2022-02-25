@@ -61,7 +61,8 @@
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Poblacion</label>
-                <datalist name="poblacion">
+                <input list="poblaciones" name="poblacion">
+                <datalist id="poblacion">
                 {% for pais in paises %}
                   {% for provincia in pais.provincias %}
                     {% for poblacion in provincia.poblaciones %}
