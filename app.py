@@ -173,7 +173,7 @@ def index():
     empresas = Empresa.query.all()
     paises = Pais.query.all()
     db.create_all()
-    return render_template("nuevoIndex.html",empresas=empresas)
+    return render_template("nuevoIndex.html",empresas=empresas,paises=paises)
 
 @app.route("/registered", methods=["GET","POST"])
 def profile():
@@ -278,7 +278,7 @@ def profile():
         charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_hora_charla,"ponente")
         db.session.add(charla)
         new_empresa.charla = charla
-        
+
         db.session.commit()
     return redirect("/")
 
