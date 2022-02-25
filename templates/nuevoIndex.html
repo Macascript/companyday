@@ -61,7 +61,7 @@
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Poblacion</label>
-                <select name="poblacion">
+                <datalist name="poblacion">
                 {% for pais in paises %}
                   {% for provincia in pais.provincias %}
                     {% for poblacion in provincia.poblaciones %}
@@ -69,7 +69,7 @@
                     {% endfor %}
                   {% endfor %}
                 {% endfor %}
-                </select>
+                </datalist>
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Provincia</label>
