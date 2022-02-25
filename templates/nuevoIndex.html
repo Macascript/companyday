@@ -74,7 +74,14 @@
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Provincia</label>
-                <input type="text" name='provicia' class="form-control" id="recipient-name">
+                <input list="provincia" name="provincia">
+                <datalist id="provincia">
+                {% for pais in paises %}
+                  {% for provincia in pais.provincias %}
+                      <option>{{provincia.nombre}}</option>
+                  {% endfor %}
+                {% endfor %}
+                </datalist>
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Codigo postal</label>
