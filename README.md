@@ -60,3 +60,12 @@ NAMES DE FORMULARIO:
 - fecha_charla
 - hora_charla
 - ponente
+
+TODO de poblaciones:
+
+- Si hay un país elegido, solo saldrán las provincias y las poblaciones de ese país.
+- Si hay una provincia elegida, solo saldrán las poblaciones de esa provincia.
+- Si no hay país elegido y se elije una provincia, el país se autorrellena.
+- Si no hay provincia elegida y se elije una población, la provincia y el país se autorrellenan.
+- Si había una provincia elegida y/o una población elegida, si se cambia de país, se vacían los campos de provincia y población.
+- Si había una población elegida y se cambia de provincia, se vacía el campo de población.
