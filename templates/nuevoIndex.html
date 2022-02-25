@@ -63,7 +63,7 @@
                 <label for="message-text" class="col-form-label">Poblacion</label>
                 {% for pais in paises %}
                   {% for provincia in pais.provincias %}
-                    {% for poblacion in provincia.poblaciones}
+                    {% for poblacion in provincia.poblaciones %}
                         <div>{{poblacion.nombre}}</div>
                     {% endfor %}
                   {% endfor %}
