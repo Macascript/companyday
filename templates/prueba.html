@@ -1,0 +1,7 @@
+{% for pais in paises %}
+    {% for provincia in pais.provincias %}
+        {% for poblacion in provincia.poblaciones %}
+            <p>{{poblacion.nombre}}</p>
+        {% endfor %}
+    {% endfor %}
+{% endfor %}

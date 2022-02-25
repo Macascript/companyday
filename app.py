@@ -9,7 +9,7 @@ UPLOAD_FOLDER = "/logos"
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://app:companyday@macascript.com/companyday"-
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://app:companyday@macascript.com/companyday"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
@@ -68,6 +68,7 @@ class Pais(db.Model):
     __tablename__ = "pais"
     id = db.Column(db.Integer, primary_key = True,autoincrement = True)
     nombre = db.Column(db.String(50))
+
     provincias = db.relationship("Provincia")
 
 class Provincia(db.Model):
@@ -75,6 +76,8 @@ class Provincia(db.Model):
     id = db.Column(db.Integer,primary_key = True,autoincrement = True)
     pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
     nombre = db.Column(db.String(50))
+
+    poblaciones = db.relationship("Poblacion")
 
 class Poblacion(db.Model):
     __tablename__ = "poblacion"
@@ -167,10 +170,10 @@ def plantilla():
 
 @app.route("/", methods=["GET","POST"])
 def index():
-    # empresas = Empresa.query.all()
-    # return render_template("index.html",empresas=empresas)
+    empresas = Empresa.query.all()
+    paises = Pais.query.all()
     db.create_all()
-    return render_template("nuevoIndex.html")
+    return render_template("nuevoIndex.html",empresas=empresas)
 
 @app.route("/registered", methods=["GET","POST"])
 def profile():
@@ -186,16 +189,16 @@ def profile():
         print(telefono)
         direccion = request.form["direccion"]
         print(direccion)
-        # poblacion = Poblacion.query.filter_by(
-        #     nombre == request.form["poblacion"],
-        #     provincia_id == Provincia.query.filter_by(
-        #         nombre == request.form["provincia"],
-        #         pais_id == Pais.query.filter_by(
-        #             nombre == request.form["pais"]
-        #         ).first().id
-        #     ).first().id
-        # ).first()
-        # print(poblacion)
+        poblacion = Poblacion.query.filter_by(
+            nombre == request.form["poblacion"],
+            provincia_id == Provincia.query.filter_by(
+                nombre == request.form["provincia"],
+                pais_id == Pais.query.filter_by(
+                    nombre == request.form["pais"]
+                ).first().id
+            ).first().id
+        ).first()
+        print(poblacion)
         codigo_postal = request.form["codigo_postal"]
         print(codigo_postal)
         web = request.form["web"]
@@ -281,14 +284,7 @@ def profile():
 
 @app.route("/prueba")
 def prueba():
-    return """
-        <form action="/prueba2" type="GET">
-            <input type="checkbox" name="msg" value="hola"/>
-            <input type="checkbox" name="msg" value="mundo"/>
-            <input type="submit"/>
-        </form>
-
-    """
+    return render_template("prueba.html",paises=Pais.query.all())
 
 @app.route("/prueba2")
 def prueba2():
