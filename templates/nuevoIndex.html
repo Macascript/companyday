@@ -61,13 +61,15 @@
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Poblacion</label>
+                <select name="poblacion">
                 {% for pais in paises %}
                   {% for provincia in pais.provincias %}
                     {% for poblacion in provincia.poblaciones %}
-                        <div>{{poblacion.nombre}}</div>
+                        <option>{{poblacion.nombre}}</option>
                     {% endfor %}
                   {% endfor %}
                 {% endfor %}
+                </select>
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Provincia</label>
