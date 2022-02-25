@@ -92,9 +92,7 @@
                 <input list="pais" name="pais">
                 <datalist id="pais">
                 {% for pais in paises %}
-                  {% for provincia in pais.provincias %}
-                      <option>{{pais.nombre}}</option>
-                  {% endfor %}
+                  <option>{{pais.nombre}}</option>
                 {% endfor %}
                 </datalist>
               </div>
