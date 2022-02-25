@@ -1,6 +1,6 @@
 #from crypt import methods
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -37,18 +37,19 @@ class Empresa(db.Model):
     email = db.Column(db.String(320))
     telefono = db.Column(db.String(13))
     direccion = db.Column(db.String(500))
-    poblacion = db.Column(db.Integer,db.ForeignKey("poblacion.id"))
+    poblacion_id = db.Column(db.Integer,db.ForeignKey("poblacion.id"))
     codigo_postal = db.Column(db.String(10))
     web = db.Column(db.String(500))
     logo_url = db.Column(db.String(200))
     consentimiento_uso_nombre = db.Column(db.Boolean)
     buscando_candidatos = db.Column(db.Boolean)
 
-    asistentes = db.relationship("asistente")
-    actividades = db.relationship("actividad",secondary = participa,backref = "participa")
-    presentacion = db.relationship("presentacion")
-    speed_meeting = db.relationship("speed_meeting")
-    charla = db.relationship("charla")
+    poblacion = db.relationship("Poblacion",uselist=False)
+    asistentes = db.relationship("Asistente")
+    actividades = db.relationship("Actividad",secondary = participa,backref = "participa")
+    presentacion = db.relationship("Presentacion",uselist=False)
+    speed_meeting = db.relationship("Speed_meeting",uselist=False)
+    charla = db.relationship("Charla",uselist=False)
 
     def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, consentimiento_uso_nombre, buscando_candidatos):
         self.nombre = nombre
@@ -67,6 +68,7 @@ class Pais(db.Model):
     __tablename__ = "pais"
     id = db.Column(db.Integer, primary_key = True,autoincrement = True)
     nombre = db.Column(db.String(50))
+
     provincias = db.relationship("Provincia")
 
 class Provincia(db.Model):
@@ -74,6 +76,8 @@ class Provincia(db.Model):
     id = db.Column(db.Integer,primary_key = True,autoincrement = True)
     pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
     nombre = db.Column(db.String(50))
+
+    poblaciones = db.relationship("Poblacion")
 
 class Poblacion(db.Model):
     __tablename__ = "poblacion"
@@ -131,7 +135,7 @@ class Speed_meeting(db.Model):
     descripcion = db.Column(db.String(500))
     preguntas = db.Column(db.String(500))
 
-    sesiones = db.relationship("sesion")
+    sesiones = db.relationship("Sesion")
 
     def __init__(self,empresa_id,presencial,descripcion,preguntas):
         self.empresa_id = empresa_id
@@ -160,87 +164,127 @@ class Charla(db.Model):
 
 # CONTROLLER
 
+@app.route("/plantilla")
+def plantilla():
+    return render_template("index.html")
+
 @app.route("/", methods=["GET","POST"])
 def index():
-    # empresas = Empresa.query.all()
-    # return render_template("index.html",empresas=empresas)
-    # db.create_all()
-    return render_template("nuevoIndex.html")
+    empresas = Empresa.query.all()
+    paises = Pais.query.all()
+    db.create_all()
+    return render_template("nuevoIndex.html",empresas=empresas)
 
 @app.route("/registered", methods=["GET","POST"])
 def profile():
     if request.method == "POST":
         # TODO: distintos parametros que recibe del formulario
         nombre = request.form["nombre"]
+        print(nombre)
         nombre_persona_contacto = request.form["nombre_persona_contacto"]
+        print(nombre_persona_contacto)
         email = request.form["email"]
+        print(email)
         telefono = request.form["telefono"]
+        print(telefono)
         direccion = request.form["direccion"]
-        poblacion = request.form["poblacion"]
+        print(direccion)
+        poblacion = Poblacion.query.filter_by(
+            nombre == request.form["poblacion"],
+            provincia_id == Provincia.query.filter_by(
+                nombre == request.form["provincia"],
+                pais_id == Pais.query.filter_by(
+                    nombre == request.form["pais"]
+                ).first().id
+            ).first().id
+        ).first()
+        print(poblacion)
         codigo_postal = request.form["codigo_postal"]
+        print(codigo_postal)
         web = request.form["web"]
+        print(web)
 
         # check if the post request has the file part
-        if 'file' in request.files:
-            file = request.files['file']
-            # if user does not select file, browser also
-            # submit a empty part without filename
-            if file.filename != '':
-                if file and allowed_file(file.filename):
-                    filename = secure_filename(file.filename)
-                    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    logo_url = UPLOAD_FOLDER+"/"+filename
+        # if 'file' in request.files:
+        #     file = request.files['file']
+        #     # if user does not select file, browser also
+        #     # submit a empty part without filename
+        #     if file.filename != '':
+        #         if file and allowed_file(file.filename):
+        #             filename = secure_filename(file.filename)
+        #             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        #             logo_url = UPLOAD_FOLDER+"/"+filename
 
-        consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"]
-        buscando_candidatos = request.form["buscando_candidatos"]
-        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,consentimiento_uso_nombre,buscando_candidatos)
+        consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"] == "si"
+        print(consentimiento_uso_nombre)
+        buscando_candidatos = request.form["buscando_candidatos"] == "si"
+        print(buscando_candidatos)
+        poblacion = Poblacion.query.get((1,1,1))
+        print(poblacion)
+        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,"logo_url",consentimiento_uso_nombre,buscando_candidatos)
+        db.session.add(new_empresa)
+        print(new_empresa)
 
-        if request.form["feria_empresas"] is not None:
+        if "feria_empresas" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["feria_empresas"])))
-        if request.form["presentacion"] is not None:
+        if "presentacion" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["presentacion"])))
-        if request.form["speed_meetings"] is not None:
+        if "speed_meetings" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["speed_meetings"])))
-        if request.form["charlas"] is not None:
+        if "charlas" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
 
-        modalidad_presentacion = request.form["modalidad_presentacion"] is not None
-        animacion = request.form["animacion"] is not None
-        videojuegos = request.form["videojuegos"] is not None
-        disenio = request.form["disenio"] is not None
-        ingenieria = request.form["ingenieria"] is not None
-        new_empresa.presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
+        print(new_empresa.actividades)
 
-        modalidad_speed_meeting = request.form["modalidad_speed_meeting"] is not None
+        modalidad_presentacion = request.form["modalidad_presentacion"] == "presencial"
+        print(modalidad_presentacion)
+        animacion = "animacion" in request.form
+        print(animacion)
+        videojuegos = "videojuegos" in request.form
+        print(videojuegos)
+        disenio = "disenio" in request.form
+        print(disenio)
+        ingenieria = "ingenieria" in request.form
+        print(ingenieria)
+        presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
+        db.session.add(presentacion)
+        new_empresa.presentacion = presentacion
+        print(new_empresa.presentacion)
+
+        modalidad_speed_meeting = request.form["modalidad_speed_meeting"] == "presencial"
         fecha_speed_meeting = request.form["fecha_speed_meeting"]
-        fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%d/%m/%Y")
+        fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%Y-%m-%d")
+        print(fecha_speed_meeting)
         duracion = request.form["duracion"]
+        print(duracion)
         descripcion = request.form["descripcion_speed_meeting"]
-        preguntas = request.form["preguntas"]
-        new_empresa.speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,preguntas)
-        new_empresa.speed_meeting.sesiones.append(Sesion(new_empresa,fecha_speed_meeting,duracion))
+        print(descripcion)
+        # preguntas = request.form["preguntas"]
+        speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,"preguntas")
+        db.session.add(speed_meeting)
+        new_empresa.speed_meeting = speed_meeting
+        print(new_empresa.speed_meeting)
+        sesion = Sesion(new_empresa,fecha_speed_meeting,duracion)
+        db.session.add(sesion)
+        new_empresa.speed_meeting.sesiones.append(sesion)
+        print(new_empresa.speed_meeting.sesiones)
 
-        modalidad_charlas = request.form["modalidad_charlas"] is not None
+        modalidad_charlas = request.form["modalidad_charlas"] == "presencial"
         descripcion = request.form["descripcion_charla"]
         fecha_charla = request.form["fecha_charla"]
         hora_charla = request.form["hora_charla"]
-        fecha_hora_charla = datetime.strptime(fecha_charla+"-"+hora_charla,"%d/%m/%Y-%H:%M")
-        ponente = request.form["ponente"]
-        new_empresa.charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_hora_charla,ponente)
-
-        db.session.add(new_empresa)
+        fecha_hora_charla = datetime.strptime(fecha_charla+" "+hora_charla,"%Y-%m-%d %H:%M")
+        # ponente = request.form["ponente"]
+        charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_hora_charla,"ponente")
+        db.session.add(charla)
+        new_empresa.charla = charla
+        
         db.session.commit()
+    return redirect("/")
 
 @app.route("/prueba")
 def prueba():
-    return """
-        <form action="/prueba2" type="GET">
-            <input type="checkbox" name="msg" value="hola"/>
-            <input type="checkbox" name="msg" value="mundo"/>
-            <input type="submit"/>
-        </form>
-
-    """
+    return render_template("prueba.html",paises=Pais.query.all())
 
 @app.route("/prueba2")
 def prueba2():
