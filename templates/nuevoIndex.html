@@ -41,23 +41,23 @@
             <form  action="/registered" method="post">
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Nombre de la empresa:</label>
-                <input type="text" name='nombre' class="form-control" id="recipient-name">
+                <input type="text" name='nombre' class="form-control" id="recipient-name" maxlength="100">
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Persona de contacto</label>
-                <input type="text" name='nombre_persona_contacto' class="form-control" id="recipient-name">
+                <input type="text" name='nombre_persona_contacto' class="form-control" id="recipient-name" maxlength="100">
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Email de empresa</label>
-                <input type="text" name='email' class="form-control" id="recipient-name">
+                <input type="text" name='email' class="form-control" id="recipient-name" maxlength="100">
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Telefono de contacto</label>
-                <input type="text" name='telefono' class="form-control" id="recipient-name">
+                <input type="text" name='telefono' class="form-control" id="recipient-name" maxlength="13">
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Direccion</label>
-                <input type="text" name='direccion' class="form-control" id="recipient-name">
+                <input type="text" name='direccion' class="form-control" id="recipient-name" maxlength="500">
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Poblacion</label>
@@ -85,7 +85,7 @@
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Codigo postal</label>
-                <input type="text" name='codigo_postal' class="form-control" id="recipient-name">
+                <input type="text" name='codigo_postal' class="form-control" id="recipient-name"maxlength="10">
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Pais</label>
@@ -98,19 +98,19 @@
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Url website</label>
-                <input type="text" name='web' class="form-control" id="recipient-name">
+                <input type="text" name='web' class="form-control" id="recipient-name" maxlength="500">
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Logo de empresa</label>
-                <input type="file" name='logo_url' class="form-control" id="recipient-name">
+                <input type="file" name='logo_url' class="form-control" id="recipient-name" maxlength="200">
               </div>
               <label for="message-text" class="col-form-label">Consentimiento del uso del nombre</label><br>
-              <input type="radio" name="consentimiento_uso_nombre" value="si">
+              <input type="radio" name="consentimiento_uso_nombre" value="si"  checked>
               <label for="html">si</label><br>
               <input type="radio" name="consentimiento_uso_nombre" value="no">
               <label for="css">no</label><br>
               <label for="message-text" class="col-form-label">Busqueda de candidatos</label><br>
-              <input type="radio" name="buscando_candidatos" value="si">
+              <input type="radio" name="buscando_candidatos" value="si"  checked>
               <label for="html">si</label><br>
               <input type="radio" name="buscando_candidatos" value="no">
               <label for="css">no</label><br>
@@ -128,7 +128,7 @@
                 <label for="message-text" class="col-form-label">Modalidad</label><br>
                 <input type="radio" name="modalidad_presentacion" value="online">
                 <label>online</label><br>
-                <input type="radio" name="modalidad_presentacion" value="presencial">
+                <input type="radio" name="modalidad_presentacion" value="presencial"  checked>
                 <label>presencial</label><br><br>
                 <input type="checkbox" name="animacion" value="value2"> <label for="cbox2">animacion</label><br>
                 <input type="checkbox" name="videojuegos" value="value2"> <label for="cbox2">videojuegos</label><br>
@@ -143,7 +143,7 @@
                 <label for="message-text" class="col-form-label">Modalidad</label><br><br>
                 <input type="radio" name="modalidad_speed_meeting" value="online">
                 <label>online</label><br>
-                <input type="radio" name="modalidad_speed_meeting" value="presencial">
+                <input type="radio" name="modalidad_speed_meeting" value="presencial"  checked>
                 <label>presencial</label><br><br>
                 <input type="date" id="start" name="fecha_speed_meeting"
                 value="2018-07-22"
@@ -170,7 +170,7 @@
                 <option value="25">25 mins</option>
               </select><br><br>
               <label for="w3review">Explique que oferta de empleo esta buscando</label>
-              <textarea id="w3review" name="descripcion_speed_meeting" rows="4" cols="50"></textarea>
+              <textarea id="w3review" name="descripcion_speed_meeting" rows="4" cols="50" maxlength="500"></textarea>
               <hr>
               </div>
               <div class="mb-3">
@@ -180,10 +180,10 @@
                 <label for="message-text" class="col-form-label">Modalidad</label><br><br><br>
                 <input type="radio" name="modalidad_charlas" value="online">
                 <label>online</label><br>
-                <input type="radio" name="modalidad_charlas" value="presencial">
+                <input type="radio" name="modalidad_charlas" value="presencial"  checked>
                 <label>presencial</label><br><br>
                 <label for="w3review">Titulo y descripcion</label>
-                <textarea id="w3review" name="descripcion_charla" rows="2" cols="50"></textarea> <br> <br>
+                <textarea id="w3review" name="descripcion_charla" rows="2" cols="50" maxlength="500"></textarea> <br> <br>
                 <input type="date" id="start" name="fecha_charla"
                 value="2018-07-22"
                 min="2022-09-18" max="2022-09-23">
