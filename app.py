@@ -1,11 +1,12 @@
 #from crypt import methods
 import os
+from django.shortcuts import render
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = "/logos"
+UPLOAD_FOLDER = "static/logos"
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -202,24 +203,26 @@ def profile():
         codigo_postal = request.form["codigo_postal"]
         print(codigo_postal)
         web = request.form["web"]
+        print("Se vienen cositas... -------------------------")
         print(web)
-
+        logo_url = ""
+        print("logo_url" in request.files)
         # check if the post request has the file part
-        # if 'file' in request.files:
-        #     file = request.files['file']
-        #     # if user does not select file, browser also
-        #     # submit a empty part without filename
-        #     if file.filename != '':
-        #         if file and allowed_file(file.filename):
-        #             filename = secure_filename(file.filename)
-        #             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        #             logo_url = UPLOAD_FOLDER+"/"+filename
+        if 'logo_url' in request.files:
+            file = request.files['logo_url']
+            # if user does not select file, browser also
+            # submit a empty part without filename
+            if file.filename != '':
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                logo_url = UPLOAD_FOLDER+"/"+filename
+
 
         consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"] == "si"
         print(consentimiento_uso_nombre)
         buscando_candidatos = request.form["buscando_candidatos"] == "si"
         print(buscando_candidatos)
-        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,"logo_url",consentimiento_uso_nombre,buscando_candidatos)
+        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,consentimiento_uso_nombre,buscando_candidatos)
         db.session.add(new_empresa)
         print(new_empresa)
 
@@ -280,14 +283,25 @@ def profile():
         db.session.commit()
     return redirect("/")
 
-@app.route("/prueba")
+@app.route("/prueba", methods=["GET","POST"])
 def prueba():
     return render_template("prueba.html",paises=Pais.query.all())
 
-@app.route("/prueba2")
+@app.route("/prueba2", methods=["GET","POST"])
 def prueba2():
-    print(request.args.get("msg") is None)
-    return "Hola"
+    print("here we go again")
+    # check if the post request has the file part
+    if 'file' in request.files:
+        file = request.files['file']
+        print(file)
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename != '':
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            logo_url = UPLOAD_FOLDER+"/"+filename
+            return "<img src='"+UPLOAD_FOLDER+"/"+filename+"'>"
+    return "VAYA"
 
 
 
