@@ -190,11 +190,11 @@ def profile():
         direccion = request.form["direccion"]
         print(direccion)
         poblacion = Poblacion.query.filter_by(
-            nombre == request.form["poblacion"],
-            provincia_id == Provincia.query.filter_by(
-                nombre == request.form["provincia"],
-                pais_id == Pais.query.filter_by(
-                    nombre == request.form["pais"]
+            nombre = request.form["poblacion"],
+            provincia_id = Provincia.query.filter_by(
+                nombre = request.form["provincia"],
+                pais_id = Pais.query.filter_by(
+                    nombre = request.form["pais"]
                 ).first().id
             ).first().id
         ).first()
@@ -219,8 +219,6 @@ def profile():
         print(consentimiento_uso_nombre)
         buscando_candidatos = request.form["buscando_candidatos"] == "si"
         print(buscando_candidatos)
-        poblacion = Poblacion.query.get((1,1,1))
-        print(poblacion)
         new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,"logo_url",consentimiento_uso_nombre,buscando_candidatos)
         db.session.add(new_empresa)
         print(new_empresa)
