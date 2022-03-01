@@ -1,6 +1,5 @@
 #from crypt import methods
 import os
-from django.shortcuts import render
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
