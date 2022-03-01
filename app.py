@@ -50,7 +50,7 @@ class Empresa(db.Model):
     presentacion = db.relationship("Presentacion",uselist=False)
     speed_meeting = db.relationship("Speed_meeting",uselist=False)
     charla = db.relationship("Charla",uselist=False)
-
+#
     def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, consentimiento_uso_nombre, buscando_candidatos):
         self.nombre = nombre
         self.nombre_persona_contacto = nombre_persona_contacto
