@@ -23,191 +23,181 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <!-- Slick Slider JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
-    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 </head>
 <body>
+  <div id="app">
     <div class="botonInscripcion">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Inscripcion</button>
     </div>
     
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title"></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form  action="/registered" method="post" enctype="multipart/form-data">
+            <form  action="/registered" method="post">
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Nombre de la empresa:</label>
-                <input type="text" name='nombre' class="form-control" id="recipient-name" maxlength="100">
+                <input type="text" name='nombre' class="form-control" id="recipient-name"  maxlength="100">
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Persona de contacto</label>
-                <input type="text" name='nombre_persona_contacto' class="form-control" id="recipient-name" maxlength="100">
+                <input type="text" name='nombre_persona_contacto' class="form-control" id="recipient-name"  maxlength="100">
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Email de empresa</label>
-                <input type="text" name='email' class="form-control" id="recipient-name" maxlength="100">
+                <input type="text" name='email' class="form-control" id="recipient-name"  maxlength="320">
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Telefono de contacto</label>
-                <input type="text" name='telefono' class="form-control" id="recipient-name" maxlength="13">
+                <input type="text" name='telefono' class="form-control" id="recipient-name"  maxlength="13">
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Direccion</label>
-                <input type="text" name='direccion' class="form-control" id="recipient-name" maxlength="500">
+                <input type="text" name='direccion' class="form-control" id="recipient-name"  maxlength="500">
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Poblacion</label>
-                <input list="poblacion" name="poblacion">
+                <input list="poblacion" name="poblacion"  maxlength="20">
                 <datalist id="poblacion">
-                {% for pais in paises %}
-                  {% for provincia in pais.provincias %}
-                    {% for poblacion in provincia.poblaciones %}
-                        <option>{{poblacion.nombre}}</option>
+                  {% for pais in paises %}
+                    {% for provincia in pais.provincias %}
+                      {% for poblacion in provincia.poblaciones %}
+                          <option>{{poblacion.nombre}}</option>
+                      {% endfor %}
                     {% endfor %}
                   {% endfor %}
-                {% endfor %}
-                </datalist>
+                  </datalist>
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Provincia</label>
-                <input list="provincia" name="provincia">
+                <input list="provincia" name="provincia"  maxlength="20">
                 <datalist id="provincia">
-                {% for pais in paises %}
-                  {% for provincia in pais.provincias %}
-                      <option>{{provincia.nombre}}</option>
+                  {% for pais in paises %}
+                    {% for provincia in pais.provincias %}
+                        <option>{{provincia.nombre}}</option>
+                    {% endfor %}
                   {% endfor %}
-                {% endfor %}
-                </datalist>
+                  </datalist>
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Codigo postal</label>
-                <input type="text" name='codigo_postal' class="form-control" id="recipient-name"maxlength="10">
+                <input type="text" name='codigo_postal' class="form-control" id="recipient-name"  maxlength="10">
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Pais</label>
-                <input list="pais" name="pais">
+                <input list="pais" name="pais"  maxlength="12">
                 <datalist id="pais">
-                {% for pais in paises %}
-                  <option>{{pais.nombre}}</option>
-                {% endfor %}
+                  {% for pais in paises %}
+                    <option>{{pais.nombre}}</option>
+                  {% endfor %}
                 </datalist>
+                
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Url website</label>
-                <input type="text" name='web' class="form-control" id="recipient-name" maxlength="500">
+                <input type="text" name='web' class="form-control" id="recipient-name"  maxlength="200">
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">Logo de empresa</label>
-                <input type="file" name='logo_url' class="form-control" id="recipient-name" maxlength="200">
+                <input type="file" name='logo_url' class="form-control" id="recipient-name">
               </div>
               <label for="message-text" class="col-form-label">Consentimiento del uso del nombre</label><br>
-              <input type="radio" name="consentimiento_uso_nombre" value="si"  checked>
+              <input type="radio" name="consentimiento_uso_nombre" value="si" checked>
               <label for="html">si</label><br>
               <input type="radio" name="consentimiento_uso_nombre" value="no">
               <label for="css">no</label><br>
               <label for="message-text" class="col-form-label">Busqueda de candidatos</label><br>
-              <input type="radio" name="buscando_candidatos" value="si"  checked>
+              <input type="radio" name="buscando_candidatos" value="si" checked>
               <label for="html">si</label><br>
               <input type="radio" name="buscando_candidatos" value="no">
               <label for="css">no</label><br>
               <label for="cbox2">Presentacion proyectos</label>
+             
               <label for="message-text" class="col-form-label">Actividades</label><br>
-              <input type="checkbox" name="feria_empresas" value="1"> <label for="cbox2" id="actividad1">Feria de empresas</label>
-              <input type="checkbox" name="presentacion" value="2"> <label for="cbox2">Presentacion proyectos</label><br>
-              <input type="checkbox" name="speed_meetings" value="3"> <label for="cbox2"  id="actividad2">Speed Meetings</label>
-              <input type="checkbox" name="charlas" value="4"> <label for="cbox2">Charlas</label>
+              <input type="checkbox" name="feria_empresas" value="1" v-model="fEmpresas"> <label for="cbox2" id="actividad1">Feria de empresas</label>
+              <input type="checkbox" name="presentacion" value="2" v-model="pProyectos"> <label for="cbox2">Presentacion proyectos</label><br>
+              <input type="checkbox" name="speed_meetings" value="3" v-model="sMeetings"> <label for="cbox2"  id="actividad2">Speed Meetings</label>
+              <input type="checkbox" name="charlas" value="4" v-model="ccharla"> <label for="cbox2">Charlas</label>
+              
               <hr>
-              <div class="mb-3">
-
-                <label for="message-text" class="col-form-label">Presentacion proyectos</label>
-                <hr>
-                <label for="message-text" class="col-form-label">Modalidad</label><br>
-                <input type="radio" name="modalidad_presentacion" value="online">
-                <label>online</label><br>
-                <input type="radio" name="modalidad_presentacion" value="presencial"  checked>
-                <label>presencial</label><br><br>
-                <input type="checkbox" name="animacion" value="value2"> <label for="cbox2">animacion</label><br>
-                <input type="checkbox" name="videojuegos" value="value2"> <label for="cbox2">videojuegos</label><br>
-                <input type="checkbox" name="ingenieria" value="value2"> <label for="cbox2">ingeieria</label><br>
-                <input type="checkbox" name="disenio" value="value2"> <label for="cbox2">diseño</label><br>
-                <hr>
+              
+              <div v-if="fEmpresas">
+                
               </div>
-              <div class="mb-3">
-
-                <label for="message-text" class="col-form-label">Speed Meetings</label>
-                <hr>
-                <label for="message-text" class="col-form-label">Modalidad</label><br><br>
-                <input type="radio" name="modalidad_speed_meeting" value="online">
-                <label>online</label><br>
-                <input type="radio" name="modalidad_speed_meeting" value="presencial"  checked>
-                <label>presencial</label><br><br>
-                <input type="date" id="start" name="fecha_speed_meeting"
-                value="2018-07-22"
-                min="2022-09-18" max="2022-09-23">
-                <br>
-                <br>
-                <!--<label for="date" class="col-sm-1 col-form-label">Date</label>
-                <div class="col-sm-4">
-                    <div class="input-group date" id="datepicker">
-                        <input type="text" class="form-control">
-                        <span class="input-group-append"> 
-                            <span class="input-group-text bg-white">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                        </span>
-                    </div>
-                </div>-->
-              <label for="cars">Duracion de la entrevista</label>
-
-              <select id="cars" name="duracion">
-                <option value="10">10 mins</option>
-                <option value="15">15 mins</option>
-                <option value="20">20 mins</option>
-                <option value="25">25 mins</option>
-              </select><br><br>
-              <label for="w3review">Explique que oferta de empleo esta buscando</label>
-              <textarea id="w3review" name="descripcion_speed_meeting" rows="4" cols="50" maxlength="500"></textarea>
-              <hr>
+              <div v-if="pProyectos">
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Presentacion proyectos</label>
+                  <hr>
+                  <label for="message-text" class="col-form-label">Modalidad</label><br>
+                  <input type="radio" name="modalidad_presentacion" value="online">
+                  <label>online</label><br>
+                  <input type="radio" name="modalidad_presentacion" value="presencial"  checked>
+                  <label>presencial</label><br><br>
+                  <input type="checkbox" name="animacion" value="value2"> <label for="cbox2">animacion</label><br>
+                  <input type="checkbox" name="videojuegos" value="value2"> <label for="cbox2">videojuegos</label><br>
+                  <input type="checkbox" name="ingenieria" value="value2"> <label for="cbox2">ingeieria</label><br>
+                  <input type="checkbox" name="disenio" value="value2"> <label for="cbox2">diseño</label><br>
+                  <hr>
+                </div>
               </div>
-              <div class="mb-3">
-
-                <label for="message-text" class="col-form-label">Charlas</label>
-                <hr>
-                <label for="message-text" class="col-form-label">Modalidad</label><br><br><br>
-                <input type="radio" name="modalidad_charlas" value="online">
-                <label>online</label><br>
-                <input type="radio" name="modalidad_charlas" value="presencial"  checked>
-                <label>presencial</label><br><br>
-                <label for="w3review">Titulo y descripcion</label>
-                <textarea id="w3review" name="descripcion_charla" rows="2" cols="50" maxlength="500"></textarea> <br> <br>
-                <input type="date" id="start" name="fecha_charla"
-                value="2018-07-22"
-                min="2022-09-18" max="2022-09-23">
-                <br>
-                <br>
-                <input type="time"  name="hora_charla" min="09:00" max="18:00"> <br> <br>
-                <!--<label for="date" class="col-sm-1 col-form-label">Date</label>
-                <div class="col-sm-4">
-                    <div class="input-group date" id="datepicker">
-                        <input type="text" class="form-control">
-                        <span class="input-group-append">
-                            <span class="input-group-text bg-white">
-                                <i class="fa fa-calendar"></i>
-                            </span>
-                        </span>
-                    </div>
-                </div>-->
+              <div v-if="sMeetings">
+                <div class="mb-3">
+                  
+                  <label for="message-text" class="col-form-label">Speed Meetings</label>
+                  <br>
+                  <div v-for="(task,index) in tasks">
+                    <label for="message-text" class="col-form-label" >Modalidad</label>
+                    <input type="radio" :name="'modalidad_speed_meeting_'+index" value="online" id="margenBox" v-model="task.modalidad">
+                    <label>online</label>
+                    <input type="radio" :name="'modalidad_speed_meeting_'+index" value="presencial" v-model="task.modalidad">
+                    <label>presencial</label><br><br>
+                    <input type="date" id="start" :name="'fecha_speed_meeting_'+index"
+                    value="2018-07-22"
+                    min="2022-09-18" max="2022-09-23" v-model="task.fecha">
+          
+                    <label for="cars" id="margenBox2">Duracion de la entrevista</label>
+          
+                    <select id="cars" :name="'duracion_'+index" v-model="task.tiempo">
+                    <option value="10">10 mins</option>
+                    <option value="15">15 mins</option>
+                    <option value="20">20 mins</option>
+                    <option value="25">25 mins</option>
+                    </select>
+                    <button @click="deleteSpeedM(task)" class="btn btn-danger" id="margenBox2" v-if="index>0">X</button><br><br>
+                    <label for="w3review">Explique que oferta de empleo esta buscando</label><br><br>
+                    <textarea id="w3review" :name="'descripcion_speed_meeting_'+index" rows="2" cols="40"  maxlength="500" v-model="task.descripcion"></textarea><br><br>
+                  </div>
+                  <a href="#addSpeedM"><button @click="addSpeedM" class="btn btn-success" id="addSpeedM">+</button></a>
+                  
+                </div>
               </div>
-
-              <!--<form action="/" type="GET">
-                <input type="checkbox" name="msg" value="hola"/>
-                <input type="checkbox" name="msg" value="mundo"/>
-                <input type="submit"/>
-              </form>-->
+              <div v-if="ccharla">
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Charlas</label>
+                  <hr>
+                  <label for="message-text" class="col-form-label">Modalidad</label><br><br><br>
+                  <input type="radio" name="modalidad_charlas" value="online">
+                  <label>online</label><br>
+                  <input type="radio" name="modalidad_charlas" value="presencial" checked>
+                  <label>presencial</label><br><br>
+                  <label for="w3review">Titulo y descripcion</label><br>
+                  <textarea id="w3review" name="descripcion_charla" rows="2" cols="50"></textarea> <br> <br>
+                  <input type="date" id="start" name="fecha_charla"
+                  value="2018-07-22"
+                  min="2022-09-18" max="2022-09-23">
+                  <br>
+                  <br>
+                  <input type="time"  name="hora_charla" min="09:00" max="18:00"> <br> <br>
+                </div>
+              </div>
+              
+       
           
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -233,6 +223,9 @@
         </section>
       </div>
     </div>
+  </div>
+</div>
+ 
     <script>
         $(document).ready(function() {
         $('.logo-carousel').slick({
@@ -273,7 +266,77 @@
         modalTitle.textContent = 'DATOS A RELLENAR'
         modalBodyInput.value = ""
         })*/
-       
+      
+        const app=new Vue({
+            el: '#app',
+            delimiters:["[[","]]"],
+            data: {
+              pProyectos:"",
+              sMeetings: "",
+              ccharla:"",
+              fEmpresas:"",
+              tasks:[
+                {
+                  modalidad:"online",
+                  fecha:"2018-07-22",
+                  tiempo:"10",
+                  descripcion:""
+                }
+              ]
+            },
+            
+            methods:{
+              comprobar:function(){console.log(this.pProyectos)},
+              addSpeedM: function(){
+              //e.preventDefault();
+              this.tasks.push({
+                modalidad:"online",
+                fecha:"2018-07-22",
+                tiempo:"10",
+                descripcion:""
+              });
+              },
+              deleteSpeedM: function(task){
+                this.tasks.splice(this.tasks.indexOf(task),1)
+              }
+            }
+        });
+
+       /* const appDos= new Vue({
+          el:"#appDos",
+          data:{
+
+            tasks:[
+              {
+                modalidad:"online",
+                fecha:"2018-07-22",
+                tiempo:"10",
+                descripcion:""
+              }
+            ]
+
+          },
+          methods:{
+            addSpeedM: function(){
+              //e.preventDefault();
+              this.tasks.push({
+                modalidad:"online",
+                fecha:"2018-07-22",
+                tiempo:"10",
+                descripcion:""
+              });
+            },
+            deleteSpeedM: function(task){
+              this.tasks.splice(this.tasks.indexOf(task),1)
+            }
+          }
+
+
+
+      });*/
+        
+
+   
     </script>
   
 </body>

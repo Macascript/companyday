@@ -11,6 +11,9 @@
 - que data necesitamos de la utad
 - la parte de maquetación, qué es lo que tiene que tener obligatoriamente?
 
+**dudas hoy**
+-- que datos se pueden cambiar una vez vez creada la cuenta(email, nombre empresa fijos,direccion,poblacion_id,codigo postal,consentimiento del nombre)
+
 Empresa datos:
 
 - contacto de la empresa
