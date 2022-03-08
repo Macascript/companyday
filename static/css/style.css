@@ -1,5 +1,6 @@
 body{
     background-color: black;
+    overflow: hidden;
 }
 .header {
     color: #36A0FF;
