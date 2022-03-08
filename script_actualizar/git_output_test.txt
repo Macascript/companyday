@@ -1,0 +1,8 @@
+Updating 2e0d17885..f839d383e
+Fast-forward
+.../tst/org/eclipse/jgit/api/RebaseCommandTest.java          |  213 +++++++++++++++++++++++++-----
+org.eclipse.jgit/src/org/eclipse/jgit/api/RebaseCommand.java |   31 ++--
+.../org/eclipse/jgit/errors/IllegalTodoFileModification.java |   59 +++++++++
+.../src/org/eclipse/jgit/lib/BaseRepositoryBuilder.java      |    2 +-
+6 files changed, 266 insertions(+), 57 deletions(-)
+create mode 100644 org.eclipse.jgit/src/org/eclipse/jgit/errors/IllegalTodoFileModification.java
