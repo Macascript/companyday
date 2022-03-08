@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # command=$( cat git_output_test.txt )
-command=$( git pull git@github.com:Macascript/companyday.git )
+command=$( git pull https://github.com/Macascript/companyday.git )
 
 while true
 do
