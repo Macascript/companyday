@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from werkzeug.utils import secure_filename
+import json
 
 UPLOAD_FOLDER = "static/logos"
 app = Flask(__name__)
@@ -168,60 +169,62 @@ class Charla(db.Model):
 def plantilla():
     return render_template("index.html")
 
+@app.route("/user/getempresas")
+def getEmpresas():
+    lista = []
+    for empresa in Empresa.query.all():
+        lista.append({
+            "id": empresa.id,
+            "nombre": empresa.nombre,
+            "web": empresa.web,
+            "logo_url": empresa.logo_url
+        })
+    print(lista)
+    # body = {
+    #     "empresas": lista
+    # }
+    # return {
+    #     'statusCode': 200,
+    #     'headers': { 'Access-Control-Allow-Origin' : '*' },
+    #     'body' : body
+    # }
+    return {"empresas": lista}
+
+@app.route("/user/getpaises")
+def getPaises():
+    lista = []
+    for pais in Pais.query.all():
+        lista.append({
+            "id": pais.id,
+            "nombre": pais.nombre,
+            "provincias": [{
+                "id": provincia.id,
+                "nombre": provincia.nombre,
+                "poblaciones": [{
+                    "id": poblacion.id,
+                    "nombre": poblacion.nombre
+                } for poblacion in provincia.poblaciones]
+            } for provincia in pais.provincias]
+        })
+    # body = {
+    #     "paises": lista
+    # }
+    # return {
+    #     'statusCode': 200,
+    #     'headers': { 'Access-Control-Allow-Origin' : '*' },
+    #     'body' : body
+    # }
+    return {"paises": lista}
+
 @app.route("/", methods=["GET","POST"])
 def index():
     empresas = Empresa.query.all()
     paises = Pais.query.all()
     db.create_all()
-    return render_template("nuevoIndex.html",empresas=empresas,paises=paises)
-
-@app.route("/registered", methods=["GET","POST"])
-def profile():
     if request.method == "POST":
-        # TODO: distintos parametros que recibe del formulario
-        nombre = request.form["nombre"]
-        print(nombre)
-        nombre_persona_contacto = request.form["nombre_persona_contacto"]
-        print(nombre_persona_contacto)
-        email = request.form["email"]
-        print(email)
-        telefono = request.form["telefono"]
-        print(telefono)
-        direccion = request.form["direccion"]
-        print(direccion)
-        poblacion = Poblacion.query.filter_by(
-            nombre = request.form["poblacion"],
-            provincia_id = Provincia.query.filter_by(
-                nombre = request.form["provincia"],
-                pais_id = Pais.query.filter_by(
-                    nombre = request.form["pais"]
-                ).first().id
-            ).first().id
-        ).first()
-        print(poblacion)
-        codigo_postal = request.form["codigo_postal"]
-        print(codigo_postal)
-        web = request.form["web"]
-        print("Se vienen cositas... -------------------------")
-        print(web)
-        logo_url = ""
-        print("logo_url" in request.files)
-        # check if the post request has the file part
-        if 'logo_url' in request.files:
-            file = request.files['logo_url']
-            # if user does not select file, browser also
-            # submit a empty part without filename
-            if file.filename != '':
-                filename = secure_filename(file.filename)
-                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                logo_url = UPLOAD_FOLDER+"/"+filename
-
-
-        consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"] == "si"
-        print(consentimiento_uso_nombre)
-        buscando_candidatos = request.form["buscando_candidatos"] == "si"
-        print(buscando_candidatos)
-        new_empresa = Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,consentimiento_uso_nombre,buscando_candidatos)
+        if Empresa.query.filter_by(email=request.form["email"]).count() == 0:
+            return render_template("nuevoIndex.html",state="EmailExists")
+        new_empresa = registrarEmpresa(request.form,request.files)
         db.session.add(new_empresa)
         print(new_empresa)
 
@@ -229,58 +232,136 @@ def profile():
             new_empresa.actividades.append(Actividad.query.get(int(request.form["feria_empresas"])))
         if "presentacion" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["presentacion"])))
+            presentacion = registrarPresentacion(request.form,new_empresa.id)
+            db.session.add(presentacion)
+            new_empresa.presentacion = presentacion
         if "speed_meetings" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["speed_meetings"])))
+            speed_meeting = registrarSpeedMeeting(request.form,new_empresa.id)
+            db.session.add(speed_meeting)
+            new_empresa.speed_meeting = speed_meeting
         if "charlas" in request.form:
             new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
+            charla = registrarCharla(request.form,new_empresa.id)
+            db.session.add(charla)
+            new_empresa.charla = charla;
+        
+        db.session.commit()
+        return redirect("/profile")
+    return render_template("nuevoIndex.html",state="NotLogged",empresas=empresas,paises=paises)
 
-        print(new_empresa.actividades)
+@app.route("/registered", methods=["GET","POST"])
+def profile():
+    if request.method == "POST":
+        if Empresa.query.filter_by(email=request.form["email"]).count() == 0:
+            return 
+        new_empresa = registrarEmpresa(request.form,request.files)
+        db.session.add(new_empresa)
+        print(new_empresa)
 
-        modalidad_presentacion = request.form["modalidad_presentacion"] == "presencial"
-        print(modalidad_presentacion)
-        animacion = "animacion" in request.form
-        print(animacion)
-        videojuegos = "videojuegos" in request.form
-        print(videojuegos)
-        disenio = "disenio" in request.form
-        print(disenio)
-        ingenieria = "ingenieria" in request.form
-        print(ingenieria)
-        presentacion = Presentacion(new_empresa.id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
-        db.session.add(presentacion)
-        new_empresa.presentacion = presentacion
-        print(new_empresa.presentacion)
-
-        modalidad_speed_meeting = request.form["modalidad_speed_meeting"] == "presencial"
-        fecha_speed_meeting = request.form["fecha_speed_meeting"]
-        fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%Y-%m-%d")
-        print(fecha_speed_meeting)
-        duracion = request.form["duracion"]
-        print(duracion)
-        descripcion = request.form["descripcion_speed_meeting"]
-        print(descripcion)
-        # preguntas = request.form["preguntas"]
-        speed_meeting = Speed_meeting(new_empresa.id,modalidad_speed_meeting,descripcion,"preguntas")
-        db.session.add(speed_meeting)
-        new_empresa.speed_meeting = speed_meeting
-        print(new_empresa.speed_meeting)
-        sesion = Sesion(new_empresa,fecha_speed_meeting,duracion)
-        db.session.add(sesion)
-        new_empresa.speed_meeting.sesiones.append(sesion)
-        print(new_empresa.speed_meeting.sesiones)
-
-        modalidad_charlas = request.form["modalidad_charlas"] == "presencial"
-        descripcion = request.form["descripcion_charla"]
-        fecha_charla = request.form["fecha_charla"]
-        hora_charla = request.form["hora_charla"]
-        fecha_hora_charla = datetime.strptime(fecha_charla+" "+hora_charla,"%Y-%m-%d %H:%M")
-        # ponente = request.form["ponente"]
-        charla = Charla(new_empresa.id,descripcion,modalidad_charlas,fecha_hora_charla,"ponente")
-        db.session.add(charla)
-        new_empresa.charla = charla
-
+        if "feria_empresas" in request.form:
+            new_empresa.actividades.append(Actividad.query.get(int(request.form["feria_empresas"])))
+        if "presentacion" in request.form:
+            new_empresa.actividades.append(Actividad.query.get(int(request.form["presentacion"])))
+            presentacion = registrarPresentacion(request.form,new_empresa.id)
+            db.session.add(presentacion)
+            new_empresa.presentacion = presentacion
+        if "speed_meetings" in request.form:
+            new_empresa.actividades.append(Actividad.query.get(int(request.form["speed_meetings"])))
+            speed_meeting = registrarSpeedMeeting(request.form,new_empresa.id)
+            db.session.add(speed_meeting)
+            new_empresa.speed_meeting = speed_meeting
+        if "charlas" in request.form:
+            new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
+            charla = registrarCharla(request.form,new_empresa.id)
+            db.session.add(charla)
+            new_empresa.charla = charla;
+        
         db.session.commit()
     return redirect("/")
+
+def registrarEmpresa(form,files):
+    nombre = form["nombre"]
+    print(nombre)
+    nombre_persona_contacto = form["nombre_persona_contacto"]
+    print(nombre_persona_contacto)
+    email = form["email"]
+    print(email)
+    telefono = form["telefono"]
+    print(telefono)
+    direccion = form["direccion"]
+    print(direccion)
+    poblacion = Poblacion.query.filter_by(
+        nombre = form["poblacion"],
+        provincia_id = Provincia.query.filter_by(
+            nombre = form["provincia"],
+            pais_id = Pais.query.filter_by(
+                nombre = form["pais"]
+            ).first().id
+        ).first().id
+    ).first()
+    print(poblacion)
+    codigo_postal = form["codigo_postal"]
+    print(codigo_postal)
+    web = form["web"]
+    print(web)
+    logo_url = ""
+    print("logo_url" in files)
+    # check if the post request has the file part
+    if 'logo_url' in files:
+        file = files['logo_url']
+        # if user does not select file, browser also
+        # submit a empty part without filename
+        if file.filename != '':
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            logo_url = UPLOAD_FOLDER+"/"+filename
+
+
+    consentimiento_uso_nombre = form["consentimiento_uso_nombre"] == "si"
+    print(consentimiento_uso_nombre)
+    buscando_candidatos = form["buscando_candidatos"] == "si"
+    print(buscando_candidatos)
+    return Empresa(nombre,nombre_persona_contacto,email,telefono,direccion,poblacion,codigo_postal,web,logo_url,consentimiento_uso_nombre,buscando_candidatos)
+
+def registrarPresentacion(form,id):
+    modalidad_presentacion = form["modalidad_presentacion"] == "presencial"
+    print(modalidad_presentacion)
+    animacion = "animacion" in form
+    print(animacion)
+    videojuegos = "videojuegos" in form
+    print(videojuegos)
+    disenio = "disenio" in form
+    print(disenio)
+    ingenieria = "ingenieria" in form
+    print(ingenieria)
+    return Presentacion(id,modalidad_presentacion,animacion,videojuegos,disenio,ingenieria)
+
+def registrarSpeedMeeting(form,id):
+    print("modalidad_speed_meeting = "+str(form["modalidad_speed_meeting"]))
+    modalidad_speed_meeting = form["modalidad_speed_meeting"] == "presencial"
+    
+    descripcion = form["descripcion_speed_meeting"]
+    print(descripcion)
+    # preguntas = form["preguntas"]
+    speed_meeting = Speed_meeting(id,modalidad_speed_meeting,descripcion,"preguntas")
+    for i in range(int(form["numero_sesiones"])):
+        fecha_speed_meeting = form["fecha_speed_meeting_"+str(i)]
+        fecha_speed_meeting = datetime.strptime(fecha_speed_meeting,"%Y-%m-%d")
+        print(fecha_speed_meeting)
+        duracion = form["duracion_"+str(i)]
+        print(duracion)
+    speed_meeting.sesiones.append(Sesion(id,fecha_speed_meeting,duracion))
+    return speed_meeting
+
+def registrarCharla(form,id):
+    modalidad_charlas = request.form["modalidad_charlas"] == "presencial"
+    descripcion = request.form["descripcion_charla"]
+    fecha_charla = request.form["fecha_charla"]
+    hora_charla = request.form["hora_charla"]
+    fecha_hora_charla = datetime.strptime(fecha_charla+" "+hora_charla,"%Y-%m-%d %H:%M")
+    # ponente = request.form["ponente"]
+    return Charla(id,descripcion,modalidad_charlas,fecha_hora_charla,"ponente")
 
 @app.route("/prueba", methods=["GET","POST"])
 def prueba():
