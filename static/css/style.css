@@ -32,11 +32,6 @@ body{
   display: flex;
   justify-content: center;
 }
-
-#loginBoton{
-    margin-top: 30px;
-    margin-left: 2000px;
-}
 #ibm{
     height: 700px;
 }
@@ -135,4 +130,8 @@ body{
 /* JsFiddle Example only/don't use */
 .logo-carousel {
     margin-top: 32px;
+}
+#loginBoton{
+    margin-top: 30px;
+    margin-left: 1700px;
 }
