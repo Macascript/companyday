@@ -294,6 +294,8 @@ def registrarEmpresa(form,files):
     print(web)
     logo_url = ""
     print("logo_url" in files)
+    print("Esto es lo que hay dentro de files:")
+    print(files.keys())
     # check if the post request has the file part
     if 'logo_url' in files:
         file = files['logo_url']
