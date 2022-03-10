@@ -199,7 +199,7 @@
                   
                   <label for="message-text" class="col-form-label">Speed Meetings</label>
                   <br>
-                  <input type="hidden" :name="numero_sesiones" :value="tasks.length">
+                  <input type="hidden" name="numero_sesiones" :value="tasks.length">
                   <div v-for="(task,index) in tasks">
                     <label for="message-text" class="col-form-label" >Modalidad</label>
                     <input type="radio" :name="'modalidad_speed_meeting_'+index" value="online" id="margenBox" v-model="task.modalidad">
