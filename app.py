@@ -1,10 +1,26 @@
-#from crypt import methods
 import os
 from flask import Flask, render_template, request, redirect
-from flask_sqlalchemy import SQLAlchemy
+from extensions import db
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import json
+
+# Modelos
+from models.actividad import Actividad
+from models.asistente import Asistente
+from models.charla import Charla
+from models.empresa import Empresa
+from models.pais import Pais
+from models.poblacion import Poblacion
+from models.presentacion import Presentacion
+from models.provincia import Provincia
+from models.sesion import Sesion
+from models.speed_meeting import Speed_meeting
+
+# Rutas
+from rutas.uni_api import uni_api
+from rutas.empresa_api import empresa_api
+from rutas.pruebas import pruebas
 
 UPLOAD_FOLDER = "static/logos"
 app = Flask(__name__)
@@ -13,275 +29,18 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://app:companyday@macascript.com/companyday"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db = SQLAlchemy(app)
+app.register_blueprint(uni_api)
+app.register_blueprint(empresa_api)
+app.register_blueprint(pruebas)
 
-# MODELS
-
-class Actividad(db.Model):
-    __tablename__ = "actividad"
-    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    nombre = db.Column(db.String(25))
-
-
-participa = db.Table(
-    "participa",
-    db.Column("empresa_id",db.Integer,db.ForeignKey("empresa.id")),
-    db.Column("actividad_id",db.Integer,db.ForeignKey("actividad.id"))
-)
-
-class Empresa(db.Model):
-    __tablename__ = "empresa"
-    # TODO: resto de atributos de una empresa en la BD
-    id = db.Column(db.Integer, primary_key = True,autoincrement = True)
-    nombre = db.Column(db.String(100))
-    nombre_persona_contacto = db.Column(db.String(100))
-    email = db.Column(db.String(320))
-    contrasenya = db.Column(db.String(16))
-    telefono = db.Column(db.String(13))
-    direccion = db.Column(db.String(500))
-    poblacion_id = db.Column(db.Integer,db.ForeignKey("poblacion.id"))
-    codigo_postal = db.Column(db.String(10))
-    web = db.Column(db.String(500))
-    logo_url = db.Column(db.String(200))
-    consentimiento_uso_nombre = db.Column(db.Boolean)
-    buscando_candidatos = db.Column(db.Boolean)
-
-    poblacion = db.relationship("Poblacion",uselist=False)
-    asistentes = db.relationship("Asistente")
-    actividades = db.relationship("Actividad",secondary = participa,backref = "participa")
-    presentacion = db.relationship("Presentacion",uselist=False)
-    speed_meeting = db.relationship("Speed_meeting",uselist=False)
-    charla = db.relationship("Charla",uselist=False)
-#
-    def __init__(self, nombre, nombre_persona_contacto, email, telefono, direccion, poblacion, codigo_postal, web, logo_url, consentimiento_uso_nombre, buscando_candidatos):
-        self.nombre = nombre
-        self.nombre_persona_contacto = nombre_persona_contacto
-        self.email = email
-        self.telefono = telefono
-        self.direccion = direccion
-        self.poblacion = poblacion
-        self.codigo_postal = codigo_postal
-        self.web = web
-        self.logo_url = logo_url
-        self.consentimiento_uso_nombre = consentimiento_uso_nombre
-        self.buscando_candidatos = buscando_candidatos
-
-class Pais(db.Model):
-    __tablename__ = "pais"
-    id = db.Column(db.Integer, primary_key = True,autoincrement = True)
-    nombre = db.Column(db.String(50))
-
-    provincias = db.relationship("Provincia")
-
-class Provincia(db.Model):
-    __tablename__ = "provincia"
-    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
-    nombre = db.Column(db.String(50))
-
-    poblaciones = db.relationship("Poblacion")
-    pais = db.relationship("Pais", uselist = False)
-
-class Poblacion(db.Model):
-    __tablename__ = "poblacion"
-    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    provincia_id = db.Column(db.Integer,db.ForeignKey("provincia.id"),primary_key = True)
-    pais_id = db.Column(db.Integer,db.ForeignKey("pais.id"),primary_key = True)
-    nombre = db.Column(db.String(100))
-
-    provincia = db.relationship("Provincia", uselist = False)
-
-
-class Asistente(db.Model):
-    __tablename__ = "asistente"
-    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"))
-    nombre_completo = db.Column(db.String(250))
-    cargo = db.Column(db.String(100))
-
-    def __init__(self,empresa_id,nombre_completo,cargo):
-        self.empresa_id = empresa_id
-        self.nombre_completo = nombre_completo
-        self.cargo = cargo
-
-class Presentacion(db.Model):
-    __tablename__ = "presentacion"
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
-    presencial = db.Column(db.Boolean)
-    animacion = db.Column(db.Boolean)
-    videojuegos = db.Column(db.Boolean)
-    disenio = db.Column(db.Boolean)
-    ingenieria = db.Column(db.Boolean)
-
-    def __init__(self,empresa_id,presencial,animacion,videojuegos,disenio,ingenieria):
-        self.empresa_id = empresa_id
-        self.presencial = presencial
-        self.animacion = animacion
-        self.videojuegos = videojuegos
-        self.disenio = disenio
-        self.ingenieria = ingenieria
-
-class Sesion(db.Model):
-    __tablename__ = "sesion"
-    id = db.Column(db.Integer,primary_key = True,autoincrement = True)
-    empresa_id = db.Column(db.Integer,db.ForeignKey("speed_meeting.empresa_id"))
-    presencial = db.Column(db.Boolean)
-    descripcion = db.Column(db.String(500))
-    fecha = db.Column(db.Date)
-    duracion = db.Column(db.String(2))
-
-    def __init__(self,empresa_id,presencial,descripcion,fecha,duracion):
-        self.empresa_id = empresa_id
-        self.presencial = presencial
-        self.descripcion = descripcion
-        self.fecha = fecha
-        self.duracion = duracion
-
-# class Speed_meeting(db.Model):
-#     __tablename__ = "speed_meeting"
-#     empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
-#     presencial = db.Column(db.Boolean)
-#     descripcion = db.Column(db.String(500))
-#     preguntas = db.Column(db.String(500))
-
-#     sesiones = db.relationship("Sesion")
-
-#     def __init__(self,empresa_id,presencial,descripcion,preguntas):
-#         self.empresa_id = empresa_id
-#         self.presencial = presencial
-#         self.descripcion = descripcion
-#         self.preguntas = preguntas
-
-class Speed_meeting(db.Model):
-    __tablename__ = "speed_meeting"
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
-    sesiones = db.relationship("Sesion")
-
-    def __init__(self,empresa_id):
-        self.empresa_id = empresa_id
-
-class Charla(db.Model):
-    __tablename__ = "charla"
-    empresa_id = db.Column(db.Integer,db.ForeignKey("empresa.id"),primary_key = True)
-    descripcion = db.Column(db.String(500))
-    presencial = db.Column(db.Boolean)
-    fecha = db.Column(db.DateTime)
-    ponente = db.Column(db.String(100))
-
-    def __init__(self,empresa_id,descripcion,presencial,fecha,ponente):
-        self.empresa_id = empresa_id
-        self.descripcion = descripcion
-        self.presencial = presencial
-        self.fecha = fecha
-        self.ponente = ponente
-
-# END MODELS
-
-
+# db = SQLAlchemy(app)
+db.init_app(app)
 
 # CONTROLLER
 
 @app.route("/plantilla")
 def plantilla():
     return render_template("index.html")
-
-@app.route("/user/getempresas")
-def getEmpresas():
-    lista = []
-    for empresa in Empresa.query.all():
-        lista.append({
-            "id": empresa.id,
-            "nombre": empresa.nombre,
-            "web": empresa.web,
-            "logo_url": empresa.logo_url
-        })
-    print(lista)
-    # body = {
-    #     "empresas": lista
-    # }
-    # return {
-    #     'statusCode': 200,
-    #     'headers': { 'Access-Control-Allow-Origin' : '*' },
-    #     'body' : body
-    # }
-    return {"empresas": lista}
-
-@app.route("/admin/getempresa/<id>")
-def getEmpresa(id):
-    empresa = Empresa.query.get(id)
-    response = {
-            "nombre": empresa.nombre,
-            "nombre_persona_contacto": empresa.nombre_persona_contacto,
-            "email": empresa.email,
-            "telefono": empresa.telefono,
-            "direccion": empresa.direccion,
-            "poblacion": empresa.poblacion.nombre,
-            "provincia": empresa.poblacion.provincia.nombre,
-            "pais": empresa.poblacion.provincia.pais.nombre,
-            "codigo_postal": empresa.codigo_postal,
-            "web": empresa.web,
-            "logo_url": empresa.logo_url,
-            "consentimiento_uso_nombre": empresa.consentimiento_uso_nombre,
-            "buscando_candidatos": empresa.buscando_candidatos
-        }
-    return {"empresa": response}
-
-@app.route("/admin/getempresas")
-def getEmpresasExtended():
-    lista = []
-    for empresa in Empresa.query.all():
-        lista.append({
-            "id": empresa.id,
-            "nombre": empresa.nombre,
-            "nombre_persona_contacto": empresa.nombre_persona_contacto,
-            "email": empresa.email,
-            "telefono": empresa.telefono,
-            "direccion": empresa.direccion,
-            "poblacion": empresa.poblacion.nombre,
-            "provincia": empresa.poblacion.provincia.nombre,
-            "pais": empresa.poblacion.provincia.pais.nombre,
-            "codigo_postal": empresa.codigo_postal,
-            "web": empresa.web,
-            "logo_url": empresa.logo_url,
-            "consentimiento_uso_nombre": empresa.consentimiento_uso_nombre,
-            "buscando_candidatos": empresa.buscando_candidatos
-        })
-    print(lista)
-    # body = {
-    #     "empresas": lista
-    # }
-    # return {
-    #     'statusCode': 200,
-    #     'headers': { 'Access-Control-Allow-Origin' : '*' },
-    #     'body' : body
-    # }
-    return {"empresas": lista}
-
-@app.route("/user/getpaises")
-def getPaises():
-    lista = []
-    for pais in Pais.query.all():
-        lista.append({
-            "id": pais.id,
-            "nombre": pais.nombre,
-            "provincias": [{
-                "id": provincia.id,
-                "nombre": provincia.nombre,
-                "poblaciones": [{
-                    "id": poblacion.id,
-                    "nombre": poblacion.nombre
-                } for poblacion in provincia.poblaciones]
-            } for provincia in pais.provincias]
-        })
-    # body = {
-    #     "paises": lista
-    # }
-    # return {
-    #     'statusCode': 200,
-    #     'headers': { 'Access-Control-Allow-Origin' : '*' },
-    #     'body' : body
-    # }
-    return {"paises": lista}
 
 @app.route("/", methods=["GET","POST"])
 def index():
@@ -407,28 +166,6 @@ def registrarCharla(id):
     fecha_hora_charla = datetime.strptime(fecha_charla+" "+hora_charla,"%Y-%m-%d %H:%M")
     # ponente = request.form["ponente"]
     return Charla(id,descripcion,modalidad_charlas,fecha_hora_charla,"ponente")
-
-@app.route("/prueba", methods=["GET","POST"])
-def prueba():
-    return render_template("prueba.html",paises=Pais.query.all())
-
-@app.route("/prueba2", methods=["GET","POST"])
-def prueba2():
-    print("here we go again")
-    # check if the post request has the file part
-    if 'file' in request.files:
-        file = request.files['file']
-        print(file)
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename != '':
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return "<img src='"+UPLOAD_FOLDER+"/"+filename+"'>"
-    return "VAYA"
-
-
-
 
 if __name__ == '__main__':
     app.run(port=5000,debug=True)
