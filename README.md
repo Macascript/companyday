@@ -1,5 +1,5 @@
 # companyday
-## Proyecto de Miguel Abdon Sánchez-Herrero, Jose Luis Arrojo Abela y Adrián Mazuecos Pérez.
+## Proyecto de Miguel Abdon Sánchez-Herrero, Jose Luis Arrojo Abela, Adrián Mazuecos Pérez y Pedro Ventura Alvarez.
 
 
 
