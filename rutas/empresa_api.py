@@ -1,10 +1,13 @@
 import flask
 from flask import jsonify
+from itsdangerous import json
 
 from models.empresa import Empresa
 from models.pais import Pais
 
 empresa_api = flask.Blueprint("empresa_api",__name__)
+
+# Consultas
 
 @empresa_api.route("/user/getempresas")
 def getEmpresas():
@@ -25,7 +28,7 @@ def getEmpresas():
     #     'headers': { 'Access-Control-Allow-Origin' : '*' },
     #     'body' : body
     # }
-    return {"empresas": lista}
+    return jsonify({"empresas": lista})
 
 @empresa_api.route("/user/getpaises")
 def getPaises():
@@ -51,4 +54,6 @@ def getPaises():
     #     'headers': { 'Access-Control-Allow-Origin' : '*' },
     #     'body' : body
     # }
-    return {"paises": lista}
+    return jsonify({"paises": lista})
+
+# Funciones

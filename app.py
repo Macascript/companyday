@@ -20,9 +20,11 @@ from models.speed_meeting import Speed_meeting
 # Rutas
 from rutas.uni_api import uni_api
 from rutas.empresa_api import empresa_api
+from rutas.empresa_rutas import empresa_rutas
 from rutas.pruebas import pruebas
 
-UPLOAD_FOLDER = "static/logos"
+from extensions import UPLOAD_FOLDER
+
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -31,6 +33,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 app.register_blueprint(uni_api)
 app.register_blueprint(empresa_api)
+app.register_blueprint(empresa_rutas)
 app.register_blueprint(pruebas)
 
 # db = SQLAlchemy(app)
@@ -49,7 +52,7 @@ def index():
     paises = Pais.query.all()
     if request.method == "POST":
         if Empresa.query.filter_by(email=request.form["email"]).count() > 0:
-            return render_template("nuevoIndex.html",state="EmailExists")
+            return render_template("nuevoIndex.html",state="EmailExists",empresas=empresas,paises=paises)
         new_empresa = registrarEmpresa()
         db.session.add(new_empresa)
         print(new_empresa)
@@ -78,7 +81,7 @@ def index():
 
 @app.route("/profile", methods=["GET","POST"])
 def profile():
-    
+    #empresa = Empresa.query.get(request.form["id"])
     return redirect("/")
 
 def registrarEmpresa():
