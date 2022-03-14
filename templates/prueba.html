@@ -1,4 +1,4 @@
-<!-- {% for pais in paises %}
+{% for pais in paises %}
     {% for provincia in pais.provincias %}
         {% for poblacion in provincia.poblaciones %}
             <p>{{poblacion.nombre}}</p>
@@ -8,7 +8,7 @@
 <form action="/prueba2" method="post" enctype="multipart/form-data">
     <input type="file" name="file">
     <button type="submit">Enviar</button>
-</form> -->
+</form>
 <form action="/changedata" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="1">
     <input type="text" placeholder="nombre" name="nombre">
@@ -17,4 +17,10 @@
     <input type="text" placeholder="direccion" name="direccion">
     <input type="file" placeholder="logo_url" name="logo_url">
     <button type="submit">Guardar</button>
+</form>
+
+<form action="/login" method="post">
+    <input type="text" name="email" placeholder="email"><br>
+    <input type="password" name="contrasenya" placeholder="contraseña"><br>
+    <button type="submit">Enviar</button>
 </form>

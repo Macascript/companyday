@@ -1,5 +1,5 @@
 import flask
-from flask import request, redirect
+from flask import request, redirect, url_for, render_template
 import os
 from werkzeug.utils import secure_filename
 
@@ -12,11 +12,13 @@ from extensions import UPLOAD_FOLDER
 
 empresa_rutas = flask.Blueprint("empresa_rutas",__name__)
 
-@empresa_rutas.route("/login",methods=["GET","POST"])
-def login():
-    empresa = Empresa.query.filter_by(email=request.form["email"],contrasenya=request.form["contrasenya"]).one_or_none()
-    if empresa is not None:
-        return redirect("/")
+@empresa_rutas.route("/profile",methods=["GET","POST"])
+def profile():
+    if request.method == "POST":
+        empresa = Empresa.query.filter_by(email=request.form["email"],contrasenya=request.form["contrasenya"]).one_or_none()
+        if empresa is not None:
+            return render_template(url_for("profile",empresa = empresa))
+    return redirect(url_for("/",state = "FailedLogging"))
 
 @empresa_rutas.route("/changedata",methods=["GET","POST"])
 def changedata():

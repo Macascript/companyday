@@ -2,6 +2,7 @@ import flask
 from flask import render_template, request
 from werkzeug.utils import secure_filename
 import os
+from models.empresa import Empresa
 
 from models.pais import Pais
 
@@ -27,3 +28,7 @@ def prueba2():
             file.save(os.path.join(UPLOAD_FOLDER, filename))
             return "<img src='"+UPLOAD_FOLDER+"/"+filename+"'>"
     return "VAYA"
+
+@pruebas.route("/pruebapedro")
+def pruebapedro():
+    return render_template("utad.html",empresas=Empresa.query.all())

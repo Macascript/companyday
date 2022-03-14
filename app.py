@@ -79,10 +79,6 @@ def index():
         return redirect("/profile")
     return render_template("nuevoIndex.html",state="NotLogged",empresas=empresas,paises=paises)
 
-@app.route("/profile", methods=["GET","POST"])
-def profile():
-    #empresa = Empresa.query.get(request.form["id"])
-    return redirect("/")
 
 @app.route("/empresaajax")
 def empresa_ajax():
