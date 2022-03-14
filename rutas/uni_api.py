@@ -24,16 +24,16 @@ def getEmpresa(id):
                 "consentimiento_uso_nombre": empresa.consentimiento_uso_nombre,
                 "buscando_candidatos": empresa.buscando_candidatos
             }
-        return {
+        return jsonify({
         'statusCode': 200,
         'headers': { 'Access-Control-Allow-Origin' : '*' },
         'body' : response
-    }
-    return {
+        })
+    return jsonify({
         'statusCode': 200,
         'headers': { 'Access-Control-Allow-Origin' : '*' },
         'body' : "ups"
-    }
+    })
 
 @uni_api.route("/admin/getempresas")
 def getEmpresasExtended():
