@@ -84,6 +84,14 @@ def profile():
     #empresa = Empresa.query.get(request.form["id"])
     return redirect("/")
 
+@app.route("/empresaajax")
+def empresa_ajax():
+    return render_template("empresa_ajax.html")
+
+@app.route("/adminajax")
+def admin_ajax():
+    return render_template("admin_ajax.html")
+
 def registrarEmpresa():
     print("prueba de si existe o no el objeto request: ")
     print(request)
