@@ -56,7 +56,7 @@ def index():
     if request.method == "POST":
         if Empresa.query.filter_by(email=request.form["email"]).count() > 0:
             return render_template("nuevoIndex.html",state="EmailExists",empresas=empresas,paises=paises)
-        else: return jsonify({'loginState': 'EmailNoExists'})
+        # else: return jsonify({'loginState': 'EmailNoExists'})
 
         new_empresa = registrarEmpresa()
         db.session.add(new_empresa)
