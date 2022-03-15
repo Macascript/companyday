@@ -1,9 +1,12 @@
+from curses import flash
 import os
 from flask import Flask, render_template, request, redirect
 from extensions import db
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import json
+from flask import jsonify
+
 
 # Modelos
 from models.actividad import Actividad
@@ -53,6 +56,8 @@ def index():
     if request.method == "POST":
         if Empresa.query.filter_by(email=request.form["email"]).count() > 0:
             return render_template("nuevoIndex.html",state="EmailExists",empresas=empresas,paises=paises)
+        # else: return jsonify({'loginState': 'EmailNoExists'})
+
         new_empresa = registrarEmpresa()
         db.session.add(new_empresa)
         print(new_empresa)
