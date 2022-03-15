@@ -1,4 +1,4 @@
-
+ 
 <!DOCTYPE html>
 <html>
 	<head>
@@ -69,12 +69,12 @@
 		<table id="app-5">
 			<thead>
 				<tr>
-					<th v-for="col in columns" v-on:click="sortTable(col)">[[col]]</th>
+					<th v-for="col in columns" v-on:click="sortTable(col)">{{col}}</th>
 				</tr>			
 			</thead>	
 			<tbody>
 				<tr v-for="row in rows">
-					<td v-for="col in columns">[[row[col]]]</td>
+					<td v-for="col in columns">{{row[col]}}</td>
 				</tr>
 			</tbody>			
 		</table>	
@@ -83,13 +83,21 @@
 	<script>
 		var app5 = new Vue({		
 		  el: '#app-5',
-          delimiters : ["[[","]]"],
 		  data: {
 			rows: [
-			  { id: 1, nombre: "BBVA", nombre_persona_contacto: 'Jose', email: 'd2@gmail.com', telefono : '+34 646 434 431', direccion : 'Calle Cristo 2 ', poblacion : 'Madrid', provincia,pais : 'Madrid',codigo_postal : '28008',web='bbva.com',logo_url : 'http://macascript.com/bbva.jpg',consentimiento_uso_nombre : true ,buscando_candidatos : false },
-			  { id: 2, nombre: "IBM", nombre_persona_contacto: 'Luis', email: 'd3@gmail.com ', telefono : '+34 646 434 431', direccion : 'Calle Cebolla 45 ', poblacion : 'Madrid', provincia,pais : 'Madrid',codigo_postal : '28020',web='lacaixa.com',logo_url : 'http://macascript.com/ibm.jpg',consentimiento_uso_nombre :true,buscando_candidatos : true }
+		 { id: 1, nombre: "BBVA", contacto: 'Jose', email: 'd2@gmail.com', telefono : '+34 646 434 431', 
+		   direccion : 'Calle Cristo 2 ', poblacion : 'Madrid', pais : 'Madrid',  codigo_postal : '28008', web: 'bbva.com',
+		   logo_url : 'http://macascript.com/bbva.jpg',  consentimiento_uso_nombre : true ,buscando_candidatos : false },
+			
+		{ id: 2, nombre: "IBM", contacto: 'Luis', email: 'd3@gmail.com ',
+		  telefono : '+34 646 434 431', direccion : 'Calle Cebolla 45 ',poblacion : 'Madrid',
+		  pais : 'Madrid',  codigo_postal : '28008', web: 'ibm.com',
+		  logo_url : 'http://macascript.com/ibm.jpg',  consentimiento_uso_nombre : true ,buscando_candidatos : false },			
+ 
 			]			
 		  },
+		
+ 	  
 		  mounted : function(){
 			$.ajax({
 			  method: "GET",
