@@ -324,6 +324,7 @@
               sMeetings: "",
               ccharla:"",
               fEmpresas:"",
+              loginState:""
               tasks:[
                 {
                   modalidad:"online",
@@ -336,6 +337,10 @@
             
             methods:{
               comprobar:function(){console.log(this.pProyectos)},
+              checkLoginState: function(){
+            // Hace falta envio de 'state' por api flask para comprobar errores
+
+              },
               addSpeedM: function(){
               //e.preventDefault();
               this.tasks.push({
