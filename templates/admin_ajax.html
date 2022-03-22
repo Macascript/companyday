@@ -48,7 +48,7 @@
         // GET empresa (id)
         // Meter el parametro en la url
         $("#get-empresa-id").click(function(){
-            $.getJSON("/admin/getempresa/id", function(result){
+            $.getJSON("http://macascript.com/admin/getempresa/2", function(result){
                 $.each(result, function(i, field){
                     $("div").append(field + " ");
                 });
