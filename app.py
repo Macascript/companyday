@@ -1,6 +1,15 @@
-from curses import flash
+from crypt import methods
+# from curses import flash
 import os
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash, url_for
+import flask
+from flask_login import login_required, login_user, logout_user, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from sqlalchemy import or_
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField
+from wtforms.validators import InputRequired
+
 from extensions import db
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -33,6 +42,8 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://app:companyday@macascript.com/companyday"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['SECRET_KEY'] = 'clavedeprueba'
+
 
 app.register_blueprint(uni_api)
 app.register_blueprint(empresa_api)
@@ -84,6 +95,31 @@ def index():
         return redirect("/profile")
     return render_template("nuevoIndex.html",state="NotLogged",empresas=empresas,paises=paises)
 
+class LoginForm(FlaskForm): # class RegisterForm extends FlaskForm
+    emailORusername = StringField('User name or Email',validators=[InputRequired()])
+    password = PasswordField('Password',validators=[InputRequired()])
+    remember = BooleanField('Remember me')
+
+@app.route('/login',methods=['GET','POST'])
+def login():
+    empresas = Empresa.query.all()
+    paises = Pais.query.all()
+    form = LoginForm()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = Empresa.query.filter(or_(Empresa.email==form.emailORusername.data,
+                                         Empresa.username==form.emailORusername.data)).first()
+            if not user or not check_password_hash(user.password, form.password.data):
+                flash("Wrong user or Password!")
+            elif user.confirmed:
+                login_user(user, remember=form.remember.data)
+                flash("Welcome back {}".format(current_user.username))
+                return redirect(url_for('/'))
+            else:
+                flash("User not confirmed. Please visit your email to confirm your user.")
+
+
+    return render_template("nuevoIndex.html",state="NotLogged",empresas=empresas,paises=paises)
 
 @app.route("/empresaajax")
 def empresa_ajax():
