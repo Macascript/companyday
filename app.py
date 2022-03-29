@@ -95,8 +95,9 @@ def index():
         return redirect("/profile")
     return render_template("nuevoIndex.html",state="NotLogged",empresas=empresas,paises=paises)
 
+
 class LoginForm(FlaskForm): # class RegisterForm extends FlaskForm
-    emailORusername = StringField('User name or Email',validators=[InputRequired()])
+    email = StringField('Email',validators=[InputRequired()])
     password = PasswordField('Password',validators=[InputRequired()])
     remember = BooleanField('Remember me')
 
@@ -107,19 +108,20 @@ def login():
     form = LoginForm()
     if request.method == 'POST':
         if form.validate_on_submit():
-            user = Empresa.query.filter(or_(Empresa.email==form.emailORusername.data,
-                                         Empresa.username==form.emailORusername.data)).first()
-            if not user or not check_password_hash(user.password, form.password.data):
+            user = Empresa.query.filter(Empresa.email==form.email.data).first()
+            if not user or not check_password_hash(user.contrasenya, form.password.data):
                 flash("Wrong user or Password!")
-            elif user.confirmed:
+            elif user.es_verificado:
                 login_user(user, remember=form.remember.data)
                 flash("Welcome back {}".format(current_user.username))
-                return redirect(url_for('/'))
+                return redirect(url_for('index'))
             else:
                 flash("User not confirmed. Please visit your email to confirm your user.")
+                login_user(user, remember=form.remember.data)
+                return redirect(url_for('index'))
 
+    return redirect(url_for('index'))
 
-    return render_template("nuevoIndex.html",state="NotLogged",empresas=empresas,paises=paises)
 
 @app.route("/empresaajax")
 def empresa_ajax():
