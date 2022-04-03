@@ -40,9 +40,12 @@ def getPaises():
             "nombre": pais.nombre,
             "provincias": [{
                 "id": provincia.id,
+                "nombrePais": pais.nombre,
                 "nombre": provincia.nombre,
                 "poblaciones": [{
                     "id": poblacion.id,
+                    "nombreProvincia": provincia.nombre,
+                    "nombrePais": pais.nombre,
                     "nombre": poblacion.nombre
                 } for poblacion in provincia.poblaciones]
             } for provincia in pais.provincias]
@@ -55,6 +58,7 @@ def getPaises():
     #     'headers': { 'Access-Control-Allow-Origin' : '*' },
     #     'body' : body
     # }
+    print(lista)
     return jsonify({"paises": lista})
 
 # Funciones
