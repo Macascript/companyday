@@ -22,6 +22,9 @@ class Empresa(db.Model):
     logo_url = db.Column(db.String(200))
     consentimiento_uso_nombre = db.Column(db.Boolean)
     buscando_candidatos = db.Column(db.Boolean)
+    es_creado = db.Column(db.Boolean)
+    es_verificado = db.Column(db.Boolean)
+    es_actualizado = db.Column(db.Boolean)
 
     poblacion = db.relationship("Poblacion",uselist=False)
     asistentes = db.relationship("Asistente")

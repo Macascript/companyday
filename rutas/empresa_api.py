@@ -28,7 +28,8 @@ def getEmpresas():
     #     'headers': { 'Access-Control-Allow-Origin' : '*' },
     #     'body' : body
     # }
-    return jsonify({"empresas": lista})
+    # return jsonify({"empresas": lista})
+    return "Hola"
 
 @empresa_api.route("/user/getpaises")
 def getPaises():

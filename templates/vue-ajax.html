@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CDN en Vue 3</title>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        
+    </div>
+
+    <script>
+        const {createApp} = Vue;
+        const application = createApp({
+            el: '#app',
+            data: {
+                personajes: []
+            },
+            created: function(){
+                this.$http.get('_ajax_response.php').then(function(response){
+                this.personajes = response.body;
+            }, function(){
+                alert('Error!');
+                });
+            }
+            });
+        application.mount('#app')
+    </script>
+</body>
+</html>
