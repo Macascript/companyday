@@ -32,3 +32,9 @@ def prueba2():
 @pruebas.route("/pruebapedro")
 def pruebapedro():
     return render_template("utad.html",empresas=Empresa.query.all())
+
+@pruebas.route("/pruebamaca")
+def pruebamaca():
+    # <meta id="paises" data-paises="{{ paises|tojson }}">
+	# <meta id="empresas" data-empresas="{{ empresas|tojson }}">
+    return render_template("nuevoIndexVue.html")
