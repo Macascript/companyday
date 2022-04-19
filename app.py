@@ -62,8 +62,6 @@ def plantilla():
 @app.route("/", methods=["GET","POST"])
 def index():
     db.create_all()
-    empresas = Empresa.query.all()
-    paises = Pais.query.all()
     if request.method == "POST":
         if Empresa.query.filter_by(email=request.form["email"]).count() > 0:
             return render_template("nuevoIndex.html",state="EmailExists",empresas=empresas,paises=paises)
@@ -93,7 +91,7 @@ def index():
         
         db.session.commit()
         return redirect("/profile")
-    return render_template("nuevoIndex.html",state="NotLogged",empresas=empresas,paises=paises)
+    return render_template("nuevoIndex.html",state="NotLogged")
 
 
 class LoginForm(FlaskForm): # class RegisterForm extends FlaskForm

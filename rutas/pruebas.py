@@ -38,3 +38,7 @@ def pruebamaca():
     # <meta id="paises" data-paises="{{ paises|tojson }}">
 	# <meta id="empresas" data-empresas="{{ empresas|tojson }}">
     return render_template("nuevoIndexVue.html")
+
+@pruebas.route("/pruebamaca2")
+def pruebamaca2():
+    return render_template("editarPerfilVue.html")

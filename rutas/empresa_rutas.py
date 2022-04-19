@@ -18,7 +18,7 @@ def profile():
         empresa = Empresa.query.filter_by(email=request.form["email"],contrasenya=request.form["contrasenya"]).one_or_none()
         if empresa is not None:
             return render_template(url_for("profile",empresa = empresa))
-    return redirect(url_for("/",state = "FailedLogging"))
+    return redirect("/")
 
 @empresa_rutas.route("/changedata",methods=["GET","POST"])
 def changedata():

@@ -1,14 +1,58 @@
-var urlbase = "http://127.0.0.1:5000/"
+const urlbase = "http://127.0.0.1:5000/"
+
+$(document).ready(function() {
+    $('.logo-carousel').slick({
+      slidesToShow: 6,
+      slidesToScroll: 1,
+      autoplay: true,
+      autoplaySpeed: 1000,
+      arrows: true,
+      dots: false,
+      pauseOnHover: false,
+      responsive: [{
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 4
+        }
+      }, {
+        breakpoint: 520,
+        settings: {
+          slidesToShow: 2
+        }
+      }]
+    });
+  });
+
 
 const app = new Vue({
-    el: "#app",
+    el: "#paises",
     delimiters: ["[[","]]"],
     data: {
         listaPaises: [],
         paises: {},
         provincias: {},
         poblaciones: {},
-        empresas: [],
+        empresas: [{
+            "id": 0,
+            "nombre": "BBVA",
+            "web": "https://www.bbva.es/personas.html",
+            "logo_url": "static/bbva.jpg"
+        },{
+            "id": 1,
+            "nombre": "El corte ingles",
+            "web": "https://www.elcorteingles.es/",
+            "logo_url": "static/elCorteIngles.png"
+        },{
+            "id": 2,
+            "nombre": "Ericcson",
+            "web": "https://www.ericsson.com/en",
+            "logo_url": "static/ericsson.jpg"
+        },{
+            "id": 3,
+            "nombre": "IBM",
+            "web": "https://www.ibm.com/es-es",
+            "logo_url": "static/ibm.png"
+        }],
         pais: "",
         provincia: "",
         poblacion: "",

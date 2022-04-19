@@ -40,7 +40,22 @@
 			Provincia: <input list="provincias" name="provincia" v-model="provincia" @keydown="trigger" @input="cambioProvincia"><br/><br/>
 			Población: <input list="poblaciones" name="poblacion" v-model="poblacion" @keydown="trigger" @input="cambioPoblacion"><br/><br/>
 
-			<button @click="debug">DEBUG</button>
+			<button @click="debug">DEBUG</button><br/><br/>
+			<!-- <div class="rowCarousel">
+				<div class="container">
+				  <section class="logo-carousel slider" data-arrows="true">
+					<div class="slide" v-for="empresa in empresas"><a :href="empresa.web" target="_blank"><img :src="empresa.logo_url"></a></div>
+					<div class="slide"><a href="https://www.bbva.es/personas.html" target="_blank"><img src="static/bbva.jpg"></a></div>
+					<div class="slide"><a href="https://www.king.com/es" target="_blank"><img src="static/king.png"></a></div>
+					<div class="slide"><a href="https://www.ericsson.com/en" target="_blank"><img src="static/ericsson.jpg"></a></div>
+					<div class="slide"><a href="https://www.elcorteingles.es/" target="_blank"><img src="static/elCorteIngles.png"></a></div>
+					<div class="slide"><a href="https://skydance.com/" target="_blank"><img src="static/skydance.png"></a></div>
+					<div class="slide"><a href="https://www.tequilaworks.com/" target="_blank"><img src="static/tequila.jpg"></a></div>
+					<div class="slide"><a href="https://www.ibm.com/es-es" target="_blank"><img src="static/ibm.png"></a></div>
+				  </section>
+				</div>
+			</div>
+			<br><br> -->
 		</div> 
 		<script src="static/js/index.js"></script>
 	</body>
