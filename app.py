@@ -103,7 +103,7 @@ class LoginForm(FlaskForm): # class RegisterForm extends FlaskForm
 def login():
     empresas = Empresa.query.all()
     paises = Pais.query.all()
-    form = LoginForm()
+    form = LoginForm() 
     if request.method == 'POST':
         if form.validate_on_submit():
             user = Empresa.query.filter(Empresa.email==form.email.data).first()
@@ -112,6 +112,7 @@ def login():
             elif user.es_verificado:
                 login_user(user, remember=form.remember.data)
                 flash("Welcome back {}".format(current_user.username))
+                session['id'] = str(user.id)
                 return redirect(url_for('index'))
             else:
                 flash("User not confirmed. Please visit your email to confirm your user.")
