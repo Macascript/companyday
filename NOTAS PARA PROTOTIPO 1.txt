@@ -1,0 +1,9 @@
+- Ruta api datos empresa
+- Esconder elementos de fondo del carrusel
+- Integrar front y maquetado empresa
+    + home
+    + carrusel
+    + login empresa
+    + mi perfil (sin diseño)
+- Formulario maquetado
+- Registro empresa

@@ -65,7 +65,9 @@
         el: '#app',
         delimiters:["[[","]]"],
         data: {
-            empresas: []
+            empresas: [],
+            id_empresa,
+            empresa
         },
         
         methods:{
@@ -98,6 +100,10 @@
     //     "web": "utad.com",
     //     "logo_url": "http://macascript.com/logos/prueba.png"
     // })
+            },
+
+            getEmpresa: function(){
+                
             },
             printEmpresas: function(){
                 console.log(this.empresas);

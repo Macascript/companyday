@@ -1,9 +1,12 @@
+from multiprocessing.spawn import import_main_path
+from aiohttp import request
 import flask
 from flask import jsonify
 from itsdangerous import json
 
 from models.empresa import Empresa
 from models.pais import Pais
+from api_functions import empresa_data
 
 empresa_api = flask.Blueprint("empresa_api",__name__)
 
@@ -30,6 +33,12 @@ def getEmpresas():
     # }
     # return jsonify({"empresas": lista})
     return "Hola"
+
+
+@empresa_api.route("/user/getempresa/<id>")
+def getEmpresa(id):
+    return empresa_data(id)
+
 
 @empresa_api.route("/user/getpaises")
 def getPaises():
@@ -61,4 +70,3 @@ def getPaises():
     print(lista)
     return jsonify({"paises": lista})
 
-# Funciones

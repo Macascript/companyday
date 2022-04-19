@@ -99,27 +99,44 @@ class LoginForm(FlaskForm): # class RegisterForm extends FlaskForm
     password = PasswordField('Password',validators=[InputRequired()])
     remember = BooleanField('Remember me')
 
-@app.route('/login',methods=['GET','POST'])
-def login():
-    empresas = Empresa.query.all()
-    paises = Pais.query.all()
-    form = LoginForm() 
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            user = Empresa.query.filter(Empresa.email==form.email.data).first()
-            if not user or not check_password_hash(user.contrasenya, form.password.data):
-                flash("Wrong user or Password!")
-            elif user.es_verificado:
-                login_user(user, remember=form.remember.data)
-                flash("Welcome back {}".format(current_user.username))
-                session['id'] = str(user.id)
-                return redirect(url_for('index'))
-            else:
-                flash("User not confirmed. Please visit your email to confirm your user.")
-                login_user(user, remember=form.remember.data)
-                return redirect(url_for('index'))
+# @app.route('/login',methods=['GET','POST'])
+# def login():
+#     empresas = Empresa.query.all()
+#     paises = Pais.query.all()
+#     form = LoginForm() 
+#     if request.method == 'POST':
+#         if form.validate_on_submit():
+#             user = Empresa.query.filter(Empresa.email==form.email.data).first()
+#             if not user or not check_password_hash(user.contrasenya, form.password.data):
+#                 flash("Wrong user or Password!")
+#             elif user.es_verificado:
+#                 login_user(user, remember=form.remember.data)
+#                 flash("Welcome back {}".format(current_user.username))
+#                 session['id'] = str(user.id)
+#                 return redirect(url_for('index'))
+#             else:
+#                 flash("User not confirmed. Please visit your email to confirm your user.")
+#                 login_user(user, remember=form.remember.data)
+#                 return redirect(url_for('index'))
 
-    return redirect(url_for('index'))
+#     return redirect(url_for('index'))
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        empresas = Empresa.query.all()
+        paises = Pais.query.all()
+        form = LoginForm()
+        user = Empresa.query.filter(Empresa.email == form.email.data).first()
+        response = {'status': 'success'}
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+        remember = data.get('remember')
+        print(email)
+    else:
+        response = {'status': 'error'}
+    return jsonify(response)
 
 
 @app.route("/empresaajax")

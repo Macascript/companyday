@@ -335,6 +335,11 @@
                   descripcion:""
                 }
               ],
+              logindata: {
+                email: "",
+                password: "",
+                remember: ""
+              },
               listaPaises: [],
               paises: {},
               provincias: {},
@@ -443,6 +448,20 @@
                   this.provincia = this.listaPaises[indices[0]].provincias[indices[1]].nombre;
                   this.paisSeleccionado = true;
                   this.provinciaSeleccionada = true;
+              },
+              login: function(){
+                const path = 'http://127.0.0.1/login'
+                axios.post(path, {
+                  email: this.data.logindata.email,
+                  password: this.data.logindata.password,
+                  remember: this.data.logindata.remember
+                })
+                  .then(response => {
+                    console.log(response)
+                  })
+                  .catch(err => {
+                    console.log(err)
+                  });
               }
             }
         });
