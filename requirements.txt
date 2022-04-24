@@ -1,4 +1,11 @@
-Flask==2.0.3
+aiohttp==3.8.1
+Flask==2.1.1
+flask_login==0.6.0
 flask_sqlalchemy==2.5.1
-itsdangerous==2.1.1
-Werkzeug==2.0.3
+flask_wtf==1.0.1
+itsdangerous==2.1.2
+SQLAlchemy==1.4.35
+Werkzeug==2.0.2
+WTForms==3.0.1
+mysqlclient
+flask_migrate

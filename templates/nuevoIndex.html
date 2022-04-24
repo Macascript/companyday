@@ -375,6 +375,12 @@
                         this.empresas = response.data.empresas;
                     }
                 )
+                this.$http.get(urlbase + "session/status").then(
+                    function(response){
+                        console.log("Bienvenido "+JSON.stringify(response.data));
+                        this.empresas = response.data.empresas;
+                    }
+                )
             },
             
             methods:{

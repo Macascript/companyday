@@ -4,11 +4,12 @@ import os
 from werkzeug.utils import secure_filename
 
 
-from models.empresa import Empresa
-from models.poblacion import Poblacion
-from extensions import db
+from models import Empresa, get_db
+from models import Poblacion
 
-from extensions import UPLOAD_FOLDER
+from config import UPLOAD_FOLDER
+
+db = get_db()
 
 empresa_rutas = flask.Blueprint("empresa_rutas",__name__)
 
@@ -22,6 +23,7 @@ def profile():
 
 @empresa_rutas.route("/changedata",methods=["GET","POST"])
 def changedata():
+    #login_required
     f = request.form
     id = f["id"]
     empresa = Empresa.query.get(id)
