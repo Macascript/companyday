@@ -1,5 +1,6 @@
 /venv
 /.idea
+/.idea*
 *.pyc
 */__pycache__
 /static/logos
