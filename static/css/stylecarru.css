@@ -1,0 +1,389 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+ 
+.myaccordion {
+  background: transparent; 
+  box-shadow: 0 0 1px rgba(0,0,0,0.1);
+}
+.card{
+  background: transparent;
+}
+
+.myaccordion .card,
+.myaccordion .card:last-child .card-header {
+  border: none;
+}
+
+.myaccordion .card-header {
+  border-bottom-color: #EDEFF0;
+  background: transparent;
+}
+
+.myaccordion .fa-stack {
+  font-size: 18px;
+}
+
+.myaccordion .btn {
+  width: 100%;
+  font-weight: bold;
+  color: #004987;
+  padding: 0;
+}
+
+.myaccordion .btn-link:hover,
+.myaccordion .btn-link:focus {
+  text-decoration: none;
+}
+ 
+ /*.accordion{
+  background-color: transparent;
+}
+  .accordion-item{
+    background-color: transparent;
+  }
+ {background-color: black;}*/
+
+.mainContainer{
+    
+
+    background: url(static/carrusel_actividades_alumnos/burbujas.png);
+    background-repeat: no-repeat;
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    
+}
+
+
+
+#margenNav{
+	margin-left: 650px;
+	color: #99ddff;
+}
+#margenNav2{
+	
+	margin-left: 120px;
+	color: #99ddff;
+}
+
+ 
+#mainNav{
+
+	border-bottom:solid 2px white;
+}
+a{
+	color:white;
+}
+
+a:hover{
+	color: white;
+}
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
+
+.Dia{
+	/* 15 · 19 */
+
+
+	position: absolute;
+	width: 12%;
+	height:12%;
+	left: 79%;
+	top: 75%;
+
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 800;
+	font-size: 40px;
+	line-height: 24px;
+	/* or 60% */
+
+	text-align: center;
+	letter-spacing: -0.011em;
+
+	color: #FFFFFF;
+	
+}
+
+.calendar{
+	position: absolute;
+	width: 80px;
+	height: 26px;
+	left: 85%;
+	top: 1%;
+
+    background: url(static/imagenes_globales/calendar.png);
+}
+
+
+.Fecha{
+	/* NOVIEMBRE */
+
+
+	position: absolute;
+	width: 12%;
+	height:12%;
+	left: 79%;
+	top: 80%;
+
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 24px;
+	/* identical to box height, or 133% */
+
+	text-align: center;
+	letter-spacing: -0.011em;
+
+	color: #FFFFFF;	
+	
+}
+
+
+
+.txt{
+	/* Diseño Digital */
+
+
+	position: static;
+	width: 12%;
+	height:12%;
+	left: 80%;
+	top: 65%;
+
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 24px;
+	/* identical to box height, or 200% */
+
+	display: flex;
+	align-items: center;
+	text-align: center;
+	letter-spacing: -0.011em;
+
+	/* White */
+
+	color: #FFFFFF;
+
+
+	/* Inside auto layout */
+
+	flex: none;
+	order: 0;
+	flex-grow: 0;
+	margin: 0px 10px;	
+}
+
+.Inicio{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 0px 14px;
+
+	position: absolute;
+	width: 8%;
+	height:4%;
+	left: 90%;
+	top: 50%;
+
+	background: rgba(255, 255, 255, 0.3);
+	/* White */
+
+	border: 1px solid #FFFFFF;
+	box-sizing: border-box;
+	border-radius: 17px;	
+}
+
+.Asistente{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 0px 14px;
+
+	position: absolute;
+	width: 8%;
+	height:4%;
+	left: 90%;
+	top: 45%;
+
+	background: rgba(0, 103, 244, 0.3);
+	/* Blue */
+
+	border: 1px solid #0067F4;
+	box-sizing: border-box;
+	border-radius: 17px;
+}
+
+
+
+
+
+.pos{
+position: absolute;
+width: 40%;
+height: 40%;
+left: 32%;
+top: 55%;
+
+/* White */
+border-bottom: 1px solid #FFFFFF;	
+	
+}
+
+
+.logoCompany{
+	position: absolute;
+	width: 80px;
+	height: 26px;
+	left: 85%;
+	top: 1%;
+
+    background: url(static/imagenes_globales/Logo_Company.png);
+}
+
+.logoUtadHome{
+    position:absolute;
+    width: 80px;
+    height: 25px;
+	left: 10%;
+	top: 1%;
+
+    background: url(static/imagenes_globales/logou.png);
+}
+
+ 
+
+.esloganHome{
+	position: absolute;
+	left: 38%;
+	top: 20%;
+ 
+
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal; 
+    font-weight: 800;
+    font-size: 100px;
+    line-height: 180px;
+
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.011em;
+
+    color: #FFFFFF;
+
+}
+
+svg {
+    overflow: visible;
+    animation: circular-text-rotate 8s linear paused infinite;
+    width: 10%;
+	height: 30%;
+	margin-top: 25%;
+	margin-left: 80%;
+    font-size: 12px;
+    font-family: 'Roboto';
+}
+svg {
+    animation-play-state: running;
+}
+path {
+    fill: none;
+  }
+text {
+    fill: white;
+}
+@keyframes circular-text-rotate {
+    to{
+        transform: rotate(1turn);
+    }
+}
+
+
+.content-all{
+
+	position: absolute;
+	left: 45%;
+	top: 30%;
+    width:10%;
+    perspective: 100%;
+ 
+}
+
+ 
+
+.content-carrousel{
+    width: 240px; /* cambiar a 100 % */
+    position: absolute;
+    animation: rotar 10s infinite linear;
+    transform-style: preserve-3d;
+}
+
+.content-carrousel:hover{
+    animation-play-state: paused;
+    cursor: pointer;
+}
+
+
+.content-carrousel figure{
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    position: absolute;
+    box-shadow: 0px 0px 20px 0px black;
+    transition: all 1000ms;
+    
+}
+
+.content-carrousel figure:hover{
+    box-shadow: 0px 0px 0px 0px black;
+    transition: all 300ms;
+}
+
+.content-carrousel figure:nth-child(1){transform: rotateY(0deg) translateZ(700px);}
+.content-carrousel figure:nth-child(2){transform: rotateY(40deg) translateZ(700px);}
+.content-carrousel figure:nth-child(3){transform: rotateY(80deg) translateZ(700px);}
+.content-carrousel figure:nth-child(4){transform: rotateY(120deg) translateZ(700px);}
+.content-carrousel figure:nth-child(5){transform: rotateY(160deg) translateZ(700px);}
+.content-carrousel figure:nth-child(6){transform: rotateY(200deg) translateZ(700px);}
+.content-carrousel figure:nth-child(7){transform: rotateY(240deg) translateZ(700px);}
+.content-carrousel figure:nth-child(8){transform: rotateY(280deg) translateZ(700px);}
+.content-carrousel figure:nth-child(9){transform: rotateY(320deg) translateZ(700px);}
+.content-carrousel figure:nth-child(10){transform: rotateY(360deg) translateZ(700px);}
+
+.content-carrousel img{
+	/* cambiar el tamaño de la imagne	*/ 
+	left: 100px;
+    width: 100%;
+	height: 100%;
+    transition: all 300ms;
+}
+
+.content-carrousel img:hover{
+    transform: scale(3);
+    transition: all 300ms;
+}
+
+
+@keyframes rotar{
+    from{
+        transform: rotateY(0deg);
+    }to{
+        transform: rotateY(360deg);
+    }
+}
+

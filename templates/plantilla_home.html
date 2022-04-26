@@ -1,0 +1,79 @@
+<!DOCTYPE HTML> 
+<html>
+<head>
+    <title>Company Day </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <!--jQuery-->
+    <script
+			  src="https://code.jquery.com/jquery-3.6.0.slim.js"
+			  integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="
+			  crossorigin="anonymous">
+    </script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Slick Slider CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <!-- jQuery first, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- Slick Slider JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.js"></script>
+    <link rel="stylesheet" href="static/css/styleplantilla.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="mainContainer">
+        <div class="logoUtadHome"></div>
+        <div class="esloganHome"><p>We create</p></div><div class="cambiar"><p>the next.</p> </div>
+		<div class="logoCompany"></div>
+		<div class="calendar"></div>
+		<div class="txt">
+			<div class="Asistente" type="button">Asiste al evento</div>
+			<div class="Inicio" type="button">Inicio Sesion</div>
+			
+			<div class="Fecha"> Noviembre </div>
+			<div class="Dia"> 15 · 19  </div>
+		</div>
+		 <svg viewBox="0 0 100 100">
+                <path d="M 0,50 a 50,50 0 1,1 0,1 z" id="circle" />
+                <text>
+                    <textPath xlink:href="#circle">
+                        JOIN THE EVENT . JOIN THE EVENT . JOIN THE EVENT
+                    </textPath>
+                </text>
+        </svg>
+    </div>  
+
+</body>
+<script> 
+$(document).ready(function() {	
+    function rotar(){
+        var indice = 0;
+        frases = new Array();
+        frases[0] = "the next.";
+        frases[1] = "the best.";
+        frases[2] = "talent.";
+
+
+        indice = Math.random()*(frases.length);
+        indice = Math.floor(indice);
+
+        if (indice == frases.length) {
+            indice = 0;
+        }
+        $(".cambiar").html(frases[indice]).fadeOut("slow");	
+        indice++;
+        
+    }
+    setInterval(rotar, 3000);
+});
+</script>
+</html>

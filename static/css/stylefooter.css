@@ -1,0 +1,148 @@
+*{
+    margin: 0;
+    padding: 0;
+    outline: none;
+    font-family: serif;
+}
+body{
+    display: flex;
+     background-color: #282828;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+}
+
+.mitad{
+	padding-top: 30px;
+	padding-left: 1000px;
+	color:white;
+}
+
+.smitad{
+	padding-left: 80px;
+	padding-top: 210px;
+	color:white;
+}
+
+.c{
+	padding-top:25px;
+}
+
+.c2{
+	border-top: 1px solid white;
+	padding-bottom: 30px;
+}
+
+#c2{
+	border-bottom: 1px solid white;
+}
+
+.redSocial{
+    position: absolute;
+    width: 58px;
+    height: 15px;
+    left: 1050px;
+    top: 21px;
+}
+.redSocial2{
+
+    position: absolute;
+    width: 58px;
+    height: 15px;
+    left: 1095px;
+    top: 21px;
+}
+.redSocial3{
+
+    position: absolute;
+    width: 58px;
+    height: 15px;
+    left: 1150px;
+    top: 21px;
+}
+.redSocial4{
+
+    position: absolute;
+    width: 58px;
+    height: 15px;
+    left: 1200px;
+    top: 21px;
+   
+}
+.redSocial5{
+
+    position: absolute;
+    width: 58px;
+    height: 15px;
+    left: 1250px;
+    top: 21px;
+   
+}
+
+ 
+.rigts{
+	color:white;
+	padding-top: 30px;
+	padding-left: 960px;
+	
+}
+
+.mail{
+	color:white;
+	padding-top: 35px;
+	padding-left: 80px;
+	
+}
+
+#mail{
+	font-size: 70px;
+	border-bottom: 1px solid white;
+}
+
+.logoUtad{
+    position:absolute;
+	left: 50%;
+	top: 60%;
+    width: 66px;
+    height: 20px;
+    background: url(static/Imagenes_globales/logo.png);
+}
+
+.camilo{
+    position:absolute;
+	left: 955px;
+	top: 64%;
+    width: 100px;
+    height: 25px;
+    background: url(static/footer/camilo.png);	
+}
+ 
+
+.patro1{
+	position:absolute;
+	left: 50%;
+	top: 70%;
+    width: 93PX;
+    height: 25px;
+    background: url(static/footer/esp.png);	
+}
+
+
+.patro2{
+    position:absolute;
+	left: 56%;
+	top: 70%;
+    width: 75px;
+    height: 32px;
+    background: url(static/footer/mad.png);		
+}
+
+
+.patro3{
+	position:absolute;
+	left: 61%;
+	top: 69%;
+    width: 85px;
+    height: 35px;
+    background: url(static/footer/madridpatro.png);	
+}

@@ -1,0 +1,255 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+p{
+	font-size: 200px
+}
+
+ 
+ 
+
+
+.mainContainer{
+    
+
+    background: url(22.png);
+    background-repeat: no-repeat;
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    
+}
+ 
+ 
+.Dia{
+	/* 15 · 19 */
+
+
+	position: absolute;
+	width: 12%;
+	height:12%;
+	left: 79%;
+	top: 75%;
+
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 800;
+	font-size: 40px;
+	line-height: 24px;
+	/* or 60% */
+
+	text-align: center;
+	letter-spacing: -0.011em;
+
+	color: #FFFFFF;
+	
+}
+
+.calendar{
+	position: absolute;
+	width: 80px;
+	height: 26px;
+	left: 85%;
+	top: 1%;
+
+    background: url(calendar.png);
+}
+
+
+.Fecha{
+	/* NOVIEMBRE */
+
+
+	position: absolute;
+	width: 12%;
+	height:12%;
+	left: 79%;
+	top: 80%;
+
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 24px;
+	/* identical to box height, or 133% */
+
+	text-align: center;
+	letter-spacing: -0.011em;
+
+	color: #FFFFFF;	
+	
+}
+
+
+
+.txt{
+	/* Diseño Digital */
+
+
+	position: static;
+	width: 12%;
+	height:12%;
+	left: 80%;
+	top: 65%;
+
+	font-family: 'Montserrat';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 24px;
+	/* identical to box height, or 200% */
+
+	display: flex;
+	align-items: center;
+	text-align: center;
+	letter-spacing: -0.011em;
+
+	/* White */
+
+	color: #FFFFFF;
+
+
+	/* Inside auto layout */
+
+	flex: none;
+	order: 0;
+	flex-grow: 0;
+	margin: 0px 10px;	
+}
+
+.Inicio{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 0px 14px;
+
+	position: absolute;
+	width: 8%;
+	height:4%;
+	left: 90%;
+	top: 50%;
+
+	background: rgba(255, 255, 255, 0.3);
+	/* White */
+
+	border: 1px solid #FFFFFF;
+	box-sizing: border-box;
+	border-radius: 17px;	
+}
+
+.Asistente{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	padding: 0px 14px;
+
+	position: absolute;
+	width: 8%;
+	height:4%;
+	left: 90%;
+	top: 45%;
+
+	background: rgba(0, 103, 244, 0.3);
+	/* Blue */
+
+	border: 1px solid #0067F4;
+	box-sizing: border-box;
+	border-radius: 17px;
+}
+
+
+
+.logoCompany{
+	position: absolute;
+	width: 80px;
+	height: 26px;
+	left: 85%;
+	top: 1%;
+
+    background: url(Logo_Company.png);
+}
+
+.logoUtadHome{
+    position:absolute;
+    width: 80px;
+    height: 25px;
+	left: 10%;
+	top: 1%;
+
+    background: url(logou.png);
+}
+
+.cambiar{
+	position: absolute;
+	left: 29%;
+	top: 46%;
+
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal; 
+    font-weight: bold;
+    font-size: 200px;
+    line-height: 180px;
+
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.011em;
+
+    color: #FFFFFF;	
+}
+
+.esloganHome{
+	position: absolute;
+	left: 25%;
+	top: 20%;
+ 
+
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal; 
+    font-weight: 800;
+    font-size: 100px;
+    line-height: 180px;
+
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+    letter-spacing: -0.011em;
+
+    color: #FFFFFF;
+
+}
+
+svg {
+    overflow: visible;
+    animation: circular-text-rotate 8s linear paused infinite;
+    width: 10%;
+	height: 30%;
+	margin-top: 25%;
+	margin-left: 80%;
+    font-size: 12px;
+    font-family: 'Roboto';
+}
+svg {
+    animation-play-state: running;
+}
+path {
+    fill: none;
+  }
+text {
+    fill: white;
+}
+@keyframes circular-text-rotate {
+    to{
+        transform: rotate(1turn);
+    }
+}
