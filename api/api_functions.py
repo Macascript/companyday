@@ -2,8 +2,7 @@ from flask import jsonify
 
 from models import Empresa
 
-def empresa_data(id):
-    empresa = Empresa.query.get(id)
+def empresa_data(empresa):
     if empresa is not None:
         return jsonify({
         'statusCode': 200,
