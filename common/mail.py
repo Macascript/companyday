@@ -1,13 +1,12 @@
 from flask_mail import Mail, Message
 from flask import render_template
-from init import get_app
 
-app = get_app()
+app = None
 mail = None
 
-
-def init_mail(app):
+def init_mail(App):
     global mail
+    app = App
     if mail == None:
         mail = Mail(app)
     return mail

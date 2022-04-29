@@ -1,32 +1,35 @@
 import random
 
-from flask import render_template, request, redirect, flash, url_for
+from flask import render_template, request, redirect, flash, url_for, Blueprint
 from flask_login import login_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 import os
 import datetime
 
-from init import get_app
-from mail import send_email
-from models import get_db, Empresa, Actividad, Poblacion, Presentacion, Pais, Provincia, Speed_meeting, Sesion, Charla
+from common.init import get_app
+from common.mail import send_email
+from common.init import get_db
+from models import Empresa, Actividad, Poblacion, Presentacion, Pais, Provincia, Speed_meeting, Sesion, Charla
 from config import UPLOAD_FOLDER
 
 app = get_app()
 db = get_db()
 
+views = Blueprint("views",__name__)
 
-@app.route("/plantilla")
+
+@views.route("/plantilla")
 def plantilla():
     return render_template("index.html")
 
 
-@app.route("/", methods=["GET", "POST"])
+@views.route("/", methods=["GET", "POST"])
 def index():
     return render_template("nuevoIndex.html", state="NotLogged")
 
 
-@app.route('/register', methods=['POST'])
+@views.route('/register', methods=['POST'])
 def register():
     if request.method == "POST":
         new_empresa = registrarEmpresa()
@@ -48,18 +51,17 @@ def register():
                 new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
                 charla = registrarCharla(new_empresa.id)
                 db.session.add(charla)
-                new_empresa.charla = charla;
+                new_empresa.charla = charla
 
             db.session.commit()
 
 
-@app.route('/login', methods=['POST'])
+@views.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
         form = request.form
         user = Empresa.query.filter(Empresa.email == form["email"]).first()
-        if not user or not user.contrasenya == form[
-            "password"]:  # check_password_hash(user.contrasenya, form["password"]):
+        if not user or not user.contrasenya == form["password"]:  # check_password_hash(user.contrasenya, form["password"]):
             flash("Wrong user or Password!")
         elif user.is_active:
             login_user(user, remember=True)
@@ -67,7 +69,6 @@ def login():
             return redirect(url_for('index'))
         else:
             flash("User not confirmed. Please visit your email to confirm your user.")
-            flash(current_user)
             login_user(user, remember=True)
             return redirect(url_for('index'))
 

@@ -2,7 +2,6 @@ import flask
 from flask import jsonify
 
 from models import Empresa, db
-from flask_login import current_user
 
 registry_handler = flask.Blueprint("registry_handler", __name__)
 
