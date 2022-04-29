@@ -1,5 +1,3 @@
-from multiprocessing.spawn import import_main_path
-from aiohttp import request
 import flask
 from flask import jsonify
 from flask_login import current_user, login_required
@@ -7,7 +5,7 @@ from flask_login import current_user, login_required
 
 from models import Empresa
 from models import Pais
-from api.api_functions import empresa_data
+from rutas.api.api_functions import empresa_data
 
 empresa_api = flask.Blueprint("empresa_api",__name__)
 

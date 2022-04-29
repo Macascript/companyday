@@ -2,27 +2,11 @@ import json
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-from init import get_app
+from common.init import get_app, init_db
 
-db = None
-
-
-def init_db(app):
-    global db
-    if db == None:
-        db = SQLAlchemy()  # class db extends app
-    return db
-
-
-def get_db():
-    global db
-    if db == None:
-        app = get_app()
-        db = init_db(app)
-    return db
 
 app = get_app()
-db = init_db(app)
+db = init_db()
 
 
 class Actividad(db.Model):

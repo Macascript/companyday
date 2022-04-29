@@ -14,3 +14,19 @@ def get_app():
     if app == None:
         app = init_app(__name__)
     return app
+
+db = None
+
+
+def init_db():
+    global db
+    if db == None:
+        db = SQLAlchemy()  # class db extends app
+    return db
+
+
+def get_db():
+    global db
+    if db == None:
+        db = init_db()
+    return db

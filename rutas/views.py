@@ -2,14 +2,15 @@ import random
 
 from flask import render_template, request, redirect, flash, url_for
 from flask_login import login_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 import os
 import datetime
 
-from init import get_app
-from mail import send_email
-from models import get_db, Empresa, Actividad, Poblacion, Presentacion, Pais, Provincia, Speed_meeting, Sesion, Charla
+from common.init import get_app
+from common.mail import send_email
+from common.init import get_db
+from models import Empresa, Actividad, Poblacion, Presentacion, Pais, Provincia, Speed_meeting, Sesion, Charla
 from config import UPLOAD_FOLDER
 
 app = get_app()
@@ -48,7 +49,7 @@ def register():
                 new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
                 charla = registrarCharla(new_empresa.id)
                 db.session.add(charla)
-                new_empresa.charla = charla;
+                new_empresa.charla = charla
 
             db.session.commit()
 
@@ -58,8 +59,7 @@ def login():
     if request.method == 'POST':
         form = request.form
         user = Empresa.query.filter(Empresa.email == form["email"]).first()
-        if not user or not user.contrasenya == form[
-            "password"]:  # check_password_hash(user.contrasenya, form["password"]):
+        if not user or not user.contrasenya == form["password"]:  # check_password_hash(user.contrasenya, form["password"]):
             flash("Wrong user or Password!")
         elif user.is_active:
             login_user(user, remember=True)
@@ -67,7 +67,6 @@ def login():
             return redirect(url_for('index'))
         else:
             flash("User not confirmed. Please visit your email to confirm your user.")
-            flash(current_user)
             login_user(user, remember=True)
             return redirect(url_for('index'))
 

@@ -1,6 +1,5 @@
 from flask import jsonify
 
-from models import Empresa
 
 def empresa_data(empresa):
     if empresa is not None:

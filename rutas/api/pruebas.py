@@ -2,9 +2,9 @@ import flask
 from flask import render_template, request
 from werkzeug.utils import secure_filename
 import os
-from models.empresa import Empresa
+from models import Empresa
 
-from models.pais import Pais
+from models import Pais
 
 UPLOAD_FOLDER = "static/logos"
 
@@ -12,7 +12,7 @@ pruebas = flask.Blueprint("pruebas",__name__)
 
 @pruebas.route("/prueba", methods=["GET","POST"])
 def prueba():
-    return render_template("prueba.html",paises=Pais.query.all())
+    return render_template("prueba.html", paises=Pais.query.all())
 
 @pruebas.route("/prueba2", methods=["GET","POST"])
 def prueba2():
@@ -31,7 +31,7 @@ def prueba2():
 
 @pruebas.route("/pruebapedro")
 def pruebapedro():
-    return render_template("utad.html",empresas=Empresa.query.all())
+    return render_template("utad.html", empresas=Empresa.query.all())
 
 @pruebas.route("/pruebamaca")
 def pruebamaca():

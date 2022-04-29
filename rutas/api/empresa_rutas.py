@@ -4,8 +4,8 @@ import os
 from werkzeug.utils import secure_filename
 
 
-from models import Empresa, get_db
-from models import Poblacion
+from common.init import get_db
+from models import Poblacion, Empresa
 
 from config import UPLOAD_FOLDER
 

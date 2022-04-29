@@ -3,7 +3,7 @@ from flask import jsonify
 
 from models import Empresa
 #from api_functions import empresa_data
-from api.api_functions import empresa_data
+from rutas.api.api_functions import empresa_data
 
 uni_api = flask.Blueprint("uni_api", __name__)
 
