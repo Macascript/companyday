@@ -8,7 +8,7 @@ from rutas.api.empresa_api import empresa_api
 from rutas.api.empresa_rutas import empresa_rutas
 from rutas.api.session_handler import session_handler
 from rutas.api.registry_handler import registry_handler
-#from api.pruebas import pruebas
+from rutas.api.pruebas import pruebas
 
 from models import Empresa
 from common.init import init_db, init_app
@@ -16,11 +16,15 @@ from common.init import init_db, init_app
 
 app = init_app(__name__)
 
+from rutas.views import views
+
+app.register_blueprint(views)
 app.register_blueprint(uni_api)
 app.register_blueprint(empresa_api)
 app.register_blueprint(empresa_rutas)
 app.register_blueprint(session_handler)
 app.register_blueprint(registry_handler)
+app.register_blueprint(pruebas)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -62,7 +66,6 @@ def empresa_ajax():
 def admin_ajax():
     return render_template("admin_ajax.html")
 
-import rutas.views
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)

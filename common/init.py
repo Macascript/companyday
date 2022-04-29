@@ -10,9 +10,9 @@ def init_app(name):
     return app
 
 def get_app():
-    global app
-    if app == None:
-        app = init_app(__name__)
+    # global app
+    # if app == None:
+    #     app = init_app(__name__)
     return app
 
 db = None
