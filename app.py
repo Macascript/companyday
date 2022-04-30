@@ -50,6 +50,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+import admin
+
 
 @login_manager.user_loader
 def load_user(company_id):
