@@ -23,7 +23,7 @@ def getEmpresas():
             "web": empresa.web,
             "logo_url": empresa.logo_url
         })
-    print(lista)
+    # print(lista)
     # body = {
     #     "empresas": lista
     # }
@@ -68,6 +68,6 @@ def getPaises():
     #     'headers': { 'Access-Control-Allow-Origin' : '*' },
     #     'body' : body
     # }
-    print(lista)
+    # print(lista)
     return jsonify({"paises": lista})
 

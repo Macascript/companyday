@@ -60,8 +60,10 @@ def register():
 def login():
     form = LoginForm()
     if request.method == 'POST':
-        user = Empresa.query.filter(Empresa.email == form.email).first()
-        if not user or not user.contrasenya == form.password:  # check_password_hash(user.contrasenya, form["password"]):
+        user = Empresa.query.filter(Empresa.email == form.email.data).first()
+        print(form.email)
+        print(user.contrasenya)
+        if not user or not user.contrasenya == form.password.data:  # check_password_hash(user.contrasenya, form["password"]):
             flash("Wrong user or Password!")
         elif user.is_active:
             login_user(user, remember=True)

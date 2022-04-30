@@ -75,7 +75,7 @@ class Empresa(UserMixin, db.Model):
     esta_creado_jb = db.Column(db.Boolean, default=False)
     esta_actualizado_jb = db.Column(db.Boolean, default=False)
     user_hash = db.Column(db.String(50))
-    usertype = db.Column(db.Integer) # 1: Admin, 2: User
+    # usertype = db.Column(db.Integer) # 1: Admin, 2: User
 
     poblacion = db.relationship("Poblacion", uselist=False)
     asistentes = db.relationship("Asistente")
@@ -102,6 +102,9 @@ class Poblacion(db.Model):
     nombre = db.Column(db.String(100))
 
     provincia = db.relationship("Provincia", uselist=False)
+
+    def __str__(self):
+     return self.nombre + ", " + self.provincia.nombre + ", " + self.provincia.pais.nombre
 
 
 class Presentacion(db.Model):
