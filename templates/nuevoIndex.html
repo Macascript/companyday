@@ -28,236 +28,17 @@
     <script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
 </head>
 <body>
+  {% include "header.html" %}
   <div id="app">
 
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="loginBoton">
       Login
     </button>
-    
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <form class="login-form" action="/login" method="post">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Login</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body col-sm">
-              <label for="inputEmail" class="sr-only">Email Address</label>
-              <input
-                type="email"
-                name="email"
-                id="inputEmail"
-                class="form-control mb-2"
-                placeholder="Email address"
-                required
-                autofocus
-              />
-              <label for="inputPassword" class="sr-only">Password</label>
-              <input
-                  type="password"
-                  name="password"
-                  id="inputPassword"
-                  class="form-control mb-2"
-                  placeholder="Password"
-                  required
-              />
-              <div class="checkbox mb-3">
-                  <label>
-                    <input type="checkbox" value="remember-me" /> Remember me
-                  </label>
-                </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-      </form>
-    </div>
     <div class="botonInscripcion">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Inscripcion</button>
     </div>
     
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title"></h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form method="post" enctype="multipart/form-data" action="/register">
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Nombre de la empresa:</label>
-                <input type="text" name='nombre' class="form-control" id="recipient-name"  maxlength="100">
-              </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Persona de contacto</label>
-                <input type="text" name='nombre_persona_contacto' class="form-control" id="recipient-name"  maxlength="100">
-              </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Email de empresa</label>
-                <input type="text" name='email' class="form-control" id="recipient-name"  maxlength="320">
-              </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Telefono de contacto</label>
-                <input type="text" name='telefono' class="form-control" id="recipient-name"  maxlength="13">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Direccion</label>
-                <input type="text" name='direccion' class="form-control" id="recipient-name"  maxlength="500">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Poblacion</label>
-                <datalist id="poblaciones">
-                  <div v-for="i in listaPaises">
-                    <div v-for="j in i.provincias">
-                      <div v-for="k in j.poblaciones">
-                        <option v-if="(!provinciaSeleccionada || provincia == k.nombreProvincia) && (!paisSeleccionado || pais == k.nombrePais)">[[k.nombre]]</option>
-                      </div>
-                    </div>
-                  </div>
-                </datalist>
-                <datalist id="provincias">
-                  <div v-for="i in listaPaises">
-                    <div v-for="j in i.provincias">
-                      <option v-if="!paisSeleccionado || pais == j.nombrePais">[[j.nombre]]</option>
-                    </div>
-                  </div>
-                </datalist>
-                <datalist id="paises">
-                  <div v-for="i in listaPaises">
-                    <option>[[i.nombre]]</option>
-                  </div>
-                </datalist>
-                <input list="poblaciones" name="poblacion" v-model="poblacion" @keydown="trigger" @input="cambioPoblacion">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Provincia</label>
-                <input list="provincias" name="provincia" v-model="provincia" @keydown="trigger" @input="cambioProvincia">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Codigo postal</label>
-                <input type="text" name='codigo_postal' class="form-control" id="recipient-name"  maxlength="10">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Pais</label>
-                <input list="paises" name="pais" v-model="pais" @keydown="trigger" @input="cambioPais">
-                
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Url website</label>
-                <input type="text" name='web' class="form-control" id="recipient-name"  maxlength="200">
-              </div>
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">Logo de empresa</label>
-                <input type="file" name='logo_url' class="form-control" id="recipient-name">
-              </div>
-              <label for="message-text" class="col-form-label">Consentimiento del uso del nombre</label><br>
-              <input type="radio" name="consentimiento_uso_nombre" value="si" checked>
-              <label for="html">si</label><br>
-              <input type="radio" name="consentimiento_uso_nombre" value="no">
-              <label for="css">no</label><br>
-              <label for="message-text" class="col-form-label">Busqueda de candidatos</label><br>
-              <input type="radio" name="buscando_candidatos" value="si" checked>
-              <label for="html">si</label><br>
-              <input type="radio" name="buscando_candidatos" value="no">
-              <label for="css">no</label><br>
-              <label for="cbox2">Presentacion proyectos</label>
-             
-              <label for="message-text" class="col-form-label">Actividades</label><br>
-              <a href="#redirectFE"><input type="checkbox" name="feria_empresas" value="1" v-model="fEmpresas" id="redirectFE"> <label for="cbox2" id="actividad1">Feria de empresas</label></a>
-              <a href="#redirectPP"><input type="checkbox" name="presentacion" value="2" v-model="pProyectos"> <label for="cbox2">Presentacion proyectos</label><br></a>
-              <a href="#redirectSM"><input type="checkbox" name="speed_meetings" value="3" v-model="sMeetings"> <label for="cbox2"  id="actividad2">Speed Meetings</label></a>
-              <a href="#redirectCC"><input type="checkbox" name="charlas" value="4" v-model="ccharla"> <label for="cbox2">Charlas</label></a>
-              
-              <hr>
-              
-              <div v-if="fEmpresas">
-                
-              </div>
-              <div v-if="pProyectos">
-                <div class="mb-3" id="redirectPP">
-                  <label for="message-text" class="col-form-label">Presentacion proyectos</label>
-                  <hr>
-                  <label for="message-text" class="col-form-label">Modalidad</label><br>
-                  <input type="radio" name="modalidad_presentacion" value="online">
-                  <label>online</label><br>
-                  <input type="radio" name="modalidad_presentacion" value="presencial"  checked>
-                  <label>presencial</label><br><br>
-                  <input type="checkbox" name="animacion" value="value2"> <label for="cbox2">animacion</label><br>
-                  <input type="checkbox" name="videojuegos" value="value2"> <label for="cbox2">videojuegos</label><br>
-                  <input type="checkbox" name="ingenieria" value="value2"> <label for="cbox2">ingeieria</label><br>
-                  <input type="checkbox" name="disenio" value="value2"> <label for="cbox2">diseño</label><br>
-                  <hr>
-                </div>
-              </div>
-              <div v-if="sMeetings">
-                <div class="mb-3" id="redirectSM">
-                  
-                  <label for="message-text" class="col-form-label">Speed Meetings</label>
-                  <br>
-                  <input type="hidden" name="numero_sesiones" :value="tasks.length">
-                  <div v-for="(task,index) in tasks">
-                    <label for="message-text" class="col-form-label" >Modalidad</label>
-                    <input type="radio" :name="'modalidad_speed_meeting_'+index" value="online" id="margenBox" v-model="task.modalidad">
-                    <label>online</label>
-                    <input type="radio" :name="'modalidad_speed_meeting_'+index" value="presencial" v-model="task.modalidad">
-                    <label>presencial</label><br><br>
-                    <input type="date" id="start" :name="'fecha_speed_meeting_'+index"
-                    value="2018-07-22"
-                    min="2022-09-18" max="2022-09-23" v-model="task.fecha">
-          
-                    <label for="cars" id="margenBox2">Duracion de la entrevista</label>
-          
-                    <select id="cars" :name="'duracion_'+index" v-model="task.tiempo">
-                    <option value="10">10 mins</option>
-                    <option value="15">15 mins</option>
-                    <option value="20">20 mins</option>
-                    <option value="25">25 mins</option>
-                    </select>
-                    <button @click="deleteSpeedM(task)" class="btn btn-danger" id="margenBox2" v-if="index>0">X</button><br><br>
-                    <label for="w3review">Explique que oferta de empleo esta buscando</label><br><br>
-                    <textarea id="w3review" :name="'descripcion_speed_meeting_'+index" rows="2" cols="40"  maxlength="500" v-model="task.descripcion"></textarea><br><br>
-                  </div>
-                  <a href="#addSpeedM"><button @click="addSpeedM" class="btn btn-success" id="addSpeedM">+</button></a>
-                  
-                </div>
-              </div>
-              <div v-if="ccharla">
-                <div class="mb-3" id="redirectCC">
-                  <label for="message-text" class="col-form-label">Charlas</label>
-                  <hr>
-                  <label for="message-text" class="col-form-label">Modalidad</label><br><br><br>
-                  <input type="radio" name="modalidad_charlas" value="online">
-                  <label>online</label><br>
-                  <input type="radio" name="modalidad_charlas" value="presencial" checked>
-                  <label>presencial</label><br><br>
-                  <label for="w3review">Titulo y descripcion</label><br>
-                  <textarea id="w3review" name="descripcion_charla" rows="2" cols="50"></textarea> <br> <br>
-                  <input type="date" id="start" name="fecha_charla"
-                  value="2018-07-22"
-                  min="2022-09-18" max="2022-09-23">
-                  <br>
-                  <br>
-                  <input type="time"  name="hora_charla" min="09:00" max="18:00"> <br> <br>
-                </div>
-              </div>
-              
-       
-          
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" onclick="$('form').submit();">Send message</button>
-              </div>
-            </form>
-          </div>
-          
-        </div>
-      </div>
+    
     </div>
     <div class="rowCarousel">
       <div class="container">
@@ -274,7 +55,238 @@
       </div>
     </div>
   </div>
+  {% include "footer.html" %}
+<!-- Modal Login -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form class="login-form" action="/login" method="post">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body col-sm">
+          {{ form.email.label }}
+          <br>
+          {{ form.email }}
+          <br>
+          {{ form.password.label }}
+          <br>
+          {{ form.password }}
+          <!---<label for="inputEmail" class="sr-only">Email Address</label>
+          <input
+            type="email"
+            name="email"
+            id="inputEmail"
+            class="form-control mb-2"
+            placeholder="Email address"
+            required
+            autofocus
+          />
+          <label for="inputPassword" class="sr-only">Password</label>
+          <input
+              type="password"
+              name="password"
+              id="inputPassword"
+              class="form-control mb-2"
+              placeholder="Password"
+              required
+          />
+          <div class="checkbox mb-3">
+              <label>
+                <input type="checkbox" value="remember-me" /> Remember me
+              </label>
+            </div>
+      </div>--->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+  </form>
 </div>
+<!--- Modal Register --->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" enctype="multipart/form-data" action="/register">
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Nombre de la empresa:</label>
+              <input type="text" name='nombre' class="form-control" id="recipient-name"  maxlength="100">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Persona de contacto</label>
+              <input type="text" name='nombre_persona_contacto' class="form-control" id="recipient-name"  maxlength="100">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Email de empresa</label>
+              <input type="text" name='email' class="form-control" id="recipient-name"  maxlength="320">
+            </div>
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Telefono de contacto</label>
+              <input type="text" name='telefono' class="form-control" id="recipient-name"  maxlength="13">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Direccion</label>
+              <input type="text" name='direccion' class="form-control" id="recipient-name"  maxlength="500">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Poblacion</label>
+              <datalist id="poblaciones">
+                <div v-for="i in listaPaises">
+                  <div v-for="j in i.provincias">
+                    <div v-for="k in j.poblaciones">
+                      <option v-if="(!provinciaSeleccionada || provincia == k.nombreProvincia) && (!paisSeleccionado || pais == k.nombrePais)">[[k.nombre]]</option>
+                    </div>
+                  </div>
+                </div>
+              </datalist>
+              <datalist id="provincias">
+                <div v-for="i in listaPaises">
+                  <div v-for="j in i.provincias">
+                    <option v-if="!paisSeleccionado || pais == j.nombrePais">[[j.nombre]]</option>
+                  </div>
+                </div>
+              </datalist>
+              <datalist id="paises">
+                <div v-for="i in listaPaises">
+                  <option>[[i.nombre]]</option>
+                </div>
+              </datalist>
+              <input list="poblaciones" name="poblacion" v-model="poblacion" @keydown="trigger" @input="cambioPoblacion">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Provincia</label>
+              <input list="provincias" name="provincia" v-model="provincia" @keydown="trigger" @input="cambioProvincia">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Codigo postal</label>
+              <input type="text" name='codigo_postal' class="form-control" id="recipient-name"  maxlength="10">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Pais</label>
+              <input list="paises" name="pais" v-model="pais" @keydown="trigger" @input="cambioPais">
+              
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Url website</label>
+              <input type="text" name='web' class="form-control" id="recipient-name"  maxlength="200">
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Logo de empresa</label>
+              <input type="file" name='logo_url' class="form-control" id="recipient-name">
+            </div>
+            <label for="message-text" class="col-form-label">Consentimiento del uso del nombre</label><br>
+            <input type="radio" name="consentimiento_uso_nombre" value="si" checked>
+            <label for="html">si</label><br>
+            <input type="radio" name="consentimiento_uso_nombre" value="no">
+            <label for="css">no</label><br>
+            <label for="message-text" class="col-form-label">Busqueda de candidatos</label><br>
+            <input type="radio" name="buscando_candidatos" value="si" checked>
+            <label for="html">si</label><br>
+            <input type="radio" name="buscando_candidatos" value="no">
+            <label for="css">no</label><br>
+            <label for="cbox2">Presentacion proyectos</label>
+           
+            <label for="message-text" class="col-form-label">Actividades</label><br>
+            <a href="#redirectFE"><input type="checkbox" name="feria_empresas" value="1" v-model="fEmpresas" id="redirectFE"> <label for="cbox2" id="actividad1">Feria de empresas</label></a>
+            <a href="#redirectPP"><input type="checkbox" name="presentacion" value="2" v-model="pProyectos"> <label for="cbox2">Presentacion proyectos</label><br></a>
+            <a href="#redirectSM"><input type="checkbox" name="speed_meetings" value="3" v-model="sMeetings"> <label for="cbox2"  id="actividad2">Speed Meetings</label></a>
+            <a href="#redirectCC"><input type="checkbox" name="charlas" value="4" v-model="ccharla"> <label for="cbox2">Charlas</label></a>
+            
+            <hr>
+            
+            <div v-if="fEmpresas">
+              
+            </div>
+            <div v-if="pProyectos">
+              <div class="mb-3" id="redirectPP">
+                <label for="message-text" class="col-form-label">Presentacion proyectos</label>
+                <hr>
+                <label for="message-text" class="col-form-label">Modalidad</label><br>
+                <input type="radio" name="modalidad_presentacion" value="online">
+                <label>online</label><br>
+                <input type="radio" name="modalidad_presentacion" value="presencial"  checked>
+                <label>presencial</label><br><br>
+                <input type="checkbox" name="animacion" value="value2"> <label for="cbox2">animacion</label><br>
+                <input type="checkbox" name="videojuegos" value="value2"> <label for="cbox2">videojuegos</label><br>
+                <input type="checkbox" name="ingenieria" value="value2"> <label for="cbox2">ingeieria</label><br>
+                <input type="checkbox" name="disenio" value="value2"> <label for="cbox2">diseño</label><br>
+                <hr>
+              </div>
+            </div>
+            <div v-if="sMeetings">
+              <div class="mb-3" id="redirectSM">
+                
+                <label for="message-text" class="col-form-label">Speed Meetings</label>
+                <br>
+                <input type="hidden" name="numero_sesiones" :value="tasks.length">
+                <div v-for="(task,index) in tasks">
+                  <label for="message-text" class="col-form-label" >Modalidad</label>
+                  <input type="radio" :name="'modalidad_speed_meeting_'+index" value="online" id="margenBox" v-model="task.modalidad">
+                  <label>online</label>
+                  <input type="radio" :name="'modalidad_speed_meeting_'+index" value="presencial" v-model="task.modalidad">
+                  <label>presencial</label><br><br>
+                  <input type="date" id="start" :name="'fecha_speed_meeting_'+index"
+                  value="2018-07-22"
+                  min="2022-09-18" max="2022-09-23" v-model="task.fecha">
+        
+                  <label for="cars" id="margenBox2">Duracion de la entrevista</label>
+        
+                  <select id="cars" :name="'duracion_'+index" v-model="task.tiempo">
+                  <option value="10">10 mins</option>
+                  <option value="15">15 mins</option>
+                  <option value="20">20 mins</option>
+                  <option value="25">25 mins</option>
+                  </select>
+                  <button @click="deleteSpeedM(task)" class="btn btn-danger" id="margenBox2" v-if="index>0">X</button><br><br>
+                  <label for="w3review">Explique que oferta de empleo esta buscando</label><br><br>
+                  <textarea id="w3review" :name="'descripcion_speed_meeting_'+index" rows="2" cols="40"  maxlength="500" v-model="task.descripcion"></textarea><br><br>
+                </div>
+                <a href="#addSpeedM"><button @click="addSpeedM" class="btn btn-success" id="addSpeedM">+</button></a>
+                
+              </div>
+            </div>
+            <div v-if="ccharla">
+              <div class="mb-3" id="redirectCC">
+                <label for="message-text" class="col-form-label">Charlas</label>
+                <hr>
+                <label for="message-text" class="col-form-label">Modalidad</label><br><br><br>
+                <input type="radio" name="modalidad_charlas" value="online">
+                <label>online</label><br>
+                <input type="radio" name="modalidad_charlas" value="presencial" checked>
+                <label>presencial</label><br><br>
+                <label for="w3review">Titulo y descripcion</label><br>
+                <textarea id="w3review" name="descripcion_charla" rows="2" cols="50"></textarea> <br> <br>
+                <input type="date" id="start" name="fecha_charla"
+                value="2018-07-22"
+                min="2022-09-18" max="2022-09-23">
+                <br>
+                <br>
+                <input type="time"  name="hora_charla" min="09:00" max="18:00"> <br> <br>
+              </div>
+            </div>
+            
+     
+        
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" onclick="$('form').submit();">Send message</button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+
  
     <script>
         const urlbase = "http://127.0.0.1:5000/"

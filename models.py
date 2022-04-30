@@ -75,6 +75,7 @@ class Empresa(UserMixin, db.Model):
     esta_creado_jb = db.Column(db.Boolean, default=False)
     esta_actualizado_jb = db.Column(db.Boolean, default=False)
     user_hash = db.Column(db.String(50))
+    usertype = db.Column(db.Integer) # 1: Admin, 2: User
 
     poblacion = db.relationship("Poblacion", uselist=False)
     asistentes = db.relationship("Asistente")
@@ -82,6 +83,7 @@ class Empresa(UserMixin, db.Model):
     presentacion = db.relationship("Presentacion", uselist=False)
     speed_meeting = db.relationship("Speed_meeting", uselist=False)
     charla = db.relationship("Charla", uselist=False)
+    
 
 
 class Pais(db.Model):
