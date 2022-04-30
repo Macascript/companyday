@@ -4,6 +4,8 @@ from flask import render_template, request, redirect, flash, url_for
 from flask_login import login_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from forms import LoginForm
+from jinja2 import Environment
 import os
 import datetime
 
@@ -23,7 +25,8 @@ def plantilla():
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("nuevoIndex.html", state="NotLogged")
+    form = LoginForm()
+    return render_template("nuevoIndex.html", state="NotLogged", form = form)
 
 
 @app.route('/register', methods=['POST'])
@@ -48,18 +51,17 @@ def register():
                 new_empresa.actividades.append(Actividad.query.get(int(request.form["charlas"])))
                 charla = registrarCharla(new_empresa.id)
                 db.session.add(charla)
-                new_empresa.charla = charla;
+                new_empresa.charla = charla
 
             db.session.commit()
 
 
 @app.route('/login', methods=['POST'])
 def login():
+    form = LoginForm()
     if request.method == 'POST':
-        form = request.form
-        user = Empresa.query.filter(Empresa.email == form["email"]).first()
-        if not user or not user.contrasenya == form[
-            "password"]:  # check_password_hash(user.contrasenya, form["password"]):
+        user = Empresa.query.filter(Empresa.email == form.email).first()
+        if not user or not user.contrasenya == form.password:  # check_password_hash(user.contrasenya, form["password"]):
             flash("Wrong user or Password!")
         elif user.is_active:
             login_user(user, remember=True)
