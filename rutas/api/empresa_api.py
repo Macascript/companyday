@@ -1,12 +1,11 @@
-from multiprocessing.spawn import import_main_path
-from aiohttp import request
 import flask
 from flask import jsonify
+from flask_login import current_user, login_required
 #from itsdangerous import json
 
 from models import Empresa
 from models import Pais
-from api.api_functions import empresa_data
+from rutas.api.api_functions import empresa_data
 
 empresa_api = flask.Blueprint("empresa_api",__name__)
 
@@ -34,10 +33,10 @@ def getEmpresas():
     # return jsonify({"empresas": lista})
     return "Hola"
 
-
+@login_required
 @empresa_api.route("/user/getempresa")
 def getEmpresa():
-    return empresa_data()
+    return empresa_data(current_user)
 
 
 @empresa_api.route("/user/getpaises")
