@@ -72,3 +72,35 @@ TODO de poblaciones:
 - Si no hay provincia elegida y se elije una población, la provincia y el país se autorrellenan.
 - Si había una provincia elegida y/o una población elegida, si se cambia de país, se vacían los campos de provincia y población.
 - Si había una población elegida y se cambia de provincia, se vacía el campo de población.
+
+
+
+TODO BACKEND:
+    + HOME:
+        - Onepage del HOME en una ruta
+        - Ruta API nombre y logo de todas las empresas
+        - Registrarse e iniciar sesion
+        - Ruta API getpaises
+        - Ruta API getempresas
+        - Ruta Login POST (correo, contraseña) --> Respuesta redireccion a HOME con estado: Logged/Failed
+        - Ruta Registro API formulario tocho con eventos
+        - Ruta cerrar sesión --> Redireccion a HOME sin estado
+
+    + MI PERFIL:
+        - Ruta Mi perfil
+        - Ruta API getmiempresa autenticado para mi perfil
+        - Ruta POST para cambiar parametros de mi empresa, no eventos, comprobar qué info se cambia para luego correo a Marta
+        - BBDD tabla de cambios de info de empresa (empresa, nombre variable)
+
+    + Eventos
+        - Ruta API eliminar evento parametro por id evento y envía correo a Marta para avisar
+        - Tabla/s de solicitud de nuevos eventos/edicion de eventos
+        - Ruta añadir evento charla solicitud
+        - Ruta añadir evento speedmeeting solicitud
+        - Ruta añadir evento presentación proyecto empresa solicitud
+        - Ruta modificar eventos solicitud
+
+    + Trabajos alumnos
+        - Añadir BBDD trabajos alumnos (ver qué datos hace falta)
+        - Peticion API todas actividades alumnos, todos los datos
+        - Ruta API get trabajos
