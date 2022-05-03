@@ -2,27 +2,11 @@ import json
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
-from init import get_app
+from common.init import get_app, init_db
 
-db = None
-
-
-def init_db(app):
-    global db
-    if db == None:
-        db = SQLAlchemy()  # class db extends app
-    return db
-
-
-def get_db():
-    global db
-    if db == None:
-        app = get_app()
-        db = init_db(app)
-    return db
 
 app = get_app()
-db = init_db(app)
+db = init_db()
 
 
 class Actividad(db.Model):
@@ -71,7 +55,10 @@ class Empresa(UserMixin, db.Model):
     logo_url = db.Column(db.String(200))
     consentimiento_uso_nombre = db.Column(db.Boolean)
     buscando_candidatos = db.Column(db.Boolean)
-    is_confirmed = db.Column(db.Boolean)
+    esta_confirmado = db.Column(db.Boolean, default=False)
+    esta_creado_jb = db.Column(db.Boolean, default=False)
+    esta_actualizado_jb = db.Column(db.Boolean, default=False)
+    user_hash = db.Column(db.String(50))
 
     poblacion = db.relationship("Poblacion", uselist=False)
     asistentes = db.relationship("Asistente")

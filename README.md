@@ -72,3 +72,34 @@ TODO de poblaciones:
 - Si no hay provincia elegida y se elije una población, la provincia y el país se autorrellenan.
 - Si había una provincia elegida y/o una población elegida, si se cambia de país, se vacían los campos de provincia y población.
 - Si había una población elegida y se cambia de provincia, se vacía el campo de población.
+
+
+TODO BACKEND:
+    + HOME:
+        - Onepage del HOME en una ruta HECHO
+        - Ruta API nombre y logo de todas las empresas HECHO
+        - Ruta API getpaises HECHO
+        - Ruta Login POST (correo, contraseña) --> Respuesta redireccion a HOME con mensajes de error SIN HACER
+        - Rescatar mensajes de error de flask login sin flash() SIN HACER
+        - Ruta Registro API formulario tocho con eventos SIN HACER
+        - Doble verificación de registro (primera por correo y segunda por api_uni) SIN HACER
+        - Ruta cerrar sesión --> Redireccion a HOME sin estado SIN HACER
+        - Reorganizar la estructura de directorios (rutas/api y rutas/views) SIN HACER
+
+    + MI PERFIL:
+        - Ruta Mi perfil SIN HACER
+        - Ruta API getempresa autenticado para mi perfil HECHO
+        - Ruta POST para cambiar parametros de mi empresa, no eventos, comprobar qué info se cambia para luego correo a Marta SIN HACER
+        - BBDD tabla de cambios de info de empresa (clave foranea empresa, nombre variable) SIN HACER
+
+    + Eventos
+        - Ruta API eliminar evento parametro por identificador del tipo de evento y envía correo a Marta para avisar SIN HACER
+        - Tabla/s de solicitud de nuevos eventos/edicion de eventos SIN HACER
+        - Ruta añadir evento charla solicitud SIN HACER
+        - Ruta añadir evento speedmeeting solicitud SIN HACER
+        - Ruta añadir evento presentación proyecto empresa solicitud SIN HACER
+        - Ruta modificar eventos solicitud SIN HACER
+
+    + Trabajos alumnos
+        - Añadir BBDD trabajos alumnos (ver qué datos hace falta) SIN HACER
+        - Peticion API todas actividades alumnos, todos los datos SIN HACER 

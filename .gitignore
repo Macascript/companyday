@@ -1,7 +1,8 @@
 /venv
 /.idea
+/.idea*
 *.pyc
 */__pycache__
 /static/logos
 models/__pycache__/empresa.cpython-39.pyc
-api/__pycache__/empresa_api.cpython-39.pyc
+rutas/api/__pycache__/empresa_api.cpython-39.pyc
