@@ -115,7 +115,7 @@ def registrarEmpresa():
                           buscando_candidatos=buscando_candidatos, contrasenya=password_hashed,
                           user_hash=str(random.getrandbits(128))
                           )
-        send_email(empresa.email, 'Porfavor confirme su correo electrónico', 'mail/new_empresa', user=empresa, url=request.host)
+        send_email(empresa.email, 'Porfavor confirme su correo electrónico', 'mail/new_empresa', empresa=empresa, url=request.host)
         return empresa
     return None
 
