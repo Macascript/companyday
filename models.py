@@ -46,7 +46,7 @@ class Empresa(UserMixin, db.Model):
     nombre = db.Column(db.String(100))
     nombre_persona_contacto = db.Column(db.String(100))
     email = db.Column(db.String(320))
-    contrasenya = db.Column(db.String(50))
+    contrasenya = db.Column(db.String(100))
     telefono = db.Column(db.String(13))
     direccion = db.Column(db.String(500))
     poblacion_id = db.Column(db.Integer, db.ForeignKey("poblacion.id"))
@@ -58,7 +58,7 @@ class Empresa(UserMixin, db.Model):
     esta_confirmado = db.Column(db.Boolean, default=False)
     esta_creado_jb = db.Column(db.Boolean, default=False)
     esta_actualizado_jb = db.Column(db.Boolean, default=False)
-    user_hash = db.Column(db.String(50))
+    user_hash = db.Column(db.String(100))
 
     poblacion = db.relationship("Poblacion", uselist=False)
     asistentes = db.relationship("Asistente")
