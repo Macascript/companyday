@@ -1,7 +1,10 @@
 import flask
 from flask import render_template, request
+from flask_login import current_user
 from werkzeug.utils import secure_filename
 import os
+
+from common.mail import send_email
 from models import Empresa
 
 from models import Pais
@@ -38,6 +41,11 @@ def pruebamaca():
     # <meta id="paises" data-paises="{{ paises|tojson }}">
 	# <meta id="empresas" data-empresas="{{ empresas|tojson }}">
     return render_template("nuevoIndexVue.html")
+
+@pruebas.route("/pruebarello")
+def pruebarello():
+    send_email("daniel.rello@live.u-tad.com", 'Porfavor confirme su correo electrónico', 'mail/new_empresa', empresa=current_user, url=request.host)
+    return render_template("nuevoIndex.html")
 
 @pruebas.route("/pruebamaca2")
 def pruebamaca2():

@@ -6,6 +6,7 @@ mail = None
 
 def init_mail(App):
     global mail
+    global app
     app = App
     if mail == None:
         mail = Mail(app)
