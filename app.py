@@ -1,7 +1,8 @@
 from flask import render_template
 from flask_login import LoginManager
 from flask_migrate import Migrate
-from config import UPLOAD_FOLDER, SQLALCHEMY_DATABASE_URI, SECRET_KEY, MAIL_SERVER, MAIL_USERNAME, MAIL_PASSWORD, MAIL_SUBJECT_PREFIX
+from config import UPLOAD_FOLDER, SQLALCHEMY_DATABASE_URI, SECRET_KEY, MAIL_SERVER, MAIL_USERNAME, MAIL_PASSWORD, \
+    MAIL_SUBJECT_PREFIX, MAIL_SENDER
 # Rutas
 from rutas.api.uni_api import uni_api
 from rutas.api.empresa_api import empresa_api
@@ -37,6 +38,7 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = MAIL_USERNAME
 app.config['MAIL_PASSWORD'] = MAIL_PASSWORD
 app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = MAIL_SUBJECT_PREFIX
+app.config['FLASKY_MAIL_SENDER'] = MAIL_SENDER
 
 db = init_db()
 db.init_app(app)
