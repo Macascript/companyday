@@ -14,7 +14,7 @@ p{
 .mainContainer{
     
 
-    background: url(static/imagenes_inicio/fondo.png);
+    background: url(../imagenes_inicio/fondo.png);
     background-repeat: no-repeat;
     height: 100%;
 
@@ -58,7 +58,7 @@ p{
 	left: 85%;
 	top: 1%;
 
-    background: url(static/imagenes_globales/calendar.png);
+    background: url(../imagenes_globales/calendar.png);
 }
 
 
@@ -174,7 +174,7 @@ p{
 	left: 85%;
 	top: 1%;
 
-    background: url(static/imagenes_globales/Logo_Company.png);
+    background: url(../imagenes_globales/Logo_Company.png);
 }
 
 .logoUtadHome{
@@ -184,7 +184,7 @@ p{
 	left: 10%;
 	top: 1%;
 
-    background: url(static/imagenes_globales/logou.png);
+    background: url(../imagenes_globales/logou.png);
 }
 
 .cambiar{

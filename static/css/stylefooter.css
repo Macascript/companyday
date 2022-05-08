@@ -105,7 +105,7 @@ body{
 	top: 60%;
     width: 66px;
     height: 20px;
-    background: url(static/Imagenes_globales/logo.png);
+    background: url(../imagenes_globales/logou.png);
 }
 
 .camilo{
@@ -114,7 +114,7 @@ body{
 	top: 64%;
     width: 100px;
     height: 25px;
-    background: url(static/footer/camilo.png);	
+    background: url(../footer/camilo.png);	
 }
  
 
@@ -124,7 +124,7 @@ body{
 	top: 70%;
     width: 93PX;
     height: 25px;
-    background: url(static/footer/esp.png);	
+    background: url(../footer/esp.png);	
 }
 
 
@@ -134,7 +134,7 @@ body{
 	top: 70%;
     width: 75px;
     height: 32px;
-    background: url(static/footer/mad.png);		
+    background: url(../footer/mad.png);		
 }
 
 
@@ -144,5 +144,5 @@ body{
 	top: 69%;
     width: 85px;
     height: 35px;
-    background: url(static/footer/madridpatro.png);	
+    background: url(../footer/madridpatro.png);	
 }

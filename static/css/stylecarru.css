@@ -49,7 +49,7 @@ body, html {
 .mainContainer{
     
 
-    background: url(static/carrusel_actividades_alumnos/burbujas.png);
+    background: url(../carrusel_actividades_alumnos/burbujas.png);
     background-repeat: no-repeat;
     height: 100%;
 
@@ -120,7 +120,7 @@ a:link, a:visited, a:active {
 	left: 85%;
 	top: 1%;
 
-    background: url(static/imagenes_globales/calendar.png);
+    background: url(../imagenes_globales/calendar.png);
 }
 
 
@@ -251,7 +251,7 @@ border-bottom: 1px solid #FFFFFF;
 	left: 85%;
 	top: 1%;
 
-    background: url(static/imagenes_globales/Logo_Company.png);
+    background: url(../imagenes_globales/Logo_Company.png);
 }
 
 .logoUtadHome{
@@ -261,7 +261,7 @@ border-bottom: 1px solid #FFFFFF;
 	left: 10%;
 	top: 1%;
 
-    background: url(static/imagenes_globales/logou.png);
+    background: url(../imagenes_globales/logou.png);
 }
 
  
@@ -355,15 +355,15 @@ text {
 }
 
 .content-carrousel figure:nth-child(1){transform: rotateY(0deg) translateZ(700px);}
-.content-carrousel figure:nth-child(2){transform: rotateY(40deg) translateZ(700px);}
-.content-carrousel figure:nth-child(3){transform: rotateY(80deg) translateZ(700px);}
-.content-carrousel figure:nth-child(4){transform: rotateY(120deg) translateZ(700px);}
-.content-carrousel figure:nth-child(5){transform: rotateY(160deg) translateZ(700px);}
-.content-carrousel figure:nth-child(6){transform: rotateY(200deg) translateZ(700px);}
-.content-carrousel figure:nth-child(7){transform: rotateY(240deg) translateZ(700px);}
+.content-carrousel figure:nth-child(2){transform: rotateY(60deg) translateZ(700px);}
+.content-carrousel figure:nth-child(3){transform: rotateY(120deg) translateZ(700px);}
+.content-carrousel figure:nth-child(4){transform: rotateY(180deg) translateZ(700px);}
+.content-carrousel figure:nth-child(5){transform: rotateY(240deg) translateZ(700px);}
+.content-carrousel figure:nth-child(6){transform: rotateY(300deg) translateZ(700px);}
+/* .content-carrousel figure:nth-child(7){transform: rotateY(240deg) translateZ(700px);}
 .content-carrousel figure:nth-child(8){transform: rotateY(280deg) translateZ(700px);}
 .content-carrousel figure:nth-child(9){transform: rotateY(320deg) translateZ(700px);}
-.content-carrousel figure:nth-child(10){transform: rotateY(360deg) translateZ(700px);}
+.content-carrousel figure:nth-child(10){transform: rotateY(360deg) translateZ(700px);} */
 
 .content-carrousel img{
 	/* cambiar el tamaño de la imagne	*/ 

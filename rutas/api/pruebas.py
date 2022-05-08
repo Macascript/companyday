@@ -42,3 +42,15 @@ def pruebamaca():
 @pruebas.route("/pruebamaca2")
 def pruebamaca2():
     return render_template("editarPerfilVue.html")
+
+@pruebas.route("/primeraruta")
+def primeraruta():
+    return render_template("plantilla_home.html")
+
+@pruebas.route("/segundaruta")
+def segundaruta():
+    return render_template("carrusel_actividades_alumnos.html")
+
+@pruebas.route("/terceraruta")
+def terceraruta():
+    return render_template("footer.html")
