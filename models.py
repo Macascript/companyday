@@ -46,7 +46,7 @@ class Empresa(UserMixin, db.Model):
     nombre = db.Column(db.String(100))
     nombre_persona_contacto = db.Column(db.String(100))
     email = db.Column(db.String(320))
-    contrasenya = db.Column(db.String(16))
+    contrasenya = db.Column(db.String(50))
     telefono = db.Column(db.String(13))
     direccion = db.Column(db.String(500))
     poblacion_id = db.Column(db.Integer, db.ForeignKey("poblacion.id"))

@@ -26,7 +26,4 @@ def init_db():
 
 
 def get_db():
-    global db
-    if db == None:
-        db = init_db()
     return db
