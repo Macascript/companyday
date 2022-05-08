@@ -1,9 +1,9 @@
 User  {{empresa.nombre}}  has been created. 
- Please <a href="http://{{base_url}}/registry/confirm/{{empresa.id}}/{{empresa.userhash}}"> click here 
+ Please <a href="http://{{base_url}}/registry/confirm/{{empresa.id}}/{{empresa.user_hash}}"> click here 
 to confirm your email. 
 
 ----
 
 Usuario {{ empresa.nombre }} ha sido creado.
- Por favor <a href="http://{{base_url}}/registry/confirm/{{empresa.id}}/{{empresa.userhash}}">pinchar aqui
+ Por favor <a href="http://{{base_url}}/registry/confirm/{{empresa.id}}/{{empresa.user_hash}}">pinchar aqui
 para confirmar su email. 

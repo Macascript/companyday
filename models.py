@@ -55,6 +55,7 @@ class Empresa(UserMixin, db.Model):
     logo_url = db.Column(db.String(200))
     consentimiento_uso_nombre = db.Column(db.Boolean)
     buscando_candidatos = db.Column(db.Boolean)
+    esta_verificado = db.Column(db.Boolean, default=False)
     esta_confirmado = db.Column(db.Boolean, default=False)
     esta_creado_jb = db.Column(db.Boolean, default=False)
     esta_actualizado_jb = db.Column(db.Boolean, default=False)

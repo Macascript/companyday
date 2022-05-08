@@ -10,14 +10,14 @@ def confirmuser(empresa_id, userhash):
     empresa = Empresa.query.filter_by(id = empresa_id).first()
     if not empresa:
         response ='Invalid url.'
-    elif userhash != empresa.userhash:
+    elif userhash != empresa.user_hash:
         response ='Invalid url.'
-    elif empresa.confirmed:
+    elif empresa.esta_verificado:
         response ='Url already used.'
     else:
         try:
             response = 'User confirmed.'
-            empresa.confirmed = 1
+            empresa.esta_verificado = 1
             db.session.commit()
         except:
             db.session.rollback()

@@ -54,6 +54,7 @@ def register():
                 new_empresa.charla = charla
 
             db.session.commit()
+            send_email(new_empresa.email, 'Porfavor confirme su correo electrónico', 'mail/new_empresa', empresa=new_empresa, url=request.host)
 
 
 @views.route('/login', methods=['POST'])
@@ -115,7 +116,7 @@ def registrarEmpresa():
                           buscando_candidatos=buscando_candidatos, contrasenya=password_hashed,
                           user_hash=str(random.getrandbits(128))
                           )
-        send_email(empresa.email, 'Porfavor confirme su correo electrónico', 'mail/new_empresa', empresa=empresa, url=request.host)
+        
         return empresa
     return None
 
