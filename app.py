@@ -6,10 +6,10 @@ from config import UPLOAD_FOLDER, SQLALCHEMY_DATABASE_URI, SECRET_KEY, MAIL_SERV
 # Rutas
 from rutas.api.uni_api import uni_api
 from rutas.api.empresa_api import empresa_api
-from rutas.api.empresa_rutas import empresa_rutas
+from rutas.controllers.empresa_rutas import empresa_rutas
 from rutas.api.session_handler import session_handler
-from rutas.api.registry_handler import registry_handler
-from rutas.api.pruebas import pruebas
+from rutas.controllers.registry_handler import registry_handler
+from rutas.controllers.pruebas import pruebas
 
 from models import Empresa
 from common.init import init_db, init_app
@@ -17,7 +17,7 @@ from common.init import init_db, init_app
 
 app = init_app(__name__)
 
-from rutas.views import views
+from rutas.controllers.views import views
 
 app.register_blueprint(views)
 app.register_blueprint(uni_api)
