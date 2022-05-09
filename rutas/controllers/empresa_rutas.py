@@ -1,6 +1,7 @@
 import flask
 from flask import request, redirect, url_for, render_template
 import os
+from flask_login import logout_user
 from werkzeug.utils import secure_filename
 
 
@@ -57,3 +58,8 @@ def changedata():
 
     db.session.commit()
     return redirect("/prueba")
+
+@empresa_rutas.route("/logout")
+def logout():
+    logout_user()
+    return redirect("/")
