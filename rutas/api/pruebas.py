@@ -1,3 +1,4 @@
+from django.shortcuts import render
 import flask
 from flask import render_template, request
 from flask_login import current_user
@@ -62,3 +63,7 @@ def segundaruta():
 @pruebas.route("/terceraruta")
 def terceraruta():
     return render_template("footer.html")
+
+@pruebas.route("/cuartaruta")
+def cuartaruta():
+    return render_template("footer2.html")

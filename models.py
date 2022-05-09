@@ -1,3 +1,4 @@
+from email.policy import default
 import json
 
 from flask_sqlalchemy import SQLAlchemy
@@ -41,7 +42,6 @@ participa = db.Table(
 
 class Empresa(UserMixin, db.Model):
     __tablename__ = "empresa"
-    # TODO: resto de atributos de una empresa en la BD
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nombre = db.Column(db.String(100))
     nombre_persona_contacto = db.Column(db.String(100))
@@ -60,6 +60,7 @@ class Empresa(UserMixin, db.Model):
     esta_creado_jb = db.Column(db.Boolean, default=False)
     esta_actualizado_jb = db.Column(db.Boolean, default=False)
     user_hash = db.Column(db.String(100))
+    user_type = db.Column(db.Integer, default=2)
 
     poblacion = db.relationship("Poblacion", uselist=False)
     asistentes = db.relationship("Asistente")
@@ -75,6 +76,9 @@ class Pais(db.Model):
     nombre = db.Column(db.String(50))
 
     provincias = db.relationship("Provincia")
+
+    def __str__(self):
+     return self.nombre + ", " + self.provincia.nombre + ", " + self.provincia.pais.nombre
 
 
 class Poblacion(db.Model):

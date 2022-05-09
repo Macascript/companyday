@@ -103,7 +103,7 @@ def registrarEmpresa():
             if file.filename != '':
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                logo_url = UPLOAD_FOLDER + "/" + filename
+                logo_url = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
         password_hashed = generate_password_hash(request.form["password"], method="sha256")
         consentimiento_uso_nombre = request.form["consentimiento_uso_nombre"] == "si"

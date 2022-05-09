@@ -25,7 +25,7 @@ $(document).ready(function() {
 
 
 const app = new Vue({
-    el: "#paises",
+    el: "#app",
     delimiters: ["[[","]]"],
     data: {
         listaPaises: [],
