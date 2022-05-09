@@ -79,7 +79,7 @@ def login():
             login_user(user, remember=True)
 
     return redirect("/")
-
+# 9:39
 
 def registrarEmpresa():
     if request:
