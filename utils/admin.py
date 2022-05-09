@@ -7,13 +7,13 @@ from flask_login import current_user
 
 class UniIndexView(AdminIndexView):
     def is_accessible(self):
-        return current_user.is_authenticated and current_user.id == 3
+        return current_user.is_authenticated and current_user.user_type == 1
 
 admin = Admin(get_app(),index_view=UniIndexView())
 
 class UniModelView(ModelView):
     def is_accessible(self):
-        return current_user.is_authenticated and current_user.id == 3
+        return current_user.is_authenticated and current_user.user_type == 1
 
 
 

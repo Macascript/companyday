@@ -2,8 +2,10 @@ import random
 
 from flask import render_template, request, redirect, flash, url_for, Blueprint
 from flask_login import login_user, current_user
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.utils import secure_filename
+from utils.forms import LoginForm
+from jinja2 import Environment
 import os
 import datetime
 
@@ -26,7 +28,11 @@ def plantilla():
 
 @views.route("/", methods=["GET", "POST"])
 def index():
-    return render_template("nuevoIndex.html", state="NotLogged")
+    state = "NotLogged"
+    if current_user.is_authenticated:
+        state = "Logged"
+    form = LoginForm()
+    return render_template("nuevoIndex.html", state=state, form = form)
 
 
 @views.route('/register', methods=['POST'])
@@ -55,25 +61,24 @@ def register():
 
             db.session.commit()
             send_email(new_empresa.email, 'Porfavor confirme su correo electrónico', 'mail/new_empresa', empresa=new_empresa, url=request.host)
-
+    return redirect("/")
 
 @views.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        form = request.form
-        user = Empresa.query.filter(Empresa.email == form["email"]).first()
-        if not user or not user.contrasenya == form["password"]:  # check_password_hash(user.contrasenya, form["password"]):
+        form = LoginForm()
+        user = Empresa.query.filter(Empresa.email == form["email"].data).first()
+        if not user or not check_password_hash(user.contrasenya, form["password"].data):
+        # if not user or not user.contrasenya == form["password"]:  # check_password_hash(user.contrasenya, form["password"]):
             flash("Wrong user or Password!")
-        elif user.is_active:
+        elif user.esta_verificado:
             login_user(user, remember=True)
             flash("Welcome back {}".format(current_user.nombre))
-            return redirect(url_for('index'))
         else:
             flash("User not confirmed. Please visit your email to confirm your user.")
             login_user(user, remember=True)
-            return redirect(url_for('index'))
 
-    return redirect(url_for('index'))
+    return redirect("/")
 
 
 def registrarEmpresa():

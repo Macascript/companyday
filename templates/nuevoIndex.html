@@ -30,10 +30,11 @@
 <body>
   {% include "header.html" %}
   <div id="app">
-
+    {% if state != "Logged" %}
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" id="loginBoton">
       Login
     </button>
+    {% endif %}
     
     <!-- Modal -->
     <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -45,7 +46,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body col-sm">
-              <label for="inputEmail" class="sr-only">Email Address</label>
+            {{ form.email.label }}
+            <br>
+            {{ form.email }}
+            <br>
+            {{ form.password.label }}
+            <br>
+            {{ form.password }}
+              <!-- <label for="inputEmail" class="sr-only">Email Address</label>
               <input
                 type="email"
                 name="email"
@@ -68,7 +76,7 @@
                   <label>
                     <input type="checkbox" value="remember-me" /> Remember me
                   </label>
-                </div>
+                </div> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -78,9 +86,11 @@
       </div>
       </form>
     </div>
+    {% if state != "Logged" %}
     <div class="botonInscripcion">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Inscripcion</button>
     </div>
+    {% endif %}
     
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-xl">

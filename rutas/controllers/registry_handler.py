@@ -22,4 +22,4 @@ def confirmuser(empresa_id, userhash):
         except:
             db.session.rollback()
             response = "Error confirming user!"
-    return jsonify(response)
+    return response
