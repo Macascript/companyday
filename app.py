@@ -1,3 +1,5 @@
+import sys
+print(sys.version)
 from flask import render_template
 from flask_login import LoginManager
 from flask_migrate import Migrate
