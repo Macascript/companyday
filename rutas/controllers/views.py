@@ -60,7 +60,7 @@ def register():
                 new_empresa.charla = charla
 
             db.session.commit()
-            send_email(new_empresa.email, 'Porfavor confirme su correo electrónico', 'mail/new_empresa', empresa=new_empresa, url=request.host)
+            send_email(new_empresa.email, 'Porfavor confirme su correo electrónico', 'mail/new_empresa', empresa=new_empresa, url="http://www.macascript.com")
     return redirect("/")
 
 @views.route('/login', methods=['POST'])
